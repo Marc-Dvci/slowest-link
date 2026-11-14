@@ -123,7 +123,7 @@ Plain code decides every finding, in Cypher on Relate. Models read and explain, 
 |---|---|
 | MCP server, `python -m slowest_link mcp` ([`.mcp.json`](.mcp.json)) | Seven tools: `check_promises`, `explain_function`, `what_if`, `check_new_call`, `list_functions`, `get_schema` and a read-only `read_cypher` |
 | Agent skill ([`.claude/skills/slowest-link/SKILL.md`](.claude/skills/slowest-link/SKILL.md), [`AGENTS.md`](AGENTS.md)) | When to use each tool, the evidence view by default, and the rule that every number comes from a tool |
-| Coding-agent hook ([`.claude/settings.json`](.claude/settings.json)) | After an agent edits a note in `plan/`, the guard compares it with `HEAD`; a broken promise comes back to the agent as feedback |
+| Coding-agent hook ([`.claude/settings.json`](.claude/settings.json)) | After an agent edits a note in `plan/`, the guard compares it with `HEAD`; a broken promise comes back to the agent as feedback ([a real session](examples/agent-session.md)) |
 | CI guard ([`plan-guard.yml`](.github/workflows/plan-guard.yml)) | A pull request that breaks a promise or makes one worse fails, with the path on the run page |
 
 **Agent evaluation.** Qwen 3.8 Flash answered the same 12 continuity questions three times each, in two ways, against
