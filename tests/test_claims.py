@@ -81,3 +81,21 @@ def test_the_tests_wrote_one_needed_call_and_two_survivable_calls_into_the_plan(
         ]
     assert needed == [{"a": "checkout", "b": "kafka", "f": ["Place an order"]}]
     assert [(s["a"], s["b"]) for s in survived] == [("checkout", "email"), ("fraud-detection", "flagd")]
+
+
+def test_the_recorded_agent_answers_grade_as_the_readme_says() -> None:
+    import sys
+
+    sys.path.insert(0, str(ROOT / "experiments"))
+    import agent_eval
+
+    questions = json.loads((ROOT / "evidence" / "agent-eval" / "questions.json").read_text(encoding="utf-8"))
+    runs = [
+        json.loads(line)
+        for line in (ROOT / "evidence" / "agent-eval" / "runs.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    summary = agent_eval.grade(questions, runs)
+    assert (summary["files"]["correct"], summary["files"]["answers"]) == (36, 36)
+    assert (summary["tools"]["correct"], summary["tools"]["answers"]) == (31, 36)
+    assert summary == json.loads((ROOT / "evidence" / "agent-eval" / "summary.json").read_text(encoding="utf-8"))

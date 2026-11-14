@@ -1,0 +1,11 @@
+Components in the notice:
+  kafka (named)
+
+Expected outage: 3 h
+
+Functions reached (Evidence (calls seen in each function's own traces)):
+  [BROKEN] Place an order: promises 1 h, out 3 h (through kafka)
+  [kept] Screen orders for fraud: promises 4 h, out 3 h (through kafka)
+  [kept] Record orders in accounting: promises 24 h, out 3 h (through kafka)
+
+Restore order: kafka -> Place an order -> Screen orders for fraud -> Record orders in accounting

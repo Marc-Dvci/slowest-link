@@ -1,0 +1,5 @@
+Change: frontend -> product-catalog (sync) for Browse the shop
+NEW    Browse the shop: promises 1 h, slowest link 4 h
+       frontend-proxy -> frontend -> product-catalog -> astronomy-db
+NEW    Browse the shop: promises 1 h, restore chain 5 h
+       frontend-proxy -> frontend -> product-catalog -> astronomy-db

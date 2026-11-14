@@ -29,7 +29,7 @@ In business-continuity audits I worked on, recovery times were set one applicati
 | Usefulness | [Use case](#use-case), [Results](#results): every finding comes from a real system, its traces and 34 outage tests on it |
 | Documentation and reproducibility | [Run it](#run-it) needs no keys and no Docker; [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md) and the committed evidence reproduce every number |
 | Creativity | A recovery promise checked as a path through a graph, with three kinds of evidence on each edge: declared, observed, proved by a test |
-| AI and agentic capabilities | [Agents](#agents): MCP tools, an agent skill, a coding-agent hook that blocks a promise-breaking change, and a measured comparison of an agent with and without the graph |
+| AI and agentic capabilities | [Agents](#agents): MCP tools, an agent skill, a coding-agent hook that blocks a promise-breaking change, and a measured agent evaluation |
 
 ## See it work
 
@@ -126,7 +126,17 @@ Plain code decides every finding, in Cypher on Relate. Models read and explain, 
 | Coding-agent hook ([`.claude/settings.json`](.claude/settings.json)) | After an agent edits a note in `plan/`, the guard compares it with `HEAD`; a broken promise comes back to the agent as feedback |
 | CI guard ([`plan-guard.yml`](.github/workflows/plan-guard.yml)) | A pull request that breaks a promise or makes one worse fails, with the path on the run page |
 
-{{AGENT_EVAL}}
+**Agent evaluation.** Qwen 3.8 Flash answered the same 12 continuity questions three times each, in two ways, against
+answers taken from the checks and committed before it ran ([`experiments/agent_eval.py`](experiments/agent_eval.py),
+[`evidence/agent-eval/`](evidence/agent-eval/)):
+
+| How the model answered | Correct | Seconds per answer | Output tokens per answer |
+|---|---|---|---|
+| Reading the plan's notes, pasted into its context | 36 of 36 | 85 | 5,130 |
+| Calling the Slowest Link tools on Relate | 31 of 36 | 21 | 1,108 |
+
+The vault's notes are plain enough for a model to reason over directly. Through the tools, the same questions take a
+quarter of the time and a fifth of the output tokens.
 
 ## Results
 

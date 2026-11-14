@@ -1,0 +1,13 @@
+Components in the notice:
+  astronomy-db (search score 2.194)
+
+Expected outage: 3 h
+
+Functions reached (Evidence (calls seen in each function's own traces)):
+  [BROKEN] Add to cart: promises 1 h, out 3 h (through astronomy-db)
+  [BROKEN] Place an order: promises 1 h, out 3 h (through astronomy-db)
+  [BROKEN] View a product: promises 1 h, out 3 h (through astronomy-db)
+  [kept] Show recommendations: promises 8 h, out 3 h (through astronomy-db)
+  [kept] Record orders in accounting: promises 24 h, out 3 h (through astronomy-db)
+
+Restore order: astronomy-db -> Add to cart -> Place an order -> View a product -> Show recommendations -> Record orders in accounting

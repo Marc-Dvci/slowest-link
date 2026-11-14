@@ -94,3 +94,10 @@ Measured recovery after a restart, over 37 affected journeys: longest 10.9 s (us
 Stop tests that left a journey down until the services were restarted:
 
 - kafka: user_checkout_single
+
+## Agent evaluation
+
+| How the model answered | Correct | Tool calls | Prompt tokens |
+|---|---|---|---|
+| Reading the plan's notes | 36 of 36 (100%) | 0 | 422,070 |
+| With the Slowest Link tools on Relate | 31 of 36 (86%) | 182 | 546,227 |

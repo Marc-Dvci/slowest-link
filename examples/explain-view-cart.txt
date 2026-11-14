@@ -1,0 +1,23 @@
+View cart: promises 1 h
+
+Plan (each listed component on its own)
+  depends on 3: cart, frontend, frontend-proxy
+  slowest link: cart, 30 min [ok]
+    cart
+  restore chain: 30 min [ok]
+    cart
+
+Architecture (published calls, followed through)
+  depends on 18: ad, astronomy-db, cart, checkout, currency, email, flagd, flagd-ui, frontend, frontend-proxy, image-provider, kafka, payment, product-catalog, quote, recommendation, shipping, valkey-cart
+  slowest link: astronomy-db, 4 h [BROKEN]
+    frontend-proxy -> frontend -> product-catalog -> astronomy-db
+  restore chain: 6 h [BROKEN]
+    frontend-proxy -> frontend -> recommendation -> product-catalog -> astronomy-db
+
+Evidence (calls seen in each function's own traces)
+  depends on 4: cart, frontend, frontend-proxy, valkey-cart
+  slowest link: cart, 30 min [ok]
+    frontend-proxy -> frontend -> cart
+  restore chain: 1 h 30 min [BROKEN]
+    frontend-proxy -> frontend -> cart -> valkey-cart
+

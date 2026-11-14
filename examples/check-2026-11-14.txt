@@ -1,0 +1,87 @@
+Slowest Link check, as of 2026-11-14
+
+Broken promises: a dependency recovers slower than the function promises
+
+  Plan (each listed component on its own): 0
+  Architecture (published calls, followed through): 5
+    Add to cart: promises 1 h, slowest link 4 h (3 h over)
+      frontend-proxy -> frontend -> product-catalog -> astronomy-db
+    Browse the shop: promises 1 h, slowest link 4 h (3 h over)
+      frontend-proxy -> frontend -> product-catalog -> astronomy-db
+    Place an order: promises 1 h, slowest link 4 h (3 h over)
+      frontend-proxy -> frontend -> product-catalog -> astronomy-db
+    View a product: promises 1 h, slowest link 4 h (3 h over)
+      frontend-proxy -> frontend -> product-catalog -> astronomy-db
+    View cart: promises 1 h, slowest link 4 h (3 h over)
+      frontend-proxy -> frontend -> product-catalog -> astronomy-db
+  Evidence (calls seen in each function's own traces): 3
+    Add to cart: promises 1 h, slowest link 4 h (3 h over)
+      frontend-proxy -> frontend -> product-catalog -> astronomy-db
+    Place an order: promises 1 h, slowest link 4 h (3 h over)
+      frontend-proxy -> frontend -> product-catalog -> astronomy-db
+    View a product: promises 1 h, slowest link 4 h (3 h over)
+      frontend-proxy -> frontend -> product-catalog -> astronomy-db
+
+Restore chains longer than the promise (dependencies come back first)
+
+  Plan (each listed component on its own): 0
+  Architecture (published calls, followed through): 5
+    Add to cart: promises 1 h, chain 6 h (5 h over)
+      frontend-proxy -> frontend -> recommendation -> product-catalog -> astronomy-db
+    Browse the shop: promises 1 h, chain 6 h (5 h over)
+      frontend-proxy -> frontend -> recommendation -> product-catalog -> astronomy-db
+    Place an order: promises 1 h, chain 6 h (5 h over)
+      frontend-proxy -> frontend -> recommendation -> product-catalog -> astronomy-db
+    View a product: promises 1 h, chain 6 h (5 h over)
+      frontend-proxy -> frontend -> recommendation -> product-catalog -> astronomy-db
+    View cart: promises 1 h, chain 6 h (5 h over)
+      frontend-proxy -> frontend -> recommendation -> product-catalog -> astronomy-db
+  Evidence (calls seen in each function's own traces): 4
+    Add to cart: promises 1 h, chain 5 h (4 h over)
+      frontend-proxy -> frontend -> product-catalog -> astronomy-db
+    Place an order: promises 1 h, chain 5 h 30 min (4 h 30 min over)
+      frontend-proxy -> frontend -> checkout -> product-catalog -> astronomy-db
+    View a product: promises 1 h, chain 5 h (4 h over)
+      frontend-proxy -> frontend -> product-catalog -> astronomy-db
+    View cart: promises 1 h, chain 1 h 30 min (30 min over)
+      frontend-proxy -> frontend -> cart -> valkey-cart
+
+Dependencies the plan's list leaves out, per function: 15
+  Add to cart (promises 1 h): astronomy-db (4 h), valkey-cart (30 min)
+  Place an order (promises 1 h): astronomy-db (4 h), kafka (2 h), product-catalog (30 min), quote (30 min), valkey-cart (30 min), flagd (15 min)
+  Record orders in accounting (promises 24 h): kafka (2 h)
+  Screen orders for fraud (promises 4 h): kafka (2 h)
+  Show ads (promises 24 h): flagd (15 min)
+  Show recommendations (promises 8 h): astronomy-db (4 h), product-catalog (30 min)
+  View a product (promises 1 h): astronomy-db (4 h)
+  View cart (promises 1 h): valkey-cart (30 min)
+
+Calls seen in traces that the plan does not declare: 0
+
+Declared calls no trace showed: 10
+  checkout -> flagd
+  email -> flagd
+  frontend -> currency
+  frontend -> shipping
+  frontend-proxy -> flagd
+  frontend-proxy -> flagd-ui
+  frontend-proxy -> image-provider
+  product-catalog -> flagd
+  recommendation -> flagd
+  shipping -> flagd
+
+Components under a critical function with no recovery test in the last 365 days: 0
+
+Shared points under two or more critical functions: 7
+  frontend: 5 functions (Browse the shop, View a product, Add to cart, View cart, Place an order)
+  frontend-proxy: 5 functions (Browse the shop, View a product, Add to cart, View cart, Place an order)
+  astronomy-db: 4 functions (View a product, Add to cart, Place an order, Record orders in accounting)
+  cart: 3 functions (Add to cart, View cart, Place an order)
+  product-catalog: 3 functions (View a product, Add to cart, Place an order)
+  valkey-cart: 3 functions (Add to cart, View cart, Place an order)
+  kafka: 2 functions (Place an order, Record orders in accounting)
+
+Components whose stop test left a journey down until someone acted: 1
+  kafka (2026-11-14): user_checkout_single
+
+~> marks a call seen in traces that the plan does not declare.

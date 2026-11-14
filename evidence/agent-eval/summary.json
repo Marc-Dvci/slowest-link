@@ -1,0 +1,16 @@
+{
+  "files": {
+    "answers": 36,
+    "correct": 36,
+    "tool_calls": 0,
+    "prompt_tokens": 422070,
+    "share": 1.0
+  },
+  "tools": {
+    "answers": 36,
+    "correct": 31,
+    "tool_calls": 182,
+    "prompt_tokens": 546227,
+    "share": 0.861
+  }
+}
