@@ -117,3 +117,20 @@ def record_test(conn: relate.Connection, test: Mapping[str, Any]) -> None:
             "rs": [float(recovery[k]) for k in sorted(recovery)],
         },
     )
+
+
+def record_survival(conn: relate.Connection, function: str, component: str, test: str) -> int:
+    """Mark the calls into `component` on `function`'s traced paths as calls the function survived without.
+
+    Called when a stop test of `component` left `function` working. Returns the number of edges marked.
+    """
+    edges = rows(
+        conn,
+        f"MATCH (a:{COMPONENT})-[r:CALLS]->(b:{COMPONENT} {{name: $c}}) "
+        "WHERE r.observed = true AND $f IN coalesce(r.journeys, []) AND NOT $f IN coalesce(r.survives_without, []) "
+        "SET r.survives_without = coalesce(r.survives_without, []) + $f, "
+        "    r.survival_tests = coalesce(r.survival_tests, []) + $t "
+        "RETURN count(r) AS n",
+        {"c": component, "f": function, "t": test},
+    )
+    return int(edges[0]["n"])

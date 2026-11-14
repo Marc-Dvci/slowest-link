@@ -7,6 +7,7 @@ from typing import Any
 import relate
 
 from slowest_link import checks
+from slowest_link.guard import GuardResult
 from slowest_link.whatif import WhatIf
 
 VIEW_LABEL = {
@@ -129,4 +130,23 @@ def render_whatif(result: WhatIf) -> str:
     if not result.affected:
         lines.append("  none")
     lines += ["", "Restore order: " + " -> ".join(result.restore_order)]
+    return "\n".join(lines)
+
+
+def render_guard(result: GuardResult) -> str:
+    lines = [f"Change: {result.change}"]
+    if not result.blocking:
+        lines.append("No promise breaks or gets worse.")
+        return "\n".join(lines)
+    for f in result.new:
+        what = "slowest link" if f["check"] == "inversion" else "restore chain"
+        lines.append(f"NEW    {f['function']}: promises {minutes(f['promise_min'])}, {what} {minutes(f['value_min'])}")
+        lines.append(f"       {path_text(f['path'], f['hidden_hops'])}")
+    for f in result.worse:
+        what = "slowest link" if f["check"] == "inversion" else "restore chain"
+        lines.append(
+            f"WORSE  {f['function']}: promises {minutes(f['promise_min'])}, "
+            f"{what} {minutes(f['was_min'])} -> {minutes(f['value_min'])}"
+        )
+        lines.append(f"       {path_text(f['path'], f['hidden_hops'])}")
     return "\n".join(lines)

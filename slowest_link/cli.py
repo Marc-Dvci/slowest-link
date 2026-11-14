@@ -6,6 +6,11 @@
     explain        show one function's dependencies, slowest link and restore chain in each view
     whatif         read an outage notice and list the promises it breaks, with a restore order
     predict        list, for each fault, the functions each view expects it to reach
+    score          compare the outage tests' measured effects with the frozen predictions
+    record-tests   write the outage tests into the plan, with the calls each function survived without
+    guard          say which promises a new call, or a change to the plan, would break
+    export         write the plan graph as one Cypher script (for the browser page)
+    mcp            serve the checks to agents over MCP (stdio)
 """
 
 from __future__ import annotations
@@ -19,8 +24,9 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from slowest_link import checks, report, whatif
-from slowest_link.evidence import import_derivation, plan_maps
+from slowest_link import checks, guard, report, scoring, whatif
+from slowest_link.export import export_cypher
+from slowest_link.evidence import import_derivation, plan_maps, record_survival, record_test
 from slowest_link.seed import seed
 from slowest_link.store import open_store
 from slowest_link.traces import derive_calls
@@ -114,6 +120,133 @@ def cmd_predict(a: argparse.Namespace) -> int:
     return 0
 
 
+def _read_jsonl(path: Path) -> list[dict[str, Any]]:
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8") as handle:  # type: ignore[operator]
+        return [json.loads(line) for line in handle if line.strip()]
+
+
+def load_run(run: Path) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, dict[str, Any]]]:
+    probe = run / "probe.jsonl.gz" if (run / "probe.jsonl.gz").exists() else run / "probe.jsonl"
+    records = _read_jsonl(probe)
+    timeline = _read_jsonl(run / "timeline.jsonl")
+    backoffice = {row["test"]: row for row in _read_jsonl(run / "backoffice.jsonl")}
+    return records, timeline, backoffice
+
+
+def outcomes_for(conn: Any, run: Path) -> tuple[list[scoring.TestOutcome], list[str]]:
+    journey_to_function, consumer_function, _ = plan_maps(conn)
+    journeys = {j: f for j, f in journey_to_function.items() if j in PROBED}
+    backoffice = {"ledger": consumer_function["accounting"], "fraud": consumer_function["fraud-detection"]}
+    records, timeline, rows_ = load_run(run)
+    outcomes = [scoring.outcome(t, records, rows_.get(t["test"]), journeys, backoffice) for t in timeline]
+    functions = sorted(set(journeys.values()) | set(backoffice.values()))
+    return outcomes, functions
+
+
+# The journeys the prober replays: one per function of the plan (experiments/prober.py).
+PROBED = {
+    "user_index",
+    "user_browse_product",
+    "user_get_recommendations",
+    "user_get_ads",
+    "user_view_cart",
+    "user_add_to_cart",
+    "user_checkout_single",
+}
+
+
+def cmd_score(a: argparse.Namespace) -> int:
+    predictions = json.loads(a.predictions.read_text(encoding="utf-8"))
+    with open_store(a.vault, read_only=True) as conn:
+        outcomes, functions = outcomes_for(conn, a.run)
+    by_test = {f["id"]: f for f in predictions["faults"]}
+    result: dict[str, Any] = {"functions": functions, "views": {}, "outcomes": [o.to_dict() for o in outcomes]}
+    for kind in ("stop", "flag"):
+        chosen = [o for o in outcomes if o.kind == kind]
+        for view in checks.VIEWS:
+            predicted = {o.test: by_test[o.test]["predicted"][view] for o in chosen}
+            result["views"].setdefault(kind, {})[view] = {
+                "score": scoring.score(chosen, predicted, functions).to_dict(),
+                "errors": scoring.errors(chosen, predicted, functions),
+            }
+    a.out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    for kind, views in result["views"].items():
+        for view, data in views.items():
+            s = data["score"]
+            print(f"{kind:4} {view:12} tp={s['tp']:3} fp={s['fp']:3} fn={s['fn']:3} tn={s['tn']:3} "
+                  f"precision={s['precision']} recall={s['recall']} exact={s['exact']}/{s['tests']}")
+    return 0
+
+
+def cmd_record_tests(a: argparse.Namespace) -> int:
+    with open_store(a.vault) as conn:
+        outcomes, functions = outcomes_for(conn, a.run)
+        reach = checks.reach(conn, "evidence")
+        written = survived = 0
+        for o in outcomes:
+            record_test(
+                conn,
+                {
+                    "name": f"{a.date} {o.test}",
+                    "date": a.date,
+                    "kind": o.kind,
+                    "target": o.target,
+                    "fault": o.test.split(":", 1)[1],
+                    "window_s": a.window,
+                    "affected": sorted(o.affected),
+                    "recovery_s": {j: v for j, v in o.recovery_s.items() if v is not None},
+                    "not_recovered": o.not_recovered if o.kind == "stop" else [],
+                },
+            )
+            written += 1
+            if o.kind != "stop":
+                continue
+            for function in functions:
+                if function in o.unjudged or function in o.affected or o.target not in reach.get(function, set()):
+                    continue
+                survived += record_survival(conn, function, o.target, f"{a.date} {o.test}")
+    print(json.dumps({"tests": written, "calls_marked_survivable": survived}))
+    return 0
+
+
+def cmd_guard(a: argparse.Namespace) -> int:
+    if bool(a.call) == bool(a.base):
+        print("give either --call SOURCE->TARGET or --base VAULT", file=sys.stderr)
+        return 2
+    with open_store(a.vault, read_only=True) as conn:
+        if a.call:
+            source, _, target = a.call.partition("->")
+            try:
+                result = guard.simulate_call(conn, source.strip(), target.strip(), a.functions or None, a.mode, a.view)
+            except ValueError as exc:
+                print(exc, file=sys.stderr)
+                return 2
+        else:
+            with open_store(a.base, read_only=True) as base:
+                result = guard.compare(base, conn, a.view)
+    if a.json:
+        print(json.dumps(result.to_dict(), indent=2))
+    else:
+        print(report.render_guard(result))
+    return 1 if result.blocking else 0
+
+
+def cmd_export(a: argparse.Namespace) -> int:
+    with open_store(a.vault, read_only=True) as conn:
+        script = export_cypher(conn)
+    a.out.write_text(script, encoding="utf-8")
+    print(f"{len(script)} characters -> {a.out}")
+    return 0
+
+
+def cmd_mcp(a: argparse.Namespace) -> int:
+    from slowest_link.mcp_server import run
+
+    run(a.vault)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog="slowest-link", description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     sub = ap.add_subparsers(dest="command", required=True)
@@ -156,6 +289,39 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--out", type=Path, default=ROOT / "evidence" / "predictions.json")
     s.add_argument("--commit", default="", help="the git commit of the vault the predictions come from")
     s.set_defaults(run=cmd_predict)
+
+    s = sub.add_parser("score", help="compare measured effects with the frozen predictions")
+    s.add_argument("--vault", type=Path, default=DEFAULT_VAULT)
+    s.add_argument("--run", type=Path, default=ROOT / "evidence" / "e1e2")
+    s.add_argument("--predictions", type=Path, default=ROOT / "evidence" / "predictions.json")
+    s.add_argument("--out", type=Path, default=ROOT / "evidence" / "e1e2-results.json")
+    s.set_defaults(run=cmd_score)
+
+    s = sub.add_parser("record-tests", help="write the outage tests into the plan")
+    s.add_argument("--vault", type=Path, default=DEFAULT_VAULT)
+    s.add_argument("--run", type=Path, default=ROOT / "evidence" / "e1e2")
+    s.add_argument("--date", required=True, help="the day the tests ran, YYYY-MM-DD")
+    s.add_argument("--window", type=int, default=60, help="seconds each fault lasted")
+    s.set_defaults(run=cmd_record_tests)
+
+    s = sub.add_parser("guard", help="say which promises a new call, or a change to the plan, would break")
+    s.add_argument("--vault", type=Path, default=DEFAULT_VAULT)
+    s.add_argument("--call", help="a new call, SOURCE->TARGET")
+    s.add_argument("--for", dest="functions", action="append", help="a function the new call serves (repeatable)")
+    s.add_argument("--mode", choices=["sync", "async"], default="sync")
+    s.add_argument("--base", type=Path, help="the plan before the change (a vault folder)")
+    s.add_argument("--view", choices=checks.VIEWS, default="evidence")
+    s.add_argument("--json", action="store_true")
+    s.set_defaults(run=cmd_guard)
+
+    s = sub.add_parser("export", help="write the plan graph as one Cypher script")
+    s.add_argument("--vault", type=Path, default=DEFAULT_VAULT)
+    s.add_argument("--out", type=Path, default=ROOT / "web" / "graph.cypher")
+    s.set_defaults(run=cmd_export)
+
+    s = sub.add_parser("mcp", help="serve the checks to agents over MCP (stdio)")
+    s.add_argument("--vault", type=Path, default=DEFAULT_VAULT)
+    s.set_defaults(run=cmd_mcp)
     return ap
 
 

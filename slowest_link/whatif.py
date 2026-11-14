@@ -1,7 +1,7 @@
 """What-if: read an outage notice and list the promises it breaks, with a restore order.
 
-1. Components: names written in the notice, then Relate's full-text `SEARCH` over component names and descriptions
-   (hits scoring at least 60% of the best hit).
+1. Components: names written in the notice, then Relate's full-text `SEARCH` over component names and descriptions,
+   with the words every notice uses left out (hits scoring at least 60% of the best hit).
 2. Duration: the first duration in the notice ("3 hours", "2 h 28 min", "90 minutes"); without one, each matched
    component's declared recovery objective.
 3. Impact: every function whose dependencies in the chosen view include a matched component. A promise is broken
@@ -21,7 +21,18 @@ from slowest_link import checks
 from slowest_link.store import rows
 
 RELATIVE_SCORE = 0.6
-_WORD = re.compile(r"[a-z0-9][a-z0-9-]*")
+_WORD = re.compile(r"[a-z][a-z0-9-]*")
+# Words every outage notice uses: they say that something failed, not what. Left out of the search.
+STOP_WORDS = frozenset(
+    """
+    a about after all also an and any are as at be been being but by can could down due during eta expect expected
+    estimate estimated estimates for from has have hour hours in is it its min mins minute minutes more no not now of
+    on or our out outage outages problem problems restore restored restoring service services some status than that
+    the their them there these they this to until up we were what when which while will with within working yet
+    affected affecting degraded degradation disruption error errors fail failed failing failure failures impact
+    impacted incident incidents investigating issue issues unavailable unreachable broken slow
+    """.split()
+)
 _DURATION = re.compile(
     r"(?:(?P<h>\d+(?:\.\d+)?)\s*(?:h|hr|hrs|hour|hours)\b)?\s*(?:and\s*)?"
     r"(?:(?P<m>\d+)\s*(?:m|min|mins|minute|minutes)\b)?",
@@ -68,7 +79,7 @@ def match_components(conn: relate.Connection, notice: str) -> list[dict[str, Any
     lowered = notice.lower()
     exact = [n for n in names if re.search(rf"(?<![a-z0-9-]){re.escape(n)}(?![a-z0-9-])", lowered)]
     found = [{"component": n, "how": "named", "score": None} for n in sorted(exact)]
-    terms = " ".join(_WORD.findall(lowered))
+    terms = " ".join(word for word in _WORD.findall(lowered) if word not in STOP_WORDS)
     if terms:
         hits = rows(
             conn,

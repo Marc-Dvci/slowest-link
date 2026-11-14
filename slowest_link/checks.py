@@ -5,7 +5,7 @@ Every number in a finding comes from a query result. A view decides which depend
 - plan: the components the plan lists for each function, one at a time (today's practice);
 - architecture: the published architecture's declared calls, followed transitively from the function's entry point;
 - evidence: calls observed in the function's own traces, synchronous only, minus calls a test proved the function
-  survives without.
+  survives without (the edge's `survives_without` list names those functions).
 """
 
 from __future__ import annotations
@@ -27,7 +27,7 @@ EDGE_FILTER: dict[View, str] = {
     "architecture": "r.declared = true",
     "evidence": (
         "r.observed = true AND f.name IN coalesce(r.journeys, []) AND r.mode = 'sync' "
-        "AND NOT coalesce(r.fallback, false)"
+        "AND NOT f.name IN coalesce(r.survives_without, [])"
     ),
 }
 
