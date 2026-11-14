@@ -33,9 +33,9 @@ In business-continuity audits I worked on, recovery times were set one applicati
 
 ## See it work
 
-![The browser page: each function is a line drawn to scale, its stations are the components it waits for in restore order, the tick is its promise, and red marks the time past it](docs/page-lines.png)
+![The browser page switching from the plan view (no broken promise) to the architecture view (every web journey late) to the evidence view (four functions late, through the 4-hour database and the cart chain); each function is a line drawn to scale, the tick is its promise and red marks the time past it](docs/views.gif)
 
-The page above runs Relate 1.0.1 in the browser tab, compiled to WebAssembly. It loads the plan, runs the same Cypher as the command line, and draws each function as a line. The stations are the components it waits for, in restore order; the tick is its promise; the ringed station is its slowest link.
+The page above runs Relate 1.0.1 in the browser tab, compiled to WebAssembly. It loads the plan, runs the same Cypher as the command line, and draws each function as a line. The stations are the components it waits for, in restore order; the tick is its promise; the ringed station is its slowest link. Checked one component at a time, the plan keeps every promise; followed through the published architecture, every web journey is late; through what each function really calls, four are.
 
 ```text
 $ python -m slowest_link guard --call "frontend->product-catalog" --for "Browse the shop"
