@@ -3,108 +3,199 @@
 **Slowest Link finds the recovery promises a system can't keep: it checks each promise in a continuity plan against everything the function depends on, and shows the path that breaks it.**
 
 [![Tests](https://github.com/Marc-Dvci/slowest-link/actions/workflows/tests.yml/badge.svg)](https://github.com/Marc-Dvci/slowest-link/actions/workflows/tests.yml)
-[![Decision core coverage](https://img.shields.io/badge/decision%20core%20coverage-{{COVERAGE}}%25-brightgreen)](tests/)
+[![Decision core coverage](https://img.shields.io/badge/decision%20core%20coverage-{{COVERAGE}}%25-brightgreen)](#run-it)
 [![CodeQL](https://github.com/Marc-Dvci/slowest-link/actions/workflows/codeql.yml/badge.svg)](https://github.com/Marc-Dvci/slowest-link/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![Live demo](https://img.shields.io/badge/live-demo-0a7d6e)]({{LIVE_URL}})
+[![Live page](https://img.shields.io/badge/live-page-003688)]({{LIVE_URL}})
 
 [![Watch the film: Slowest Link](docs/film_thumbnail.jpg)](https://www.youtube.com/watch?v={{VIDEO_ID}})
 
-**[Watch the film](https://www.youtube.com/watch?v={{VIDEO_ID}})**
+**[Watch the film](https://www.youtube.com/watch?v={{VIDEO_ID}})** · **[Open the live page]({{LIVE_URL}})**
 
-<!-- TEMPLATE: one human line from Marc, confirmed facts only. -->
+In business-continuity audits I worked on, recovery times were set one application at a time, and nobody checked them against what each application depends on.
 
-| Live demo | Track | Built with | Headline result |
+| Live page | Built with | Store | Headline result |
 |---|---|---|---|
-| [Open it]({{LIVE_URL}}) | {{TRACK}} | {{SPONSOR}} | {{HEADLINE}} |
+| [Open it]({{LIVE_URL}}) (Relate runs in the tab) | Relate by Neo4j 1.0.1: Python, CLI, MCP, WebAssembly | Markdown directory store, [`plan/`](plan/) | {{HEADLINE}} |
 
-[For judges](#for-judges) · [See it work](#see-it-work) · [How it works](#how-it-works) · [Results](#results) ·
-[Run it](#run-it)
+[For judges](#for-judges) · [See it work](#see-it-work) · [Use case](#use-case) · [How it uses Relate](#how-it-uses-relate) · [Agents](#agents) · [Results](#results) · [Run it](#run-it) · [Where the data lives](#where-the-data-lives)
 
 ## For judges
 
-<!-- TEMPLATE: one row per judging criterion, in the rules' order. Link code to exact lines at the release tag
-(blob/v1.0.0/<path>#L10-L40), and open every link once the tag exists. -->
-
 | Criterion | Where it is answered |
 |---|---|
-| {{CRITERION}} | [How it works](#how-it-works), [`app/core.py`](app/core.py) |
+| Relate and connected context | [How it uses Relate](#how-it-uses-relate): the answers are path aggregates computed in Cypher on Relate ([`slowest_link/checks.py`](slowest_link/checks.py)); the plan is a Markdown vault Relate opens as a graph; the same queries run in the CLI, the MCP server and the browser ([parity check](web/test/parity.mjs)) |
+| Functionality and completeness | [See it work](#see-it-work), [Run it](#run-it): command line, MCP server, agent skill and hook, CI guard, browser page, Docker images; {{TEST_COUNT}} tests |
+| Usefulness | [Use case](#use-case), [Results](#results): every finding comes from a real system, its traces and {{TEST_RUNS}} outage tests on it |
+| Documentation and reproducibility | [Run it](#run-it) needs no keys and no Docker; [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md) and the committed evidence reproduce every number |
+| Creativity | A recovery promise checked as a path through a graph, with three kinds of evidence on each edge: declared, observed, proved by a test |
+| AI and agentic capabilities | [Agents](#agents): MCP tools, an agent skill, a coding-agent hook that blocks a promise-breaking change, and a measured comparison of an agent with and without the graph |
 
 ## See it work
 
-<!-- TEMPLATE: one GIF or screenshot per key moment, from the real product (scripts/make_gif.py). -->
+![The browser page: each function is a line drawn to scale, its stations are the components it waits for in restore order, the tick is its promise, and red marks the time past it](docs/page-lines.png)
 
-## The problem
+The page above runs Relate 1.0.1 in the browser tab, compiled to WebAssembly. It loads the plan, runs the same Cypher as the command line, and draws each function as a line. The stations are the components it waits for, in restore order; the tick is its promise; the ringed station is its slowest link.
 
-<!-- TEMPLATE: who it is for, the moment it matters, and the pain with one sourced number[^1]. -->
+```text
+$ python -m slowest_link guard --call "frontend->product-catalog" --for "Browse the shop"
+Change: frontend -> product-catalog (sync) for Browse the shop
+NEW    Browse the shop: promises 1 h, slowest link 4 h
+       frontend-proxy -> frontend -> product-catalog -> astronomy-db
+NEW    Browse the shop: promises 1 h, restore chain 5 h
+       frontend-proxy -> frontend -> product-catalog -> astronomy-db
+```
+
+A developer adds featured products to the home page. The guard sees that "Browse the shop" now waits for the product catalogue, which waits for the database, which takes 4 hours to restore. The change fails CI before it merges.
+
+## Use case
+
+On 12 June 2025 a third-party cloud provider behind Cloudflare's Workers KV failed. 91% of KV requests failed and the outage lasted 2 hours and 28 minutes, taking Access, WARP, Gateway, Turnstile and other products with it[^1]. Cloudflare's customers were hit by a provider two levels down from them.
+
+Continuity plans share that blind spot. A business impact analysis gives each function a recovery promise ("orders back within 1 hour") and lists the applications it uses. Each application's owner declares how fast it recovers. Each line can look fine on its own while the function waits for a database three calls away that takes 4 hours to restore.
+
+Slowest Link is for the continuity lead who signs the annual recovery test plan, and for the engineer on call at 07:40 when a provider's status page turns red. It answers three questions from the graph:
+
+1. **Which promises can't be kept?** The slowest recovery on any path under the function, and the longest restore chain, since a dependent comes back only after what it waits for.
+2. **What does this outage break, and in what order do we restore?** A free-text notice, mapped to components by full-text search, then to functions through the graph.
+3. **Will this change break a promise?** A new call between services, tried on a copy of the plan before it merges.
+
+## How it uses Relate
+
+- **Mode:** directory (Markdown codec).
+- **Why this mode:** the continuity plan is owned by people, so it lives as one Markdown note per function, component and test: the team edits it like documents and every change is a reviewable git diff. Relate opens the folder as the graph, and the trace import and outage tests write their evidence into the same notes.
+- **What the graph models:**
+
+```text
+(:Function {promise_min, critical, journeys})-[:ENTERS]->(:Service)      where the function starts
+(:Function)-[:USES]->(:Service|:Datastore|:Queue)                         the plan's own list
+(:Service)-[:CALLS {declared, observed, mode, journeys, calls,            a dependency, with its evidence
+                    survives_without}]->(:Service|:Datastore|:Queue)
+(:Service|:Datastore|:Queue {recovery_min, owner, description})           a component and its recovery time
+(:Test {date, kind, affected, recovery_s})-[:EXERCISED]->(component)      an outage test on the running system
+```
+
+Each `CALLS` edge carries three kinds of evidence. `declared`: the published architecture shows it. `observed` and `journeys`: traces show it, and for which functions. `survives_without`: an outage test proved the function keeps working without it. Three views read the same graph:
+
+| View | Edges it follows | What it shows |
+|---|---|---|
+| Plan | The function's own `USES` list, one component at a time | How plans are checked today |
+| Architecture | Every declared call, followed through | Everything that could matter |
+| Evidence | Calls in the function's own traces, synchronous, minus calls a test proved survivable | What the running system does |
+
+| Relate surface | What it does here |
+|---|---|
+| Python, embedded (`relate-db`) | Every check: acyclic variable-length paths, path sums with `reduce`, `EXISTS` subqueries, per-view edge filters ([`checks.py`](slowest_link/checks.py)) |
+| Markdown directory store | The plan itself, [`plan/`](plan/): notes with frontmatter properties and `[[wikilinks]]`; hand edits are picked up at the next open |
+| Full-text index and `SEARCH` | The what-if maps an outage notice to components ([`whatif.py`](slowest_link/whatif.py)) |
+| Read-only open | The MCP tools and the guard never write to the plan; Relate refuses a write on a read-only open |
+| WebAssembly (`@relate/relate-wasm`) | The browser page runs the plan and the same queries in the tab ([`web/js`](web/js)) |
+| CLI | `relate --database plan "MATCH ..."` explores the vault; `relate serve --mcp stdio --database plan --read-only` serves it to any agent |
+
+```cypher
+// The slowest link under every function, in the evidence view (slowest_link/checks.py)
+MATCH (f:Function)-[:ENTERS]->(entry)
+MATCH p = ACYCLIC (entry)-[rs:CALLS]->*(d)
+WHERE all(r IN rs WHERE r.observed = true AND f.name IN coalesce(r.journeys, []) AND r.mode = 'sync'
+          AND NOT f.name IN coalesce(r.survives_without, []))
+WITH f, d, [n IN nodes(p) | n.name] AS names ORDER BY d.recovery_min DESC, size(names) ASC
+WITH f, collect({component: d.name, recovery: d.recovery_min, names: names})[0] AS slowest
+WHERE slowest.recovery > f.promise_min
+RETURN f.name, f.promise_min, slowest
+```
 
 ## How it works
 
-![Slowest Link, step by step: the input, the model step that reads it, the decision by fixed rules, and the output with
-its evidence](docs/architecture.png)
+![Inputs (the published architecture, the business impact analysis, recovery objectives, traces and outage tests) flow into the Relate vault; fixed rules in Cypher decide; answers land in the CLI and CI, the MCP server, the agent hook and the browser page](docs/architecture.png)
 
-Models read and phrase; plain code decides ([`app/core.py`](app/core.py)). The diagram's source is
-[`docs/architecture.mmd`](docs/architecture.mmd).
+Plain code decides every finding, in Cypher on Relate. Models read and explain, and an agent's numbers must come from a tool result.
 
-## How {{SPONSOR}} is used
+1. **Seed.** [`sources/`](sources/) holds the plan's inputs: the shop's published service diagram (34 declared calls between deployed components), a business impact analysis (9 functions with their promises and supporting components) and the recovery objective of each of 20 components. `python -m slowest_link seed` writes them into the vault.
+2. **Observe.** The shop ran under its own load generator, and 1,037 traces were exported from Jaeger ([`evidence/e0-traces/`](evidence/e0-traces/)). A trace's root span names its journey, so each call is recorded with the functions it serves. Producer spans make asynchronous calls, and work below a Kafka consumer serves the consumer's function.
+3. **Test.** Each of the 20 components was stopped for 60 seconds, and each of 14 failure flags was turned on, while a prober replayed every journey through the front door. The predictions of all three views were committed before any test ran ([`evidence/predictions.json`](evidence/predictions.json)).
+4. **Check.** Broken promises, restore chains, plan gaps, hidden and unseen calls, untested components, shared points, what-if and guard.
 
-| Product | What it does here | Why it is needed |
-|---|---|---|
+## Agents
 
-## What it will not do
+| Piece | What the agent gets |
+|---|---|
+| MCP server, `python -m slowest_link mcp` ([`.mcp.json`](.mcp.json)) | Seven tools: `check_promises`, `explain_function`, `what_if`, `check_new_call`, `list_functions`, `get_schema` and a read-only `read_cypher` |
+| Agent skill ([`.claude/skills/slowest-link/SKILL.md`](.claude/skills/slowest-link/SKILL.md), [`AGENTS.md`](AGENTS.md)) | When to use each tool, the evidence view by default, and the rule that every number comes from a tool |
+| Coding-agent hook ([`.claude/settings.json`](.claude/settings.json)) | After an agent edits a note in `plan/`, the guard compares it with `HEAD`; a broken promise comes back to the agent as feedback |
+| CI guard ([`plan-guard.yml`](.github/workflows/plan-guard.yml)) | A pull request that breaks a promise or makes one worse fails, with the path on the run page |
 
-<!-- TEMPLATE: briefly: safety, approvals, refusals. -->
+{{AGENT_EVAL}}
 
 ## Results
 
-<!-- TEMPLATE: counts, before and after, and the command that reproduces each one. Then one line on what is real.
-Never call anything synthetic, fictional or invented. -->
+{{RESULTS}}
+
+> [!IMPORTANT]
+> What is real: the system is the OpenTelemetry Astronomy Shop 3.1.0, run unmodified in Docker; the declared calls are its published architecture; the traces, outage tests and recovery times were measured on it. The promises, the plan's component lists and the recovery objectives are the plan's inputs, as a continuity team writes them ([`sources/`](sources/)).
+
+## What it will not do
+
+- Change the plan on its own. The MCP tools and the guard open it read-only; people edit the notes, and the trace import and the test recorder write evidence only.
+- Let an agent invent a number. The skill and the server instructions require every figure to come from a tool result.
 
 ## Run it
 
 > [!TIP]
-> Nothing to install: the [live demo]({{LIVE_URL}}), or a ready environment in your browser:
+> Nothing to install: the [live page]({{LIVE_URL}}), or a ready environment in your browser:
 > [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Marc-Dvci/slowest-link?quickstart=1)
 
-### With Docker
+### Setup and run
 
-| | Command | Opens at | Needs |
-|---|---|---|---|
-| **Demo** | `docker compose up demo` | http://localhost:8080 | Nothing |
-| **Live** | `docker compose up app` | http://localhost:8787 | `cp .env.example .env`, then your keys |
-
-### From source
-
-Python 3.12.
+Python 3.12. No keys.
 
 ```sh
 python -m venv .venv
-. .venv/Scripts/activate           # Linux, macOS: . .venv/bin/activate; PowerShell: .venv\Scripts\Activate.ps1
+. .venv/Scripts/activate          # Linux, macOS: . .venv/bin/activate; PowerShell: .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-APP_DEMO=1 python -m uvicorn app.server:app --port 8787    # http://localhost:8787, no keys
+python -m slowest_link check                       # every check, every view
+python -m slowest_link explain "View cart"         # one function: slowest link and restore chain
+python -m slowest_link whatif "Our managed PostgreSQL database is down. Estimated restore: 3 hours."
+python -m slowest_link guard --call "frontend->product-catalog" --for "Browse the shop"
+python -m http.server 8080 --directory web         # the browser page, http://localhost:8080
 ```
 
-Tests: `pip install -r requirements-dev.txt`, then `python -m pytest --cov`. {{TEST_COUNT}} tests run in a new random
-order each time, each within 30 seconds; they cover {{COVERAGE}}% of the decision core's lines and
-{{BRANCH_COVERAGE}}% of its branches, and CI fails below 90%. The CI run page splits them into unit, integration and
-end-to-end tests.
+With Docker: `docker compose up web` serves the page at http://localhost:8080, and `docker compose run --rm cli` runs the checks.
+
+In Claude Code, the repository's [`.mcp.json`](.mcp.json) offers the `slowest-link` MCP server and the skill loads from `.claude/skills/`. Any MCP client can start it with `python -m slowest_link mcp`.
+
+To explore the vault with the Relate CLI ([install](https://relatedb.ai/docs/get-started/install/)):
+
+```sh
+relate --read-only --database plan "MATCH (f:Function) RETURN f.name, f.promise_min ORDER BY f.name"
+relate serve --mcp stdio --database plan --read-only      # Relate's own MCP server on the plan
+```
+
+Tests: `pip install -r requirements-dev.txt`, then `python -m pytest --cov`. {{TEST_COUNT}} tests run in a new random order each time; they cover {{COVERAGE}}% of the decision core's lines and {{BRANCH_COVERAGE}}% of its branches, and CI fails below 90%. `cd web && npm ci && node test/parity.mjs` checks that the browser code gives the command line's answers on Relate's WebAssembly build.
+
+To repeat the experiments on your own machine (Docker, about 8 GB of images), follow [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md).
+
+## Where the data lives
+
+| Path | What it holds |
+|---|---|
+| [`plan/`](plan/) | **The persistent Relate store**: a Markdown directory store, one note per function, component and test |
+| [`sources/`](sources/) | The plan's inputs: the published service diagram, the business impact analysis, the recovery objectives |
+| [`evidence/`](evidence/) | Traces (E0), frozen predictions, outage test records (E1, E2), scores and the agent evaluation |
+| [`web/data/`](web/data/) | The vault exported to one Cypher script, and the check queries, for the browser page |
 
 ## Claims
 
-| Claim | Code | Test |
-|---|---|---|
-| A fact is settled only when two independent sources agree | [`app/core.py`](app/core.py) | [`tests/test_core.py`](tests/test_core.py) |
+{{CLAIMS}}
 
 ## Layout
 
-- `app/` the decision core (`core.py`) and the HTTP API (`server.py`)
-- `web/` the web page, served by the API on the same port
-- `tests/` the rules and the HTTP entry points
-- `docs/` the architecture diagram and its source
-- `scripts/` checks (links, placeholders) and figure tools (diagram, GIFs)
+- `slowest_link/` the checks (`checks.py`), trace derivation (`traces.py`), what-if (`whatif.py`), guard (`guard.py`), evidence writer (`evidence.py`), scoring (`scoring.py`), MCP server and CLI
+- `plan/` the Relate vault; `sources/` its inputs; `evidence/` everything measured
+- `experiments/` the trace export, the prober, the test runner and the agent evaluation
+- `web/` the browser page and its parity check; `tests/` the test suite
 
 ## License
 
-[MIT](LICENSE).
+[MIT](LICENSE). The shop's service diagram in `sources/` is © OpenTelemetry Authors, CC BY 4.0. The shop's checkout payloads in `experiments/people.json` come from the OpenTelemetry demo, Apache-2.0.
 
-[^1]: {{SOURCE}}
+[^1]: Cloudflare, "Cloudflare service outage June 12, 2025", https://blog.cloudflare.com/cloudflare-service-outage-june-12-2025/

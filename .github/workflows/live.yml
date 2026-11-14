@@ -1,25 +1,23 @@
-# A smoke test of the live demo during judging, with its own badge; it also keeps the demo warm.
-# It reads the live site and writes nothing to the repository.
-# TEMPLATE: set LIVE_URL and RESULTS_DATE, then uncomment the schedule once the demo is live. After RESULTS_DATE the
-# job ends at once, so stopping the demo later never turns the badge red.
+# A smoke test of the live page during judging, with its own badge. It reads the page and writes nothing to the
+# repository. After RESULTS_DATE the job ends at once, so it never turns red later.
 name: live
 on:
   workflow_dispatch:
+  # The schedule is switched on once the page is public:
   # schedule:
-  #   - cron: "17 */3 * * *"
+  #   - cron: "17 */6 * * *"
 permissions:
   contents: read
 env:
-  LIVE_URL: ""
-  RESULTS_DATE: "" # YYYY-MM-DD
+  LIVE_URL: "https://marc-dvci.github.io/slowest-link"
+  RESULTS_DATE: "2026-12-17"
 jobs:
   smoke:
-    if: github.repository != 'Marc-Dvci/project-template'
     runs-on: ubuntu-latest
     steps:
-      - name: The live demo answers
+      - name: The live page and its graph answer
         run: |
-          if [ -z "$LIVE_URL" ]; then echo "No LIVE_URL set."; exit 0; fi
-          if [ -n "$RESULTS_DATE" ] && [ "$(date -u +%F)" \> "$RESULTS_DATE" ]; then echo "Past the results date."; exit 0; fi
-          curl -fsS --retry 3 --retry-delay 20 --max-time 90 "$LIVE_URL/api/health"
-          curl -fsS --max-time 90 "$LIVE_URL/" | grep -q '<title>'
+          if [ "$(date -u +%F)" \> "$RESULTS_DATE" ]; then echo "Past the results date."; exit 0; fi
+          curl -fsS --retry 3 --retry-delay 20 --max-time 90 "$LIVE_URL/" | grep -q '<title>Slowest Link</title>'
+          curl -fsS --max-time 90 "$LIVE_URL/data/graph.cypher" | grep -q 'CREATE'
+          curl -fsS --max-time 90 "https://cdn.jsdelivr.net/npm/@relate/relate-wasm@1.0.1/relate_bg.wasm" -o /dev/null

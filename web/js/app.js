@@ -190,7 +190,7 @@ function drawDetail() {
   if (view !== "plan") {
     const gaps = graph.rows(graph.queries.plan_gaps[view]).find((g) => g.function === selected);
     if (gaps && gaps.missing.length) {
-      parts.push(`<h3>Missing from the plan's own list</h3><p class="list">${gaps.missing
+      parts.push(`<h3>Left out of the plan's own list</h3><p class="list">${gaps.missing
         .map((m) => `${esc(m.component)} (${minutes(m.recovery_min)})`)
         .join(", ")}</p>`);
     }
