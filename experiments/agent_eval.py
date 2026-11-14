@@ -38,7 +38,8 @@ SYSTEM = (
     "You answer questions about a business continuity plan for an online shop. Each function has a recovery promise "
     "in minutes; each component has a recovery time in minutes. Unless a question says otherwise, use what each "
     "function really calls as seen in its traces (calls marked observed for that function, synchronous ones only, "
-    "leaving out calls a test proved the function survives without). "
+    "plus asynchronous calls a test proved the function needs (needed_by), and leaving out calls a test proved the "
+    "function survives without (survives_without)). "
     'Reply with JSON only, as {"answer": ...}: a list of names when the question asks which, a number when it asks '
     "how long or how many."
 )
