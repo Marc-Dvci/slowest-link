@@ -147,7 +147,7 @@ def chat(url: str, key: str, messages: list[dict[str, Any]], tools: list[dict[st
         req.add_header("Authorization", f"Bearer {key}")
         req.add_header("Content-Type", "application/json")
         try:
-            with urllib.request.urlopen(req, timeout=180) as response:
+            with urllib.request.urlopen(req, timeout=600) as response:
                 result: dict[str, Any] = json.load(response)
             return result
         except (TimeoutError, OSError):
