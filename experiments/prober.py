@@ -130,6 +130,7 @@ class Prober:
     seed: int = 7
     stop: threading.Event = field(default_factory=threading.Event)
     lock: threading.Lock = field(default_factory=threading.Lock)
+    records: list[dict[str, Any]] = field(default_factory=list)
 
     def _run(self, name: str, fn: Callable[..., dict[str, Any]], period: float, index_: int) -> None:
         rng = random.Random(self.seed * 100 + index_)
@@ -148,6 +149,7 @@ class Prober:
                 with self.lock:
                     sink.write(json.dumps(record) + "\n")
                     sink.flush()
+                    self.records.append(record)
                 self.stop.wait(max(0.0, period - (time.time() - started)))
 
     def start(self) -> list[threading.Thread]:
