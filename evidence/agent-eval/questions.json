@@ -1,0 +1,100 @@
+[
+  {
+    "id": "q01",
+    "kind": "names",
+    "question": "Which functions cannot keep their recovery promise because one of their dependencies takes longer to recover than the promise?",
+    "answer": [
+      "Add to cart",
+      "Place an order",
+      "View a product"
+    ]
+  },
+  {
+    "id": "q02",
+    "kind": "number",
+    "question": "How many minutes is the longest restore chain under 'Place an order' (the recovery times added up along one dependency path, from its entry point)?",
+    "answer": 330
+  },
+  {
+    "id": "q03",
+    "kind": "names",
+    "question": "Which components does 'Place an order' depend on that the plan's own list of components for it (its USES links) leaves out?",
+    "answer": [
+      "astronomy-db",
+      "flagd",
+      "kafka",
+      "product-catalog",
+      "quote",
+      "valkey-cart"
+    ]
+  },
+  {
+    "id": "q04",
+    "kind": "names",
+    "question": "Which functions have a restore chain longer than their promise even though no single dependency takes longer to recover than the promise?",
+    "answer": [
+      "View cart"
+    ]
+  },
+  {
+    "id": "q05",
+    "kind": "names",
+    "question": "The database astronomy-db is down for 3 hours. Which functions break their promise?",
+    "answer": [
+      "Add to cart",
+      "Place an order",
+      "View a product"
+    ]
+  },
+  {
+    "id": "q06",
+    "kind": "names",
+    "question": "The kafka queue is down for 3 hours. Which functions break their promise? Answer an empty list if none do.",
+    "answer": [
+      "Place an order"
+    ]
+  },
+  {
+    "id": "q07",
+    "kind": "names",
+    "question": "Which components sit under the largest number of critical functions?",
+    "answer": [
+      "frontend",
+      "frontend-proxy"
+    ]
+  },
+  {
+    "id": "q08",
+    "kind": "number",
+    "question": "How many calls does the published architecture declare that no trace has shown?",
+    "answer": 10
+  },
+  {
+    "id": "q09",
+    "kind": "names",
+    "question": "A developer makes the frontend call product-catalog when it renders the home page ('Browse the shop'). Which functions would then break their promise?",
+    "answer": [
+      "Browse the shop"
+    ]
+  },
+  {
+    "id": "q10",
+    "kind": "names",
+    "question": "If the ad service is lost, which functions lose a dependency?",
+    "answer": [
+      "Show ads"
+    ]
+  },
+  {
+    "id": "q11",
+    "kind": "number",
+    "question": "How many minutes does the slowest component under 'View a product' take to recover?",
+    "answer": 240
+  },
+  {
+    "id": "q12",
+    "kind": "number",
+    "question": "What is the recovery promise of 'Record orders in accounting', in minutes?",
+    "answer": 1440
+  }
+]
