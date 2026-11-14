@@ -271,10 +271,17 @@ def cmd_guard(a: argparse.Namespace) -> int:
 
 
 def cmd_export(a: argparse.Namespace) -> int:
+    """The browser page's data: the graph as one Cypher script, the check queries, and the outage test results."""
     with open_store(a.vault, read_only=True) as conn:
         script = export_cypher(conn)
-    a.out.write_text(script, encoding="utf-8")
-    print(f"{len(script)} characters -> {a.out}")
+    a.out_dir.mkdir(parents=True, exist_ok=True)
+    (a.out_dir / "graph.cypher").write_text(script, encoding="utf-8")
+    (a.out_dir / "queries.json").write_text(json.dumps(checks.query_texts(), indent=2) + "\n", encoding="utf-8")
+    for source, name in (("e1e2-results.json", "tests.json"), ("predictions.json", "predictions.json")):
+        path = ROOT / "evidence" / source
+        if path.exists():
+            (a.out_dir / name).write_text(path.read_text(encoding="utf-8"), encoding="utf-8")
+    print(f"graph ({len(script)} characters), queries and test results -> {a.out_dir}")
     return 0
 
 
@@ -360,7 +367,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     s = sub.add_parser("export", help="write the plan graph as one Cypher script")
     s.add_argument("--vault", type=Path, default=DEFAULT_VAULT)
-    s.add_argument("--out", type=Path, default=ROOT / "web" / "graph.cypher")
+    s.add_argument("--out-dir", type=Path, default=ROOT / "web" / "data")
     s.set_defaults(run=cmd_export)
 
     s = sub.add_parser("mcp", help="serve the checks to agents over MCP (stdio)")

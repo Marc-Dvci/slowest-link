@@ -6,22 +6,79 @@
     <title>Slowest Link</title>
     <meta name="description" content="Slowest Link finds the recovery promises a system can't keep: it checks each promise in a continuity plan against everything the function depends on, and shows the path that breaks it." />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <!-- The card a pasted link shows (Devpost, Discord, LinkedIn): og:image must be an absolute URL. -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Slowest Link" />
     <meta property="og:description" content="Slowest Link finds the recovery promises a system can't keep: it checks each promise in a continuity plan against everything the function depends on, and shows the path that breaks it." />
     <meta property="og:image" content="{{DEMO_URL}}og-card.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <header>
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 64 24" aria-hidden="true"><line x1="4" y1="12" x2="60" y2="12" stroke="#003688" stroke-width="5" stroke-linecap="round"/><circle cx="14" cy="12" r="4.5" fill="#fff" stroke="#111" stroke-width="2.5"/><circle cx="32" cy="12" r="4.5" fill="#fff" stroke="#111" stroke-width="2.5"/><circle cx="50" cy="12" r="8" fill="none" stroke="#dc241f" stroke-width="3"/><circle cx="50" cy="12" r="4.5" fill="#fff" stroke="#111" stroke-width="2.5"/></svg>
+        <h1>Slowest Link</h1>
+      </div>
+      <p class="tagline">Finds the recovery promises a system can't keep: each promise in a continuity plan, checked against everything the function depends on.</p>
+      <p class="context">The system is the OpenTelemetry Astronomy Shop, run for real: its published architecture, 1,037 of its traces, and an outage test on every component.</p>
+    </header>
+
     <main>
-      <h1>Slowest Link</h1>
-      <p class="lede">Slowest Link finds the recovery promises a system can't keep: it checks each promise in a continuity plan against everything the function depends on, and shows the path that breaks it.</p>
-      <button id="run" type="button">Run the example</button>
-      <pre id="out" aria-live="polite"></pre>
-      <p class="foot" id="status"></p>
+      <section aria-labelledby="map-title">
+        <div class="bar">
+          <h2 id="map-title">How long until each function is back</h2>
+          <div id="views" role="group" aria-label="View">
+            <button type="button" data-view="plan" aria-pressed="false">Plan</button>
+            <button type="button" data-view="architecture" aria-pressed="false">Architecture</button>
+            <button type="button" data-view="evidence" aria-pressed="true">Evidence</button>
+          </div>
+        </div>
+        <p id="view-note" class="note"></p>
+        <p class="note">Each line is a function, drawn to scale. Its stations are the components it waits for, in restore order, dependencies first. The tick is the function's promise. Red marks the time past it, and the ringed station is the slowest link.</p>
+        <p id="map-summary" class="summary" aria-live="polite"></p>
+        <div class="map-wrap"><svg id="map" role="img" aria-labelledby="map-title map-summary"></svg></div>
+      </section>
+
+      <section id="detail" aria-live="polite"></section>
+
+      <section aria-labelledby="whatif-title">
+        <h2 id="whatif-title">An outage notice arrives</h2>
+        <p class="note">Paste a status-page notice. Relate's full-text search finds the components it describes. The graph then finds the functions behind them, the promises that break and the restore order.</p>
+        <div id="examples" class="chips"></div>
+        <label for="notice" class="vh">Outage notice</label>
+        <textarea id="notice" rows="2" placeholder="Our managed PostgreSQL database is down. Estimated restore: 3 hours."></textarea>
+        <button id="run-whatif" type="button" class="go">Check the notice</button>
+        <div id="whatif-out" aria-live="polite"></div>
+      </section>
+
+      <section aria-labelledby="guard-title">
+        <h2 id="guard-title">Before a change merges</h2>
+        <p class="note">A new call between two services can put a slow component under a fast promise. The guard tries the call on a copy of the plan and reports what it would break. The same check runs in CI and as a coding-agent hook.</p>
+        <div class="guard">
+          <label>From <select id="g-source"></select></label>
+          <label>to <select id="g-target"></select></label>
+          <label>for <select id="g-function"></select></label>
+          <button id="run-guard" type="button" class="go">Check the call</button>
+        </div>
+        <div id="guard-out" aria-live="polite"></div>
+      </section>
+
+      <section aria-labelledby="results-title">
+        <h2 id="results-title">Measured on the running shop</h2>
+        <p class="note">Each component was stopped for 60 seconds while every journey was replayed through the front door. A dot means the function went down. A red cell means the evidence view, frozen before the tests ran, said otherwise.</p>
+        <ul id="results-scores" class="scores"></ul>
+        <div class="table-wrap"><table id="results-table"></table></div>
+        <ul id="results-legend" class="legend"></ul>
+      </section>
     </main>
-    <script src="app.js"></script>
+
+    <footer>
+      <p id="status">Loading Relate in this tab…</p>
+      <p><a href="https://github.com/Marc-Dvci/slowest-link">Source on GitHub</a> · The graph is the plan vault in <code>plan/</code>, exported to Cypher.</p>
+    </footer>
+    <script type="module" src="js/app.js"></script>
   </body>
 </html>

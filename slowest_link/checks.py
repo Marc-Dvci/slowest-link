@@ -88,9 +88,8 @@ def _hidden_hops(names: list[str], declared: list[bool]) -> list[str]:
     return [f"{names[i]} -> {names[i + 1]}" for i, ok in enumerate(declared) if not ok]
 
 
-def inversions(conn: relate.Connection, view: View) -> list[Finding]:
-    """Functions whose promise is shorter than the slowest recovery objective among their dependencies."""
-    query = (
+def inversions_query(view: View) -> str:
+    return (
         _paths(view)
         + """
 WITH f, d, names, declared ORDER BY d.recovery_min DESC, size(names) ASC, d.name ASC
@@ -101,16 +100,16 @@ RETURN f.name AS function, f.promise_min AS promise, slowest.component AS compon
 ORDER BY function
 """
     )
+
+
+def inversions(conn: relate.Connection, view: View) -> list[Finding]:
+    """Functions whose promise is shorter than the slowest recovery objective among their dependencies."""
+    query = inversions_query(view)
     return [_finding("inversion", view, row) for row in rows(conn, query)]
 
 
-def restore_chains(conn: relate.Connection, view: View) -> list[Finding]:
-    """Functions whose promise is shorter than their longest restore chain.
-
-    A dependent cannot be restored before what it depends on, so the time to bring a function back after losing
-    everything is the longest path of recovery objectives under it (its critical path).
-    """
-    query = (
+def restore_chains_query(view: View) -> str:
+    return (
         _paths(view)
         + """
 WITH f, d, names, declared, chain ORDER BY chain DESC, size(names) ASC, d.name ASC
@@ -121,6 +120,15 @@ RETURN f.name AS function, f.promise_min AS promise, longest.component AS compon
 ORDER BY function
 """
     )
+
+
+def restore_chains(conn: relate.Connection, view: View) -> list[Finding]:
+    """Functions whose promise is shorter than their longest restore chain.
+
+    A dependent cannot be restored before what it depends on, so the time to bring a function back after losing
+    everything is the longest path of recovery objectives under it (its critical path).
+    """
+    query = restore_chains_query(view)
     return [_finding("restore_chain", view, row) for row in rows(conn, query)]
 
 
@@ -138,18 +146,21 @@ def _finding(check: str, view: View, row: dict[str, Any]) -> Finding:
     )
 
 
+def reach_query(view: View) -> str:
+    return _paths(view) + "RETURN f.name AS function, collect(DISTINCT d.name) AS components"
+
+
 def reach(conn: relate.Connection, view: View) -> dict[str, set[str]]:
     """Each function's dependency set in a view (the components whose loss can stop it)."""
-    query = _paths(view) + "RETURN f.name AS function, collect(DISTINCT d.name) AS components"
+    query = reach_query(view)
     result = {row["function"]: set(row["components"]) for row in rows(conn, query)}
     for row in rows(conn, "MATCH (f:Function) RETURN f.name AS function"):
         result.setdefault(row["function"], set())
     return result
 
 
-def profile(conn: relate.Connection, view: View, function: str) -> dict[str, Any]:
-    """One function in one view: its dependencies, its slowest link and its longest restore chain, with paths."""
-    query = (
+def profile_query(view: View) -> str:
+    return (
         _paths(view)
         + """
 WITH f, d, names, declared, chain WHERE f.name = $function
@@ -162,6 +173,11 @@ RETURN f.name AS function, f.promise_min AS promise,
               OR (x.chain = best.chain AND size(x.names) < size(best.names)) THEN x ELSE best END) AS longest
 """
     )
+
+
+def profile(conn: relate.Connection, view: View, function: str) -> dict[str, Any]:
+    """One function in one view: its dependencies, its slowest link and its longest restore chain, with paths."""
+    query = profile_query(view)
     found = rows(conn, query, {"function": function})
     if not found:
         known = rows(
@@ -184,9 +200,8 @@ RETURN f.name AS function, f.promise_min AS promise,
     return row
 
 
-def plan_gaps(conn: relate.Connection, view: View = "evidence") -> list[dict[str, Any]]:
-    """Components a function depends on that the plan's own list for it leaves out, with the slowest first."""
-    query = (
+def plan_gaps_query(view: View) -> str:
+    return (
         _paths(view)
         + f"""
 WITH f, d WHERE (d:{COMPONENT}) AND NOT EXISTS {{ MATCH (f)-[:USES]->(d) }}
@@ -196,6 +211,11 @@ RETURN f.name AS function, f.promise_min AS promise_min, missing
 ORDER BY function
 """
     )
+
+
+def plan_gaps(conn: relate.Connection, view: View = "evidence") -> list[dict[str, Any]]:
+    """Components a function depends on that the plan's own list for it leaves out, with the slowest first."""
+    query = plan_gaps_query(view)
     return rows(conn, query)
 
 
@@ -275,3 +295,15 @@ def run_all(conn: relate.Connection, since: str) -> dict[str, Any]:
         "shared_points": shared_points(conn, "evidence"),
         "not_self_recovering": not_self_recovering(conn),
     }
+
+
+def query_texts() -> dict[str, dict[str, str]]:
+    """Every per-view query, as text: the browser page runs exactly these on Relate's WebAssembly build."""
+    builders = {
+        "inversions": inversions_query,
+        "restore_chains": restore_chains_query,
+        "reach": reach_query,
+        "profile": profile_query,
+        "plan_gaps": plan_gaps_query,
+    }
+    return {name: {view: build(view) for view in VIEWS} for name, build in builders.items()}
