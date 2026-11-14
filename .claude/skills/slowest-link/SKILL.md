@@ -20,7 +20,7 @@ The continuity plan is a Relate graph in `plan/` (a Markdown vault: one note per
 |---|---|
 | Which promises are broken, and why? | `check_promises(view)` |
 | Why is this function at risk? | `explain_function(function)` |
-| A provider or a component is down: what breaks, and in what order do we restore? | `what_if(notice)` |
+| A provider or a component is down: what breaks, and what comes back first? | `what_if(notice)` |
 | Will this new call between services break a promise? | `check_new_call(source, target, functions)` |
 | Anything else about the graph | `get_schema()`, then `read_cypher(query)` (read-only) |
 

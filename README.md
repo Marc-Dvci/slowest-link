@@ -59,7 +59,7 @@ European financial law asks for exactly this check. Under DORA, the business imp
 Slowest Link is for the continuity lead who signs the annual recovery test plan, and for the engineer on call at 07:40 when a provider's status page turns red. It answers three questions from the graph:
 
 1. **Which promises can't be kept?** The slowest recovery on any path under the function, and the longest restore chain, since a dependent comes back only after what it waits for.
-2. **What does this outage break, and in what order do we restore?** A free-text notice, mapped to components by full-text search, then to functions through the graph.
+2. **What does this outage break, and what comes back first?** A free-text notice, mapped to components by full-text search, then to functions through the graph.
 3. **Will this change break a promise?** A new call between services, tried on a copy of the plan before it merges.
 
 ## How it uses Relate
