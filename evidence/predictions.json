@@ -1,0 +1,795 @@
+{
+  "vault_commit": "8211f9f",
+  "functions": [
+    "Add to cart",
+    "Browse the shop",
+    "Place an order",
+    "Record orders in accounting",
+    "Screen orders for fraud",
+    "Show ads",
+    "Show recommendations",
+    "View a product",
+    "View cart"
+  ],
+  "faults": [
+    {
+      "id": "stop:accounting",
+      "kind": "stop",
+      "target": "accounting",
+      "predicted": {
+        "plan": [
+          "Record orders in accounting"
+        ],
+        "architecture": [
+          "Record orders in accounting"
+        ],
+        "evidence": [
+          "Record orders in accounting"
+        ]
+      }
+    },
+    {
+      "id": "stop:ad",
+      "kind": "stop",
+      "target": "ad",
+      "predicted": {
+        "plan": [
+          "Show ads"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Show ads"
+        ]
+      }
+    },
+    {
+      "id": "stop:astronomy-db",
+      "kind": "stop",
+      "target": "astronomy-db",
+      "predicted": {
+        "plan": [
+          "Record orders in accounting"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Record orders in accounting",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Add to cart",
+          "Place an order",
+          "Record orders in accounting",
+          "Show recommendations",
+          "View a product"
+        ]
+      }
+    },
+    {
+      "id": "stop:cart",
+      "kind": "stop",
+      "target": "cart",
+      "predicted": {
+        "plan": [
+          "Add to cart",
+          "Place an order",
+          "View cart"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Add to cart",
+          "Place an order",
+          "View cart"
+        ]
+      }
+    },
+    {
+      "id": "stop:checkout",
+      "kind": "stop",
+      "target": "checkout",
+      "predicted": {
+        "plan": [
+          "Place an order"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order"
+        ]
+      }
+    },
+    {
+      "id": "stop:currency",
+      "kind": "stop",
+      "target": "currency",
+      "predicted": {
+        "plan": [
+          "Place an order"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order"
+        ]
+      }
+    },
+    {
+      "id": "stop:email",
+      "kind": "stop",
+      "target": "email",
+      "predicted": {
+        "plan": [
+          "Place an order"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order"
+        ]
+      }
+    },
+    {
+      "id": "stop:flagd",
+      "kind": "stop",
+      "target": "flagd",
+      "predicted": {
+        "plan": [],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Screen orders for fraud",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order",
+          "Screen orders for fraud",
+          "Show ads"
+        ]
+      }
+    },
+    {
+      "id": "stop:flagd-ui",
+      "kind": "stop",
+      "target": "flagd-ui",
+      "predicted": {
+        "plan": [],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": []
+      }
+    },
+    {
+      "id": "stop:fraud-detection",
+      "kind": "stop",
+      "target": "fraud-detection",
+      "predicted": {
+        "plan": [
+          "Screen orders for fraud"
+        ],
+        "architecture": [
+          "Screen orders for fraud"
+        ],
+        "evidence": [
+          "Screen orders for fraud"
+        ]
+      }
+    },
+    {
+      "id": "stop:frontend",
+      "kind": "stop",
+      "target": "frontend",
+      "predicted": {
+        "plan": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ]
+      }
+    },
+    {
+      "id": "stop:frontend-proxy",
+      "kind": "stop",
+      "target": "frontend-proxy",
+      "predicted": {
+        "plan": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ]
+      }
+    },
+    {
+      "id": "stop:image-provider",
+      "kind": "stop",
+      "target": "image-provider",
+      "predicted": {
+        "plan": [],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": []
+      }
+    },
+    {
+      "id": "stop:kafka",
+      "kind": "stop",
+      "target": "kafka",
+      "predicted": {
+        "plan": [],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Record orders in accounting",
+          "Screen orders for fraud",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Record orders in accounting",
+          "Screen orders for fraud"
+        ]
+      }
+    },
+    {
+      "id": "stop:payment",
+      "kind": "stop",
+      "target": "payment",
+      "predicted": {
+        "plan": [
+          "Place an order"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order"
+        ]
+      }
+    },
+    {
+      "id": "stop:product-catalog",
+      "kind": "stop",
+      "target": "product-catalog",
+      "predicted": {
+        "plan": [
+          "Add to cart",
+          "View a product"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Add to cart",
+          "Place an order",
+          "Show recommendations",
+          "View a product"
+        ]
+      }
+    },
+    {
+      "id": "stop:quote",
+      "kind": "stop",
+      "target": "quote",
+      "predicted": {
+        "plan": [],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order"
+        ]
+      }
+    },
+    {
+      "id": "stop:recommendation",
+      "kind": "stop",
+      "target": "recommendation",
+      "predicted": {
+        "plan": [
+          "Show recommendations"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Show recommendations"
+        ]
+      }
+    },
+    {
+      "id": "stop:shipping",
+      "kind": "stop",
+      "target": "shipping",
+      "predicted": {
+        "plan": [
+          "Place an order"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order"
+        ]
+      }
+    },
+    {
+      "id": "stop:valkey-cart",
+      "kind": "stop",
+      "target": "valkey-cart",
+      "predicted": {
+        "plan": [],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Add to cart",
+          "Place an order",
+          "View cart"
+        ]
+      }
+    },
+    {
+      "id": "flag:adFailure",
+      "kind": "flag",
+      "target": "ad",
+      "predicted": {
+        "plan": [
+          "Show ads"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Show ads"
+        ]
+      }
+    },
+    {
+      "id": "flag:adHighCpu",
+      "kind": "flag",
+      "target": "ad",
+      "predicted": {
+        "plan": [
+          "Show ads"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Show ads"
+        ]
+      }
+    },
+    {
+      "id": "flag:adManualGc",
+      "kind": "flag",
+      "target": "ad",
+      "predicted": {
+        "plan": [
+          "Show ads"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Show ads"
+        ]
+      }
+    },
+    {
+      "id": "flag:cartFailure",
+      "kind": "flag",
+      "target": "cart",
+      "predicted": {
+        "plan": [
+          "Add to cart",
+          "Place an order",
+          "View cart"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Add to cart",
+          "Place an order",
+          "View cart"
+        ]
+      }
+    },
+    {
+      "id": "flag:emailMemoryLeak",
+      "kind": "flag",
+      "target": "email",
+      "predicted": {
+        "plan": [
+          "Place an order"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order"
+        ]
+      }
+    },
+    {
+      "id": "flag:failedReadinessProbe",
+      "kind": "flag",
+      "target": "cart",
+      "predicted": {
+        "plan": [
+          "Add to cart",
+          "Place an order",
+          "View cart"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Add to cart",
+          "Place an order",
+          "View cart"
+        ]
+      }
+    },
+    {
+      "id": "flag:imageSlowLoad",
+      "kind": "flag",
+      "target": "image-provider",
+      "predicted": {
+        "plan": [],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": []
+      }
+    },
+    {
+      "id": "flag:intlShippingSlowdown",
+      "kind": "flag",
+      "target": "shipping",
+      "predicted": {
+        "plan": [
+          "Place an order"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order"
+        ]
+      }
+    },
+    {
+      "id": "flag:kafkaQueueProblems",
+      "kind": "flag",
+      "target": "kafka",
+      "predicted": {
+        "plan": [],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Record orders in accounting",
+          "Screen orders for fraud",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Record orders in accounting",
+          "Screen orders for fraud"
+        ]
+      }
+    },
+    {
+      "id": "flag:paymentFailure",
+      "kind": "flag",
+      "target": "payment",
+      "predicted": {
+        "plan": [
+          "Place an order"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order"
+        ]
+      }
+    },
+    {
+      "id": "flag:paymentUnreachable",
+      "kind": "flag",
+      "target": "payment",
+      "predicted": {
+        "plan": [
+          "Place an order"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Place an order"
+        ]
+      }
+    },
+    {
+      "id": "flag:productCatalogFailure",
+      "kind": "flag",
+      "target": "product-catalog",
+      "predicted": {
+        "plan": [
+          "Add to cart",
+          "View a product"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Add to cart",
+          "Place an order",
+          "Show recommendations",
+          "View a product"
+        ]
+      }
+    },
+    {
+      "id": "flag:productCatalogLockContention",
+      "kind": "flag",
+      "target": "astronomy-db",
+      "predicted": {
+        "plan": [
+          "Record orders in accounting"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Record orders in accounting",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Add to cart",
+          "Place an order",
+          "Record orders in accounting",
+          "Show recommendations",
+          "View a product"
+        ]
+      }
+    },
+    {
+      "id": "flag:recommendationCacheFailure",
+      "kind": "flag",
+      "target": "recommendation",
+      "predicted": {
+        "plan": [
+          "Show recommendations"
+        ],
+        "architecture": [
+          "Add to cart",
+          "Browse the shop",
+          "Place an order",
+          "Show ads",
+          "Show recommendations",
+          "View a product",
+          "View cart"
+        ],
+        "evidence": [
+          "Show recommendations"
+        ]
+      }
+    }
+  ]
+}
