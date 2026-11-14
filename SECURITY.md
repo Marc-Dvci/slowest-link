@@ -1,7 +1,7 @@
 # Security
 
 Please report a vulnerability through
-[GitHub's private reporting](https://github.com/{{OWNER}}/{{REPO}}/security/advisories/new), not in a public issue.
+[GitHub's private reporting](https://github.com/Marc-Dvci/slowest-link/security/advisories/new), not in a public issue.
 The supported version is the `main` branch and the hosted [live demo]({{LIVE_URL}}).
 
 The reports that matter most are anything that:
@@ -13,4 +13,4 @@ personal data. -->
 - changes a stored result without the product noticing.
 
 To dispute what an output says, rather than how the software works,
-[report a correction](https://github.com/{{OWNER}}/{{REPO}}/issues/new?template=correction.yml).
+[report a correction](https://github.com/Marc-Dvci/slowest-link/issues/new?template=correction.yml).

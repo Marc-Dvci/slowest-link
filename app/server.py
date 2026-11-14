@@ -21,7 +21,7 @@ WEB_DIR = Path(os.environ.get("APP_WEB_DIR") or Path(__file__).resolve().parents
 # TEMPLATE: the recorded answer demo mode serves; record a real one from a live run.
 RECORDED_ANSWER = {"answer": "A recorded answer from a live run.", "recorded": True}
 
-app = FastAPI(title="{{NAME}}", version=__version__)
+app = FastAPI(title="Slowest Link", version=__version__)
 
 
 class ObservationIn(BaseModel):

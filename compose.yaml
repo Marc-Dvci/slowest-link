@@ -8,7 +8,7 @@ services:
     build:
       context: .
       target: demo
-    image: "{{REPO}}:demo"
+    image: "slowest-link:demo"
     ports:
       - "127.0.0.1:8080:8787"
 
@@ -16,7 +16,7 @@ services:
     build:
       context: .
       target: app
-    image: "{{REPO}}:app"
+    image: "slowest-link:app"
     env_file:
       - path: .env
         required: false
