@@ -1,6 +1,8 @@
-"""Render a Mermaid source to a committed PNG for the README (default: docs/architecture.mmd).
+"""Render a diagram source to a committed PNG for the README (default: docs/architecture.svg).
 
-    python scripts/render_diagram.py [docs/architecture.mmd]
+    python scripts/render_diagram.py [docs/architecture.svg | docs/<name>.mmd]
+
+An SVG is drawn at 2x in Chromium with the page's fonts; a Mermaid source is laid out by Mermaid first.
 
 A committed image loads wherever the README is read; GitHub's own Mermaid renderer can refuse a diagram that other
 Mermaid versions draw. Needs Playwright with Chromium: pip install -r requirements-dev.txt, then
@@ -34,9 +36,32 @@ INIT = (
 )
 
 
+FONTS = "https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,600;0,800;1,400&family=JetBrains+Mono&display=block"
+
+
+def render_svg(src: Path, out: Path) -> None:
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page(device_scale_factor=2, viewport={"width": 1700, "height": 1100})
+        page.set_content(
+            f'<html><head><link rel="stylesheet" href="{FONTS}"></head>'
+            f'<body style="margin:0;background:#fff"><div id="d" style="display:inline-block">'
+            f"{src.read_text(encoding='utf-8')}</div></body></html>"
+        )
+        page.evaluate("document.fonts.ready")
+        page.wait_for_timeout(300)
+        page.locator("#d svg").screenshot(path=str(out))
+        width = page.locator("#d svg").bounding_box()["width"]
+        browser.close()
+    print(f"wrote {out.relative_to(ROOT)} ({width:.0f} px wide at 1x)")
+
+
 def main() -> None:
-    src = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "docs/architecture.mmd"
+    src = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "docs/architecture.svg"
     out = src.with_suffix(".png")
+    if src.suffix == ".svg":
+        render_svg(src, out)
+        return
     code = "\n".join(line for line in src.read_text(encoding="utf-8").splitlines() if not line.startswith("%%"))
     with sync_playwright() as p:
         browser = p.chromium.launch()

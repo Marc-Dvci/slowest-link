@@ -33,9 +33,9 @@ In business-continuity audits I worked on, recovery times were set one applicati
 
 ## See it work
 
-![The browser page switching from the plan view (no broken promise) to the architecture view (every web journey late) to the evidence view (four functions late, through the 4-hour database and the cart chain); each function is a line drawn to scale, the tick is its promise and red marks the time past it](docs/views.gif)
+![The browser page switching from the plan view (no broken promise) to the architecture view (all five 1-hour promises late) to the evidence view (four functions late, through the 4-hour database and the cart chain); each function is a line drawn to scale, the tick is its promise and red marks the time past it](docs/views.gif)
 
-The page above runs Relate 1.0.1 in the browser tab, compiled to WebAssembly. It loads the plan, runs the same Cypher as the command line, and draws each function as a line. The stations are the components it waits for, in restore order; the tick is its promise; the ringed station is its slowest link. Checked one component at a time, the plan keeps every promise; followed through the published architecture, every web journey is late; through what each function really calls, four are.
+The page above runs Relate 1.0.1 in the browser tab, compiled to WebAssembly. It loads the plan, runs the same Cypher as the command line, and draws each function as a line. The stations are the components it waits for, in restore order; the tick is its promise; the ringed station is its slowest link. Checked one component at a time, the plan keeps every promise; followed through the published architecture, all five 1-hour promises are late; through what each function really calls, four functions are.
 
 ```text
 $ python -m slowest_link guard --call "frontend->product-catalog" --for "Browse the shop"
@@ -108,7 +108,7 @@ RETURN f.name, f.promise_min, slowest
 
 ## How it works
 
-![Inputs (the published architecture, the business impact analysis, recovery objectives, traces and outage tests) flow into the Relate vault; fixed rules in Cypher decide; answers land in the CLI and CI, the MCP server, the agent hook and the browser page](docs/architecture.png)
+![Drawn as a transit map: the plan (published architecture, business impact analysis, recovery objectives) and the running shop (traces, outage tests) run into the Relate vault plan/; fixed rules in Cypher on Relate decide; four lines carry the answers to the CLI and CI, the MCP server, the agent hook and the browser page](docs/architecture.png)
 
 Plain code decides every finding, in Cypher on Relate. Models read and explain, and an agent's numbers must come from a tool result.
 

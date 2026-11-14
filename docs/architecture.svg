@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1640 1000" width="1640" height="1000" font-family="Hanken Grotesk, Segoe UI, sans-serif">
+  <!-- Slowest Link: how it works, drawn as a transit map. Inputs run into the Relate vault, fixed Cypher rules decide,
+       and four lines carry the answers out. Rendered to architecture.png by scripts/render_diagram.py. -->
+  <rect width="1640" height="1000" fill="#ffffff"/>
+  <style>
+    .t { font-size: 30px; font-weight: 800; fill: #111418; }
+    .s { font-size: 23px; fill: #5d6670; }
+    .c { font-size: 23px; fill: #5d6670; font-style: italic; }
+    .cap { font-size: 21px; font-weight: 600; letter-spacing: 2px; fill: #5d6670; }
+    .station { fill: #ffffff; stroke: #111418; stroke-width: 5; }
+    .line { fill: none; stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+
+  <!-- The plan: what a continuity team writes -->
+  <text x="60" y="64" class="cap">THE PLAN</text>
+  <path d="M90,110 V400 Q90,440 130,440 H560" class="line" stroke="#003688"/>
+  <circle cx="90" cy="150" r="13" class="station"/>
+  <text x="128" y="148" class="t">Published architecture</text>
+  <text x="128" y="178" class="s">34 declared calls between services</text>
+  <circle cx="90" cy="260" r="13" class="station"/>
+  <text x="128" y="258" class="t">Business impact analysis</text>
+  <text x="128" y="288" class="s">9 functions, each with a recovery promise</text>
+  <circle cx="90" cy="370" r="13" class="station"/>
+  <text x="128" y="368" class="t">Recovery objectives</text>
+  <text x="128" y="398" class="s">20 components, one owner each</text>
+  <text x="300" y="478" class="c">seed</text>
+
+  <!-- The running shop: what was measured -->
+  <path d="M90,860 V600 Q90,560 130,560 H560" class="line" stroke="#00782a"/>
+  <text x="300" y="600" class="c">import and record</text>
+  <circle cx="90" cy="680" r="13" class="station"/>
+  <text x="128" y="678" class="t">Traces</text>
+  <text x="128" y="708" class="s">1,037, one user journey each</text>
+  <circle cx="90" cy="800" r="13" class="station"/>
+  <text x="128" y="798" class="t">Outage tests</text>
+  <text x="128" y="828" class="s">20 components stopped, 14 fault flags</text>
+  <text x="60" y="904" class="cap">THE RUNNING SHOP</text>
+
+  <!-- The vault -->
+  <rect x="560" y="330" width="300" height="340" rx="46" fill="#ffffff" stroke="#111418" stroke-width="6"/>
+  <text x="710" y="408" text-anchor="middle" class="t" style="font-family: 'JetBrains Mono', monospace; font-size: 40px;">plan/</text>
+  <text x="710" y="458" text-anchor="middle" class="t" style="font-size: 27px;">Relate by Neo4j</text>
+  <text x="710" y="505" text-anchor="middle" class="s">Markdown directory</text>
+  <text x="710" y="535" text-anchor="middle" class="s">store: one note per</text>
+  <text x="710" y="565" text-anchor="middle" class="s">function, component</text>
+  <text x="710" y="595" text-anchor="middle" class="s">and test</text>
+
+  <path d="M860,500 H930" class="line" stroke="#111418" stroke-width="14"/>
+
+  <!-- The rules -->
+  <rect x="930" y="330" width="300" height="340" rx="46" fill="#ffffff" stroke="#dc241f" stroke-width="6"/>
+  <text x="1080" y="400" text-anchor="middle" class="t" style="font-size: 27px;">Cypher on Relate</text>
+  <text x="1080" y="450" text-anchor="middle" class="s">broken promises</text>
+  <text x="1080" y="484" text-anchor="middle" class="s">restore chains</text>
+  <text x="1080" y="518" text-anchor="middle" class="s">plan gaps</text>
+  <text x="1080" y="552" text-anchor="middle" class="s">what-if</text>
+  <text x="1080" y="586" text-anchor="middle" class="s">guard</text>
+  <text x="1080" y="634" text-anchor="middle" class="cap" style="font-size: 18px;">FIXED RULES</text>
+
+  <!-- Four lines out -->
+  <path d="M1230,420 H1255 Q1275,420 1275,400 V220 Q1275,200 1295,200 H1350" class="line" stroke="#0098d4"/>
+  <path d="M1230,470 H1275 Q1295,470 1295,450 V420 Q1295,400 1315,400 H1350" class="line" stroke="#4fa594"/>
+  <path d="M1230,530 H1275 Q1295,530 1295,550 V580 Q1295,600 1315,600 H1350" class="line" stroke="#b36305"/>
+  <path d="M1230,580 H1255 Q1275,580 1275,600 V780 Q1275,800 1295,800 H1350" class="line" stroke="#9b0056"/>
+  <circle cx="1350" cy="200" r="13" class="station"/>
+  <text x="1384" y="198" class="t">CLI and CI</text>
+  <text x="1384" y="228" class="s">check, what-if, guard</text>
+  <circle cx="1350" cy="400" r="13" class="station"/>
+  <text x="1384" y="398" class="t">MCP server</text>
+  <text x="1384" y="428" class="s">seven tools, a skill</text>
+  <circle cx="1350" cy="600" r="13" class="station"/>
+  <text x="1384" y="598" class="t">Agent hook</text>
+  <text x="1384" y="628" class="s">stops a broken promise</text>
+  <circle cx="1350" cy="800" r="13" class="station"/>
+  <text x="1384" y="798" class="t">Browser page</text>
+  <text x="1384" y="828" class="s">Relate in WebAssembly</text>
+
+  <text x="820" y="960" text-anchor="middle" class="s" style="font-size: 25px; fill: #111418;">Plain code decides every finding. Models read and explain, and an agent's numbers come from a tool result.</text>
+</svg>
