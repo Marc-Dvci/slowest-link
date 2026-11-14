@@ -26,8 +26,35 @@ A journey is **affected** in a fault window when, compared with the baseline win
 - its failure rate is at least 20 percentage points higher, or
 - its 95th-percentile latency is at least twice the baseline and above 1 second.
 
+The journeys are the shop's load generator tasks, with the same requests: `user_index`, `user_browse_product`,
+`user_add_to_cart`, `user_view_cart`, `user_checkout_single`, `user_get_recommendations` and `user_get_ads`, one per
+function of the plan. Checkout runs every 2 seconds, the others every second. The shop's own load generator is
+stopped during E1 and E2, so the prober's traffic is the only traffic.
+
+## Measuring the back-office functions
+
+"Record orders in accounting" and "Screen orders for fraud" serve the orders the prober places. For each window, an
+order placed in it counts as served when its id appears in the accounting ledger (`accounting.order` in
+`astronomy-db`) or in the fraud detection log, checked 90 seconds after the test ends. The function is affected when
+its served share is at least 20 percentage points below the baseline window's. A window in which no order was placed
+cannot be judged, and that pair is left out of the score.
+
+## Timings
+
+- Stop tests: 40 s baseline, 60 s with the component stopped, then up to 180 s of recovery.
+- Flag tests: 40 s baseline, 60 s with the flag on (the variant in `flags.csv`), then 60 s with it off.
+- Between tests, every journey must succeed 10 times in a row before the next baseline starts.
+
 ## Recovery
 
 After a stopped component starts again, the prober keeps running. A journey's **recovery time** is the time from the
 start command to its first run of 5 consecutive successful attempts. A journey that has not recovered after 180
-seconds is recorded as not recovered on its own.
+seconds is recorded as not recovered on its own; the app services are then restarted so the next test starts healthy,
+and the restart is recorded.
+
+## Faults
+
+- E1 stops each of the plan's 20 components.
+- E2 turns on the 14 failure flags in `flags.csv`. Each row names the component where the shop's code injects the
+  fault. The flags file's other entries are left out: two target the agent service, which this compose set does not
+  run, one controls telemetry content, and one makes the load generator flood the home page.

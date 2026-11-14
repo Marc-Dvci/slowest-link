@@ -1,0 +1,15 @@
+flag,variant,target,effect,code
+adFailure,on,ad,errors,src/ad/src/main/java/oteldemo/AdService.java
+adHighCpu,on,ad,cpu load,src/ad/src/main/java/oteldemo/AdService.java
+adManualGc,on,ad,garbage collection pauses,src/ad/src/main/java/oteldemo/AdService.java
+cartFailure,100%,cart,errors on EmptyCart,src/cart/src/services/CartService.cs
+emailMemoryLeak,10000x,email,memory leak,src/email/email_server.rb
+failedReadinessProbe,on,cart,readiness probe fails,src/cart/src/services/HealthCheckService.cs
+imageSlowLoad,10sec,image-provider,slow image responses at the front door,src/frontend/components/ProductCard/ProductCard.tsx
+intlShippingSlowdown,10sec,shipping,slow quotes for addresses outside the US,src/shipping/src/shipping_service.rs
+kafkaQueueProblems,on,kafka,queue overload and consumer delay,src/checkout/main.go
+paymentFailure,100%,payment,errors on Charge,src/payment/charge.js
+paymentUnreachable,on,payment,payment address unreachable from checkout,src/checkout/main.go
+productCatalogFailure,on,product-catalog,errors on one product,src/product-catalog/main.go
+productCatalogLockContention,on,astronomy-db,lock contention on the catalogue tables,src/product-catalog/main.go
+recommendationCacheFailure,on,recommendation,cache leak,src/recommendation/recommendation_server.py
