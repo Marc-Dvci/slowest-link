@@ -1,7 +1,16 @@
-# Shell scripts run on Linux too, whatever machine they were last saved on.
+# Text files are stored with LF line endings, whatever machine they were saved on.
+* text=auto eol=lf
 *.sh text eol=lf
 
-# Keep the languages bar honest: mark generated or vendored files so they don't count.
-# web/dist/** linguist-generated
-# data/** linguist-generated
-# vendor/** linguist-vendored
+# Relate's own files for the vault: kept byte for byte.
+plan/.cypherlite/** -text
+
+# Binary data.
+*.png binary
+*.jpg binary
+*.gif binary
+*.gz binary
+
+# Keep the languages bar honest: generated data does not count as code.
+web/data/** linguist-generated
+evidence/** linguist-generated
