@@ -1,6 +1,25 @@
 %% Source of docs/architecture.png, the diagram in the README. Rebuild: python scripts/render_diagram.py
-%% TEMPLATE: replace with the project's own flow; mark where models read and where code decides.
-flowchart TD
-    A["Input<br/>what the user gives"] --> B["Model step<br/>reads, locates, phrases"]
-    B --> C{{"Decision<br/>fixed rules, app/core.py"}}
-    C --> D["Output<br/>with the evidence it rests on"]
+flowchart TB
+    subgraph P["The plan"]
+        direction TB
+        A["Published architecture<br/>34 declared calls"]
+        B["Business impact analysis<br/>9 functions, 9 promises"]
+        C["Recovery objectives<br/>20 components"]
+        A ~~~ B ~~~ C
+    end
+    subgraph S["The running shop"]
+        direction TB
+        D["Traces<br/>1,037, one journey each"]
+        E["Outage tests<br/>20 stops, 14 fault flags"]
+        D ~~~ E
+    end
+    V[("Relate by Neo4j<br/>plan/ : Markdown directory store<br/>one note per function,<br/>component and test")]
+    K["Fixed rules, in Cypher on Relate<br/>broken promises · restore chains<br/>plan gaps · untested components<br/>what-if · guard"]
+    O1["CLI<br/>and CI"]
+    O2["MCP server<br/>and skill"]
+    O3["Agent hook<br/>and guard"]
+    O4["Browser page<br/>WebAssembly"]
+    P -->|seed| V
+    S -->|import and record| V
+    V --> K
+    K --> O1 & O2 & O3 & O4
