@@ -87,13 +87,14 @@ function drawMap() {
   const maxChain = Math.max(360, ...rows.map((r) => (r.chain.length ? r.chain[r.chain.length - 1].at : 0)));
   const scaleMax = Math.ceil((maxChain + 30) / 60) * 60;
   const x = (m) => left + ((right - left) * Math.min(m, scaleMax)) / scaleMax;
-  const rowH = 112;
-  const top = 46;
-  const height = top + rows.length * rowH + 10;
+  const rowH = 128;
+  const top = 58;
+  const height = top + rows.length * rowH + 34;
   const parts = [];
+  // The hour scale runs along the bottom, clear of the station names above each line.
   for (let m = 0; m <= scaleMax; m += 60) {
-    parts.push(`<line x1="${x(m)}" y1="${top - 14}" x2="${x(m)}" y2="${height - 8}" class="grid"/>`);
-    parts.push(`<text x="${x(m)}" y="${top - 22}" class="tick" text-anchor="middle">${m ? `${m / 60} h` : "0"}</text>`);
+    parts.push(`<line x1="${x(m)}" y1="${top}" x2="${x(m)}" y2="${height - 26}" class="grid"/>`);
+    parts.push(`<text x="${x(m)}" y="${height - 8}" class="tick" text-anchor="middle">${m ? `${m / 60} h` : "0"}</text>`);
   }
   rows.forEach((row, i) => {
     const y = top + i * rowH + 62;
@@ -118,13 +119,13 @@ function drawMap() {
     row.chain.forEach((s) => {
       const ring = s === slowest ? `<circle cx="${x(s.at)}" cy="${y}" r="11" fill="none" stroke="${RED}" stroke-width="3"/>` : "";
       parts.push(`${ring}<circle cx="${x(s.at)}" cy="${y}" r="6.5" class="station"/>`);
-      parts.push(`<text transform="translate(${x(s.at) + 3},${y - 14}) rotate(-55)" class="sname${s === slowest ? " slow" : ""}">${esc(s.name)} · ${minutes(s.recovery)}</text>`);
+      parts.push(`<text transform="translate(${x(s.at) + 3},${y - 14}) rotate(-55)" class="sname${s === slowest && s.recovery > promise ? " slow" : ""}">${esc(s.name)} · ${minutes(s.recovery)}</text>`);
     });
     const tick = promise <= scaleMax ? x(promise) : right;
     parts.push(`<line x1="${tick}" y1="${y - 16}" x2="${tick}" y2="${y + 16}" class="promise"/>`);
-    if (promise > scaleMax) parts.push(`<text x="${tick}" y="${y + 32}" class="pnote" text-anchor="middle">promise ${minutes(promise)} →</text>`);
     const first = end === 0 ? "nothing under it" : minutes(end);
-    const second = end === 0 ? "" : late ? `${minutes(end - promise)} late` : "kept";
+    const beyond = promise > scaleMax ? `, promise ${minutes(promise)}` : "";
+    const second = end === 0 ? "" : late ? `${minutes(end - promise)} late` : `kept${beyond}`;
     parts.push(`<text x="${right + 26}" y="${y - 1}" class="verdict${late ? " late" : ""}">${first}</text>`);
     parts.push(`<text x="${right + 26}" y="${y + 16}" class="vnote${late ? " late" : ""}">${second}</text>`);
     parts.push("</g>");
@@ -275,7 +276,7 @@ function drawResults() {
   const stops = t.outcomes.filter((o) => o.kind === "stop");
   const fnNames = t.functions;
   const pred = t.predictions || {};
-  const head = `<tr><th scope="col">Component stopped</th>${fnNames.map((f) => `<th scope="col"><span class="swatch" style="background:${LINE[f] || "#333"}"></span><span class="vh">${esc(f)}</span></th>`).join("")}</tr>`;
+  const head = `<tr><th scope="col" class="corner">Component stopped</th>${fnNames.map((f) => `<th scope="col" class="fn"><span class="vname">${esc(f)}</span><span class="swatch" style="background:${LINE[f] || "#333"}"></span></th>`).join("")}</tr>`;
   const body = stops
     .map((o) => {
       const cells = fnNames
@@ -291,8 +292,9 @@ function drawResults() {
     })
     .join("");
   $("#results-table").innerHTML = `<thead>${head}</thead><tbody>${body}</tbody>`;
-  const legend = fnNames.map((f) => `<li><span class="swatch" style="background:${LINE[f] || "#333"}"></span>${esc(f)}</li>`).join("");
-  $("#results-legend").innerHTML = legend;
+  $("#results-legend").innerHTML = `<li><span class="key">●</span> the function went down</li>
+    <li><span class="key miss-key"></span> the evidence view, frozen before the test, said otherwise</li>
+    <li><span class="key">·</span> no order reached the back office in the window, so it is not judged</li>`;
   const views = t.views?.stop || {};
   $("#results-scores").innerHTML = VIEWS.filter((v) => views[v])
     .map((v) => {
