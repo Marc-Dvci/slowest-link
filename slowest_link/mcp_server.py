@@ -95,7 +95,9 @@ def build_server(vault: Path) -> MCPServer:
             return whatif.what_if(conn, notice, view=_view(view)).to_dict()
 
     @server.tool()
-    def check_new_call(source: str, target: str, functions: list[str] | None = None, mode: str = "sync") -> dict[str, Any]:
+    def check_new_call(
+        source: str, target: str, functions: list[str] | None = None, mode: str = "sync"
+    ) -> dict[str, Any]:
         """Before adding a call from one component to another: the promises it would break or make worse. Tried on an
         in-memory copy; the plan is not changed. functions: the functions the call serves (default: every function
         that reaches the source today)."""
@@ -120,7 +122,12 @@ def build_server(vault: Path) -> MCPServer:
                 conn,
                 "MATCH ()-[r]->() UNWIND keys(r) AS key RETURN type(r) AS type, collect(DISTINCT key) AS properties",
             )
-        return {"labels": labels, "relationship_types": types, "node_properties": keys, "relationship_properties": rel_keys}
+        return {
+            "labels": labels,
+            "relationship_types": types,
+            "node_properties": keys,
+            "relationship_properties": rel_keys,
+        }
 
     @server.tool()
     def read_cypher(query: str, params: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -140,7 +147,7 @@ def build_server(vault: Path) -> MCPServer:
 def _view(view: str) -> checks.View:
     if view not in checks.VIEWS:
         raise ValueError(f"view is one of {', '.join(checks.VIEWS)}")
-    return view  # type: ignore[return-value]
+    return view
 
 
 def run(vault: Path) -> None:

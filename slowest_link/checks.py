@@ -90,7 +90,9 @@ def _hidden_hops(names: list[str], declared: list[bool]) -> list[str]:
 
 def inversions(conn: relate.Connection, view: View) -> list[Finding]:
     """Functions whose promise is shorter than the slowest recovery objective among their dependencies."""
-    query = _paths(view) + """
+    query = (
+        _paths(view)
+        + """
 WITH f, d, names, declared ORDER BY d.recovery_min DESC, size(names) ASC, d.name ASC
 WITH f, collect({component: d.name, recovery: d.recovery_min, names: names, declared: declared})[0] AS slowest
 WHERE slowest.recovery > f.promise_min
@@ -98,6 +100,7 @@ RETURN f.name AS function, f.promise_min AS promise, slowest.component AS compon
        slowest.names AS names, slowest.declared AS declared
 ORDER BY function
 """
+    )
     return [_finding("inversion", view, row) for row in rows(conn, query)]
 
 
@@ -107,7 +110,9 @@ def restore_chains(conn: relate.Connection, view: View) -> list[Finding]:
     A dependent cannot be restored before what it depends on, so the time to bring a function back after losing
     everything is the longest path of recovery objectives under it (its critical path).
     """
-    query = _paths(view) + """
+    query = (
+        _paths(view)
+        + """
 WITH f, d, names, declared, chain ORDER BY chain DESC, size(names) ASC, d.name ASC
 WITH f, collect({component: d.name, chain: chain, names: names, declared: declared})[0] AS longest
 WHERE longest.chain > f.promise_min
@@ -115,6 +120,7 @@ RETURN f.name AS function, f.promise_min AS promise, longest.component AS compon
        longest.names AS names, longest.declared AS declared
 ORDER BY function
 """
+    )
     return [_finding("restore_chain", view, row) for row in rows(conn, query)]
 
 
@@ -143,7 +149,9 @@ def reach(conn: relate.Connection, view: View) -> dict[str, set[str]]:
 
 def profile(conn: relate.Connection, view: View, function: str) -> dict[str, Any]:
     """One function in one view: its dependencies, its slowest link and its longest restore chain, with paths."""
-    query = _paths(view) + """
+    query = (
+        _paths(view)
+        + """
 WITH f, d, names, declared, chain WHERE f.name = $function
 WITH f, collect({component: d.name, recovery: d.recovery_min, chain: chain, names: names, declared: declared}) AS all
 RETURN f.name AS function, f.promise_min AS promise,
@@ -153,12 +161,21 @@ RETURN f.name AS function, f.promise_min AS promise,
        reduce(best = null, x IN all | CASE WHEN best IS NULL OR x.chain > best.chain
               OR (x.chain = best.chain AND size(x.names) < size(best.names)) THEN x ELSE best END) AS longest
 """
+    )
     found = rows(conn, query, {"function": function})
     if not found:
-        known = rows(conn, "MATCH (f:Function {name: $function}) RETURN f.promise_min AS promise", {"function": function})
+        known = rows(
+            conn, "MATCH (f:Function {name: $function}) RETURN f.promise_min AS promise", {"function": function}
+        )
         if not known:
             raise KeyError(function)
-        return {"function": function, "promise": known[0]["promise"], "components": [], "slowest": None, "longest": None}
+        return {
+            "function": function,
+            "promise": known[0]["promise"],
+            "components": [],
+            "slowest": None,
+            "longest": None,
+        }
     row = found[0]
     row["components"] = sorted(set(row["components"]))
     for key in ("slowest", "longest"):
@@ -169,13 +186,16 @@ RETURN f.name AS function, f.promise_min AS promise,
 
 def plan_gaps(conn: relate.Connection, view: View = "evidence") -> list[dict[str, Any]]:
     """Components a function depends on that the plan's own list for it leaves out, with the slowest first."""
-    query = _paths(view) + f"""
+    query = (
+        _paths(view)
+        + f"""
 WITH f, d WHERE (d:{COMPONENT}) AND NOT EXISTS {{ MATCH (f)-[:USES]->(d) }}
 WITH f, d ORDER BY d.recovery_min DESC, d.name
 WITH f, collect(DISTINCT {{component: d.name, recovery_min: d.recovery_min}}) AS missing
 RETURN f.name AS function, f.promise_min AS promise_min, missing
 ORDER BY function
 """
+    )
     return rows(conn, query)
 
 
@@ -204,25 +224,31 @@ ORDER BY source, target
 
 def untested_components(conn: relate.Connection, view: View, since: str) -> list[dict[str, Any]]:
     """Components under a critical function that no recovery test exercised on or after `since` (YYYY-MM-DD)."""
-    query = _paths(view) + f"""
+    query = (
+        _paths(view)
+        + f"""
 WITH f, d WHERE f.critical = true AND (d:{COMPONENT})
 WITH d, collect(DISTINCT f.name) AS functions
 WHERE NOT EXISTS {{ MATCH (t:Test)-[:EXERCISED]->(d) WHERE t.date >= $since }}
 RETURN d.name AS component, d.recovery_min AS recovery_min, functions
 ORDER BY size(functions) DESC, component
 """
+    )
     return rows(conn, query, {"since": since})
 
 
 def shared_points(conn: relate.Connection, view: View, minimum: int = 2) -> list[dict[str, Any]]:
     """Components that two or more critical functions depend on: one loss, several broken promises."""
-    query = _paths(view) + f"""
+    query = (
+        _paths(view)
+        + f"""
 WITH f, d WHERE f.critical = true AND (d:{COMPONENT})
 WITH d, collect(DISTINCT f.name) AS functions
 WHERE size(functions) >= $minimum
 RETURN d.name AS component, d.recovery_min AS recovery_min, functions
 ORDER BY size(functions) DESC, recovery_min DESC, component
 """
+    )
     return rows(conn, query, {"minimum": minimum})
 
 

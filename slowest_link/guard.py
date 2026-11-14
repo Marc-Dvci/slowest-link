@@ -116,6 +116,51 @@ def simulate_call(
         after.close()
 
 
+def _calls(conn: relate.Connection) -> dict[tuple[str, str], dict[str, Any]]:
+    """Each call between two components, with the functions it serves across parallel edges and whether any edge is
+    synchronous."""
+    found = rows(
+        conn,
+        f"MATCH (a:{checks.COMPONENT})-[r:CALLS]->(b:{checks.COMPONENT}) "
+        "RETURN a.name AS source, b.name AS target, collect(r.mode) AS modes, "
+        "reduce(acc = [], js IN collect(coalesce(r.journeys, [])) | acc + js) AS journeys",
+    )
+    return {
+        (row["source"], row["target"]): {
+            "mode": "async" if set(row["modes"]) == {"async"} else "sync",
+            "journeys": set(row["journeys"]),
+        }
+        for row in found
+    }
+
+
 def compare(base: relate.Connection, head: relate.Connection, view: checks.View = "evidence") -> GuardResult:
-    """What a change to the plan breaks: findings in `head` that `base` does not have, or has smaller."""
-    return diff(base, head, view, "plan change")
+    """What a change to the plan breaks: findings in `head` that `base` does not have, or has smaller.
+
+    A call the change adds, or a function the change adds to an existing call, is planned and not yet seen in traces,
+    so the evidence view would ignore it. Each one is tried on the base plan as `simulate_call` does: for the functions
+    the note names, or every function through the source when it names none.
+    """
+    result = diff(base, head, view, "plan change")
+    before, after = _calls(base), _calls(head)
+    changes: list[tuple[str, str, list[str] | None, str]] = []
+    for (source, target), call in sorted(after.items()):
+        old = before.get((source, target))
+        if old is None:
+            changes.append((source, target, sorted(call["journeys"]) or None, call["mode"]))
+        elif call["journeys"] - old["journeys"]:
+            changes.append((source, target, sorted(call["journeys"] - old["journeys"]), call["mode"]))
+    keyed = {(f["check"], f["function"]): f for f in result.new + result.worse}
+    for source, target, functions, mode in changes:
+        simulated = simulate_call(base, source, target, functions, mode, view)
+        for finding in simulated.new + simulated.worse:
+            key = (finding["check"], finding["function"])
+            if key not in keyed or finding["value_min"] > keyed[key]["value_min"]:
+                keyed[key] = finding
+    result.new = [f for f in keyed.values() if "was_min" not in f]
+    result.worse = [f for f in keyed.values() if "was_min" in f]
+    if changes:
+        result.change = "plan change: " + "; ".join(
+            f"{s} -> {t} for {', '.join(fns) if fns else 'every function through ' + s}" for s, t, fns, _ in changes
+        )
+    return result

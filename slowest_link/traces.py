@@ -80,6 +80,38 @@ def _peer(tags: Mapping[str, Any], components: set[str]) -> str | None:
     return address if address in components else None
 
 
+class _Serves:
+    """The function a span serves: the trace root's, unless a consumer span above it hands the work to the function
+    that enters at the consumer. Walks up the parents iteratively and remembers every answer."""
+
+    def __init__(
+        self,
+        spans: Mapping[str, Mapping[str, Any]],
+        service: Mapping[str, str],
+        consumer_function: Mapping[str, str],
+        root_function: str,
+    ) -> None:
+        self.spans, self.service, self.consumers, self.root = spans, service, consumer_function, root_function
+        self.memo: dict[str, str] = {}
+
+    def __call__(self, sid: str) -> str:
+        chain: list[str] = []
+        current: str | None = sid
+        result = self.root
+        while current is not None and current in self.spans:
+            if current in self.memo:
+                result = self.memo[current]
+                break
+            chain.append(current)
+            if _tags(self.spans[current]).get("span.kind") == "consumer" and self.service[current] in self.consumers:
+                result = self.consumers[self.service[current]]
+                break
+            current = _parent_id(self.spans[current])
+        for item in chain:
+            self.memo[item] = result
+        return result
+
+
 def derive_calls(
     traces: Iterable[Mapping[str, Any]],
     journey_to_function: Mapping[str, str],
@@ -123,32 +155,12 @@ def derive_calls(
             continue
         attributed += 1
 
-        memo: dict[str, str] = {}
         children: dict[str, list[str]] = defaultdict(list)
         for sid, span in spans.items():
             parent_id = _parent_id(span)
             if parent_id is not None:
                 children[parent_id].append(sid)
-
-        def function_of(sid: str) -> str:
-            # The function a span serves: the root's, unless a consumer span above it hands the work to the
-            # function that enters at the consumer. Iterative walk up the parents, memoised.
-            chain: list[str] = []
-            current: str | None = sid
-            result = function
-            while current is not None and current in spans:
-                if current in memo:
-                    result = memo[current]
-                    break
-                chain.append(current)
-                tags = _tags(spans[current])
-                if tags.get("span.kind") == "consumer" and service[current] in consumer_function:
-                    result = consumer_function[service[current]]
-                    break
-                current = _parent_id(spans[current])
-            for item in chain:
-                memo[item] = result
-            return result
+        serves = _Serves(spans, service, consumer_function, function)
 
         for sid, span in spans.items():
             here = service[sid]
@@ -161,18 +173,20 @@ def derive_calls(
                 # Cross-component edge into this span. A consumer span's parent is the producer: the consumer
                 # depends on the queue, not on the producer, so that hop is recorded below instead.
                 if kind != "consumer":
-                    record(service[parent], here, "sync", function_of(sid))
+                    record(service[parent], here, "sync", serves(sid))
             if kind in ("client", "producer", "consumer"):
                 peer = _peer(tags, components)
                 if peer is None:
                     if kind == "client" and not any(service[c] != here for c in children[sid]):
-                        name = str(tags.get("server.address") or tags.get("net.peer.name") or tags.get("rpc.service") or "")
+                        name = str(
+                            tags.get("server.address") or tags.get("net.peer.name") or tags.get("rpc.service") or ""
+                        )
                         if name:
                             unknown[name] += 1
                     continue
                 if peer == here:
                     continue
-                record(here, peer, "async" if kind == "producer" else "sync", function_of(sid))
+                record(here, peer, "async" if kind == "producer" else "sync", serves(sid))
 
     calls = sorted(edges.values(), key=lambda c: (c.source, c.target))
     return Derivation(calls, count, attributed, dict(unattributed), dict(unknown))

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "slowest-link": {
+      "command": "python",
+      "args": ["-m", "slowest_link", "mcp"]
+    }
+  }
+}

@@ -91,7 +91,9 @@ def match_components(conn: relate.Connection, notice: str) -> list[dict[str, Any
             top = float(hits[0]["score"])
             for hit in hits:
                 if float(hit["score"]) >= RELATIVE_SCORE * top and hit["component"] not in exact:
-                    found.append({"component": hit["component"], "how": "search", "score": round(float(hit["score"]), 3)})
+                    found.append(
+                        {"component": hit["component"], "how": "search", "score": round(float(hit["score"]), 3)}
+                    )
     return found
 
 
@@ -124,13 +126,17 @@ def what_if(conn: relate.Connection, notice: str, view: checks.View = "evidence"
     objectives = {
         row["n"]: int(row["r"])
         for row in rows(
-            conn, f"MATCH (c:{checks.COMPONENT}) WHERE c.name IN $names RETURN c.name AS n, c.recovery_min AS r", {"names": names}
+            conn,
+            f"MATCH (c:{checks.COMPONENT}) WHERE c.name IN $names RETURN c.name AS n, c.recovery_min AS r",
+            {"names": names},
         )
     }
     reach = checks.reach(conn, view)
     functions = {
         row["name"]: row
-        for row in rows(conn, "MATCH (f:Function) RETURN f.name AS name, f.promise_min AS promise, f.critical AS critical")
+        for row in rows(
+            conn, "MATCH (f:Function) RETURN f.name AS name, f.promise_min AS promise, f.critical AS critical"
+        )
     }
     for name, deps in sorted(reach.items()):
         hit = sorted(set(names) & deps)

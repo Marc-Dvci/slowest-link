@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -m slowest_link guard --base-ref HEAD --hook",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

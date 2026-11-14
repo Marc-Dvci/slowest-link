@@ -98,7 +98,11 @@ def add_to_cart(c: Client, rng: random.Random, user: str = "") -> dict[str, Any]
     user = user or str(uuid.uuid1())
     product = rng.choice(PRODUCTS)
     c.request("GET", "/api/products/" + product)
-    c.request("POST", "/api/cart", {"item": {"productId": product, "quantity": rng.choice([1, 2, 3, 4, 5, 10])}, "userId": user})
+    c.request(
+        "POST",
+        "/api/cart",
+        {"item": {"productId": product, "quantity": rng.choice([1, 2, 3, 4, 5, 10])}, "userId": user},
+    )
     return {}
 
 

@@ -9,8 +9,12 @@ target-version = "py312"
 select = ["E4", "E7", "E9", "F", "B", "I"]
 
 [tool.mypy]
-files = ["app"]
+files = ["slowest_link", "experiments"]
 strict = true
+
+[[tool.mypy.overrides]]
+module = ["relate", "relate.*"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -28,15 +32,26 @@ markers = [
 ]
 
 [tool.coverage.run]
-source = ["app"]
+source = ["slowest_link"]
 branch = true
 
 [tool.coverage.report]
-# TEMPLATE: list the decision core here (the modules whose rules decide outcomes), and publish this figure under
-# that name ("decision core coverage"), never the total.
-include = ["*/app/core.py"]
+# The decision core: the modules whose rules decide every finding, test outcome and guard verdict. The README
+# publishes this figure as "decision core coverage". The CLI, the MCP server and the text reports are tested through
+# their entry points (tests marked integration) and are not part of this figure.
+include = [
+    "*/slowest_link/checks.py",
+    "*/slowest_link/evidence.py",
+    "*/slowest_link/export.py",
+    "*/slowest_link/guard.py",
+    "*/slowest_link/scoring.py",
+    "*/slowest_link/seed.py",
+    "*/slowest_link/store.py",
+    "*/slowest_link/traces.py",
+    "*/slowest_link/whatif.py",
+]
 fail_under = 90
 show_missing = true
 
 [tool.codespell]
-skip = "*.png,*.jpg,*.gif,*.svg,*.lock,package-lock.json,.git,.venv,node_modules"
+skip = "*.png,*.jpg,*.gif,*.svg,*.lock,*.gz,*.jsonl,package-lock.json,.git,.venv,node_modules,./experiments/people.json"

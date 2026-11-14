@@ -102,6 +102,8 @@ def test_an_unknown_component_kind_is_refused(tmp_path: Path) -> None:
 
 
 def test_a_function_naming_an_unknown_component_is_refused(tmp_path: Path) -> None:
-    src = _sources(tmp_path, HEAD_O + "web,Service,15,T,d\napi,Service,15,T,d\n", HEAD_B + "F,j,60,true,web,web;nope,d\n")
+    src = _sources(
+        tmp_path, HEAD_O + "web,Service,15,T,d\napi,Service,15,T,d\n", HEAD_B + "F,j,60,true,web,web;nope,d\n"
+    )
     with pytest.raises(ValueError, match="nope"):
         seed.seed(tmp_path / "plan", src)

@@ -11,9 +11,13 @@ JOURNEYS = {"user_order": "Place order", "user_view": "View product"}
 CONSUMERS = {"ledger": "Record orders", "fraud": "Screen orders"}
 
 
-def span(sid: str, process: str, op: str, parent: str | None = None, kind: str = "server", **tags: Any) -> dict[str, Any]:
+def span(
+    sid: str, process: str, op: str, parent: str | None = None, kind: str = "server", **tags: Any
+) -> dict[str, Any]:
     refs = [{"refType": "CHILD_OF", "spanID": parent}] if parent else []
-    tag_list = [{"key": "span.kind", "value": kind}] + [{"key": k.replace("_", "."), "value": v} for k, v in tags.items()]
+    tag_list = [{"key": "span.kind", "value": kind}] + [
+        {"key": k.replace("_", "."), "value": v} for k, v in tags.items()
+    ]
     return {"spanID": sid, "operationName": op, "references": refs, "startTime": int(sid[1:]), "processID": process,
             "tags": tag_list}  # fmt: skip
 
@@ -159,7 +163,11 @@ def test_a_client_span_answered_by_an_instrumented_service_is_not_unknown() -> N
 
 def test_counts_and_journeys_accumulate_across_traces() -> None:
     def one(journey: str) -> dict[str, Any]:
-        return trace(span("s1", "loadgen", journey, kind="internal"), span("s2", "proxy", "in", "s1"), span("s3", "web", "x", "s2"))
+        return trace(
+            span("s1", "loadgen", journey, kind="internal"),
+            span("s2", "proxy", "in", "s1"),
+            span("s3", "web", "x", "s2"),
+        )
 
     calls = derive(one("user_order"), one("user_view"), one("user_view"))
     assert calls["proxy", "web"].calls == 3

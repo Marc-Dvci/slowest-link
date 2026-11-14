@@ -53,8 +53,12 @@ def _findings(title: str, by_view: dict[str, list[dict[str, Any]]], what: str) -
 
 def render_check(result: dict[str, Any], as_of: str) -> str:
     lines = [f"Slowest Link check, as of {as_of}", ""]
-    lines += _findings("Broken promises: a dependency recovers slower than the function promises", result["inversions"], "slowest link")
-    lines += _findings("Restore chains longer than the promise (dependencies come back first)", result["restore_chains"], "chain")
+    lines += _findings(
+        "Broken promises: a dependency recovers slower than the function promises", result["inversions"], "slowest link"
+    )
+    lines += _findings(
+        "Restore chains longer than the promise (dependencies come back first)", result["restore_chains"], "chain"
+    )
 
     gaps = result["plan_gaps"]
     lines.append(f"Dependencies the plan's list leaves out, per function: {sum(len(g['missing']) for g in gaps)}")
@@ -75,7 +79,9 @@ def render_check(result: dict[str, Any], as_of: str) -> str:
     untested = result["untested_components"]
     lines.append(f"Components under a critical function with no recovery test in the last 365 days: {len(untested)}")
     for u in untested:
-        lines.append(f"  {u['component']} (recovers in {minutes(u['recovery_min'])}; under {', '.join(u['functions'])})")
+        lines.append(
+            f"  {u['component']} (recovers in {minutes(u['recovery_min'])}; under {', '.join(u['functions'])})"
+        )
     lines.append("")
     shared = result["shared_points"]
     lines.append(f"Shared points under two or more critical functions: {len(shared)}")

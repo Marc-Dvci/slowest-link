@@ -123,13 +123,21 @@ def outcome(
     if backoffice is not None:
         orders = list(backoffice.get("orders") or [])
         ledger = backoffice.get("in_ledger")
-        sources = {"ledger": set(ledger) if ledger is not None else None, "fraud": set(backoffice.get("in_fraud_log") or [])}
+        sources = {
+            "ledger": set(ledger) if ledger is not None else None,
+            "fraud": set(backoffice.get("in_fraud_log") or []),
+        }
     for source, function in backoffice_functions.items():
         served = sources.get(source)
         base_share = served_share(orders, served, t0, t1) if served is not None else None
         fault_share = served_share(orders, served, t1, t2) if served is not None else None
         judged = base_share is not None and fault_share is not None
-        hit = bool(judged and fault_share is not None and base_share is not None and base_share - fault_share >= SERVED_DROP - 1e-9)
+        hit = bool(
+            judged
+            and fault_share is not None
+            and base_share is not None
+            and base_share - fault_share >= SERVED_DROP - 1e-9
+        )
         result.backoffice[function] = {"baseline_share": base_share, "fault_share": fault_share, "affected": hit}
         if not judged:
             result.unjudged.add(function)

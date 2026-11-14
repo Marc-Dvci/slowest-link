@@ -80,7 +80,9 @@ def test_without_a_duration_the_recovery_objective_is_used(conn: relate.Connecti
 
 def test_broken_promises_come_first_in_the_impact_list(conn: relate.Connection) -> None:
     result = whatif.what_if(conn, "PostgreSQL database down for 3 hours")
-    assert [row["broken"] for row in result.affected] == sorted((row["broken"] for row in result.affected), reverse=True)
+    assert [row["broken"] for row in result.affected] == sorted(
+        (row["broken"] for row in result.affected), reverse=True
+    )
 
 
 def test_the_restore_order_puts_dependencies_first(conn: relate.Connection) -> None:

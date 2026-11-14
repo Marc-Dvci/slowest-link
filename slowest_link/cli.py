@@ -1,16 +1,16 @@
 """Command line: `python -m slowest_link <command>`.
 
-    seed           build the plan vault from sources/
-    import-traces  add the calls seen in exported traces to the plan
-    check          run every check and print the findings
-    explain        show one function's dependencies, slowest link and restore chain in each view
-    whatif         read an outage notice and list the promises it breaks, with a restore order
-    predict        list, for each fault, the functions each view expects it to reach
-    score          compare the outage tests' measured effects with the frozen predictions
-    record-tests   write the outage tests into the plan, with the calls each function survived without
-    guard          say which promises a new call, or a change to the plan, would break
-    export         write the plan graph as one Cypher script (for the browser page)
-    mcp            serve the checks to agents over MCP (stdio)
+seed           build the plan vault from sources/
+import-traces  add the calls seen in exported traces to the plan
+check          run every check and print the findings
+explain        show one function's dependencies, slowest link and restore chain in each view
+whatif         read an outage notice and list the promises it breaks, with a restore order
+predict        list, for each fault, the functions each view expects it to reach
+score          compare the outage tests' measured effects with the frozen predictions
+record-tests   write the outage tests into the plan, with the calls each function survived without
+guard          say which promises a new call, or a change to the plan, would break
+export         write the plan graph as one Cypher script (for the browser page)
+mcp            serve the checks to agents over MCP (stdio)
 """
 
 from __future__ import annotations
@@ -19,14 +19,18 @@ import argparse
 import csv
 import datetime as dt
 import gzip
+import io
 import json
+import subprocess
 import sys
+import tarfile
+import tempfile
 from pathlib import Path
 from typing import Any
 
 from slowest_link import checks, guard, report, scoring, whatif
-from slowest_link.export import export_cypher
 from slowest_link.evidence import import_derivation, plan_maps, record_survival, record_test
+from slowest_link.export import export_cypher
 from slowest_link.seed import seed
 from slowest_link.store import open_store
 from slowest_link.traces import derive_calls
@@ -101,9 +105,7 @@ def cmd_whatif(a: argparse.Namespace) -> int:
 def cmd_predict(a: argparse.Namespace) -> int:
     with open_store(a.vault, read_only=True) as conn:
         reach = {view: checks.reach(conn, view) for view in checks.VIEWS}
-        components = sorted(
-            row["n"] for row in conn.execute("MATCH (c:Service|Datastore|Queue) RETURN c.name AS n")
-        )
+        components = sorted(row["n"] for row in conn.execute("MATCH (c:Service|Datastore|Queue) RETURN c.name AS n"))
     with a.flags.open(encoding="utf-8", newline="") as handle:
         flags = list(csv.DictReader(handle))
     faults = [{"id": f"stop:{c}", "kind": "stop", "target": c} for c in components]
@@ -122,7 +124,7 @@ def cmd_predict(a: argparse.Namespace) -> int:
 
 def _read_jsonl(path: Path) -> list[dict[str, Any]]:
     opener = gzip.open if path.suffix == ".gz" else open
-    with opener(path, "rt", encoding="utf-8") as handle:  # type: ignore[operator]
+    with opener(path, "rt", encoding="utf-8") as handle:
         return [json.loads(line) for line in handle if line.strip()]
 
 
@@ -174,8 +176,10 @@ def cmd_score(a: argparse.Namespace) -> int:
     for kind, views in result["views"].items():
         for view, data in views.items():
             s = data["score"]
-            print(f"{kind:4} {view:12} tp={s['tp']:3} fp={s['fp']:3} fn={s['fn']:3} tn={s['tn']:3} "
-                  f"precision={s['precision']} recall={s['recall']} exact={s['exact']}/{s['tests']}")
+            print(
+                f"{kind:4} {view:12} tp={s['tp']:3} fp={s['fp']:3} fn={s['fn']:3} tn={s['tn']:3} "
+                f"precision={s['precision']} recall={s['recall']} exact={s['exact']}/{s['tests']}"
+            )
     return 0
 
 
@@ -210,11 +214,40 @@ def cmd_record_tests(a: argparse.Namespace) -> int:
     return 0
 
 
+def extract_plan(ref: str, folder: Path, vault: Path) -> Path:
+    """Write the vault as it is at git `ref` into `folder` and return its path there."""
+    rel = vault.resolve().relative_to(ROOT).as_posix()
+    archive = subprocess.run(
+        ["git", "-C", str(ROOT), "archive", "--format=tar", ref, rel], capture_output=True, check=True
+    ).stdout
+    with tarfile.open(fileobj=io.BytesIO(archive)) as tar:
+        tar.extractall(folder, filter="data")
+    return folder / rel
+
+
+def _hook_wants(stdin_text: str, vault: Path) -> bool:
+    """A Claude Code PostToolUse payload: act only when the edited file is inside the vault."""
+    try:
+        payload = json.loads(stdin_text or "{}")
+    except ValueError:
+        return False
+    edited = (payload.get("tool_input") or {}).get("file_path")
+    if not edited:
+        return False
+    try:
+        Path(edited).resolve().relative_to(vault.resolve())
+    except ValueError:
+        return False
+    return True
+
+
 def cmd_guard(a: argparse.Namespace) -> int:
-    if bool(a.call) == bool(a.base):
-        print("give either --call SOURCE->TARGET or --base VAULT", file=sys.stderr)
+    if a.hook and not _hook_wants(sys.stdin.read(), a.vault):
+        return 0
+    if sum(bool(x) for x in (a.call, a.base, a.base_ref)) != 1:
+        print("give one of --call SOURCE->TARGET, --base VAULT or --base-ref GIT_REF", file=sys.stderr)
         return 2
-    with open_store(a.vault, read_only=True) as conn:
+    with tempfile.TemporaryDirectory() as tmp, open_store(a.vault, read_only=True) as conn:
         if a.call:
             source, _, target = a.call.partition("->")
             try:
@@ -223,12 +256,17 @@ def cmd_guard(a: argparse.Namespace) -> int:
                 print(exc, file=sys.stderr)
                 return 2
         else:
-            with open_store(a.base, read_only=True) as base:
+            base_path = a.base or extract_plan(a.base_ref, Path(tmp), a.vault)
+            with open_store(base_path, read_only=True) as base:
                 result = guard.compare(base, conn, a.view)
-    if a.json:
-        print(json.dumps(result.to_dict(), indent=2))
-    else:
-        print(report.render_guard(result))
+    text = json.dumps(result.to_dict(), indent=2) if a.json else report.render_guard(result)
+    if a.hook:
+        # Claude Code shows a PostToolUse hook's stderr to the agent when the hook exits with 2.
+        if result.blocking:
+            print(text, file=sys.stderr)
+            return 2
+        return 0
+    print(text)
     return 1 if result.blocking else 0
 
 
@@ -248,7 +286,9 @@ def cmd_mcp(a: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    ap = argparse.ArgumentParser(prog="slowest-link", description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
+    ap = argparse.ArgumentParser(
+        prog="slowest-link", description=__doc__, formatter_class=argparse.RawTextHelpFormatter
+    )
     sub = ap.add_subparsers(dest="command", required=True)
 
     s = sub.add_parser("seed", help="build the plan vault from sources/")
@@ -310,6 +350,10 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--for", dest="functions", action="append", help="a function the new call serves (repeatable)")
     s.add_argument("--mode", choices=["sync", "async"], default="sync")
     s.add_argument("--base", type=Path, help="the plan before the change (a vault folder)")
+    s.add_argument("--base-ref", help="the plan before the change, as it is at this git ref (for CI)")
+    s.add_argument(
+        "--hook", action="store_true", help="run as a Claude Code PostToolUse hook (reads its JSON on stdin)"
+    )
     s.add_argument("--view", choices=checks.VIEWS, default="evidence")
     s.add_argument("--json", action="store_true")
     s.set_defaults(run=cmd_guard)

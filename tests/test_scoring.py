@@ -15,9 +15,7 @@ BACKOFFICE = {"ledger": "Record orders", "fraud": "Screen orders"}
 
 
 def attempts(journey: str, start: float, n: int, failures: int = 0, latency: float = 0.1) -> list[dict[str, Any]]:
-    return [
-        {"journey": journey, "t": start + i, "ok": i >= failures, "latency_s": latency} for i in range(n)
-    ]
+    return [{"journey": journey, "t": start + i, "ok": i >= failures, "latency_s": latency} for i in range(n)]
 
 
 def test_p95_uses_the_nearest_rank() -> None:
@@ -66,7 +64,11 @@ def test_outcome_marks_journeys_and_back_office_functions() -> None:
     records = attempts("user_a", 0, 50) + attempts("user_a", 100, 50, failures=50) + attempts("user_b", 0, 50)
     records += attempts("user_b", 100, 50)
     orders = [{"id": f"o{i}", "t": float(i * 10)} for i in range(20)]  # ten in each window
-    backoffice = {"orders": orders, "in_ledger": [f"o{i}" for i in range(10)], "in_fraud_log": [o["id"] for o in orders]}
+    backoffice = {
+        "orders": orders,
+        "in_ledger": [f"o{i}" for i in range(10)],
+        "in_fraud_log": [o["id"] for o in orders],
+    }
     result = scoring.outcome(TEST, records, backoffice, JOURNEYS, BACKOFFICE)
     assert result.affected == {"Function A", "Record orders"}
     assert result.unjudged == set()
