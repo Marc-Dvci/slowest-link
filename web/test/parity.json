@@ -371,6 +371,16 @@
       "outage_min": 120,
       "affected": [
         {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": true
+        },
+        {
           "function": "Screen orders for fraud",
           "promise_min": 240,
           "critical": false,
@@ -391,9 +401,12 @@
           "broken": false
         }
       ],
-      "broken": [],
+      "broken": [
+        "Place an order"
+      ],
       "restore_order": [
         "kafka",
+        "Place an order",
         "Screen orders for fraud",
         "Record orders in accounting"
       ]
@@ -1127,16 +1140,6 @@
           "broken": true
         },
         {
-          "function": "Screen orders for fraud",
-          "promise_min": 240,
-          "critical": false,
-          "through": [
-            "flagd"
-          ],
-          "expected_outage_min": 148,
-          "broken": false
-        },
-        {
           "function": "Show recommendations",
           "promise_min": 480,
           "critical": false,
@@ -1176,7 +1179,6 @@
         "Place an order",
         "View a product",
         "View cart",
-        "Screen orders for fraud",
         "Show recommendations",
         "Show ads"
       ]

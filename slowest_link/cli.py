@@ -186,6 +186,7 @@ def cmd_score(a: argparse.Namespace) -> int:
 def cmd_record_tests(a: argparse.Namespace) -> int:
     with open_store(a.vault) as conn:
         outcomes, functions = outcomes_for(conn, a.run_dir)
+        windows = {t["test"]: round(float(t["t_fault_end"]) - float(t["t_fault"])) for t in load_run(a.run_dir)[1]}
         reach = checks.reach(conn, "evidence")
         written = survived = needed = 0
         for o in outcomes:
@@ -197,7 +198,7 @@ def cmd_record_tests(a: argparse.Namespace) -> int:
                     "kind": o.kind,
                     "target": o.target,
                     "fault": o.test.split(":", 1)[1],
-                    "window_s": a.window,
+                    "window_s": windows.get(o.test, 0),
                     "affected": sorted(o.affected),
                     "recovery_s": {j: v for j, v in o.recovery_s.items() if v is not None},
                     "not_recovered": o.not_recovered if o.kind == "stop" else [],
@@ -352,7 +353,6 @@ def build_parser() -> argparse.ArgumentParser:
     s.add_argument("--vault", type=Path, default=DEFAULT_VAULT)
     s.add_argument("--run", dest="run_dir", type=Path, default=ROOT / "evidence" / "e1e2")
     s.add_argument("--date", required=True, help="the day the tests ran, YYYY-MM-DD")
-    s.add_argument("--window", type=int, default=60, help="seconds each fault lasted")
     s.set_defaults(run=cmd_record_tests)
 
     s = sub.add_parser("guard", help="say which promises a new call, or a change to the plan, would break")

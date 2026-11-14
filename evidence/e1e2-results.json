@@ -1,0 +1,6021 @@
+{
+  "functions": [
+    "Add to cart",
+    "Browse the shop",
+    "Place an order",
+    "Record orders in accounting",
+    "Screen orders for fraud",
+    "Show ads",
+    "Show recommendations",
+    "View a product",
+    "View cart"
+  ],
+  "views": {
+    "stop": {
+      "plan": {
+        "score": {
+          "tp": 25,
+          "fp": 3,
+          "fn": 15,
+          "tn": 119,
+          "precision": 0.893,
+          "recall": 0.625,
+          "exact": 11,
+          "tests": 20
+        },
+        "errors": [
+          {
+            "test": "stop:accounting",
+            "function": "Record orders in accounting",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:email",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd",
+            "function": "Place an order",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:flagd",
+            "function": "Show ads",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:fraud-detection",
+            "function": "Screen orders for fraud",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:kafka",
+            "function": "Place an order",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:kafka",
+            "function": "Record orders in accounting",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:kafka",
+            "function": "Screen orders for fraud",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:product-catalog",
+            "function": "Place an order",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:product-catalog",
+            "function": "Show recommendations",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:quote",
+            "function": "Place an order",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:valkey-cart",
+            "function": "Add to cart",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:valkey-cart",
+            "function": "Place an order",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:valkey-cart",
+            "function": "View cart",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:astronomy-db",
+            "function": "Add to cart",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:astronomy-db",
+            "function": "Place an order",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:astronomy-db",
+            "function": "Show recommendations",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "stop:astronomy-db",
+            "function": "View a product",
+            "predicted": false,
+            "measured": true
+          }
+        ]
+      },
+      "architecture": {
+        "score": {
+          "tp": 40,
+          "fp": 91,
+          "fn": 0,
+          "tn": 31,
+          "precision": 0.305,
+          "recall": 1.0,
+          "exact": 2,
+          "tests": 20
+        },
+        "errors": [
+          {
+            "test": "stop:accounting",
+            "function": "Record orders in accounting",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:ad",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:ad",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:ad",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:ad",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:ad",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:ad",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:cart",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:cart",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:cart",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:cart",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:checkout",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:checkout",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:checkout",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:checkout",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:checkout",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:checkout",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:currency",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:currency",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:currency",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:currency",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:currency",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:currency",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:email",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:email",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:email",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:email",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:email",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:email",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:email",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd",
+            "function": "Screen orders for fraud",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd-ui",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd-ui",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd-ui",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd-ui",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd-ui",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd-ui",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd-ui",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:fraud-detection",
+            "function": "Screen orders for fraud",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:image-provider",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:image-provider",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:image-provider",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:image-provider",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:image-provider",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:image-provider",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:image-provider",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:kafka",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:kafka",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:kafka",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:kafka",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:kafka",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:kafka",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:payment",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:payment",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:payment",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:payment",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:payment",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:payment",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:product-catalog",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:product-catalog",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:product-catalog",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:quote",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:quote",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:quote",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:quote",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:quote",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:quote",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:recommendation",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:recommendation",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:recommendation",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:recommendation",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:recommendation",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:recommendation",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:shipping",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:shipping",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:shipping",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:shipping",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:shipping",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:shipping",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:valkey-cart",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:valkey-cart",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:valkey-cart",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:valkey-cart",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:astronomy-db",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:astronomy-db",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:astronomy-db",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          }
+        ]
+      },
+      "evidence": {
+        "score": {
+          "tp": 39,
+          "fp": 4,
+          "fn": 1,
+          "tn": 118,
+          "precision": 0.907,
+          "recall": 0.975,
+          "exact": 15,
+          "tests": 20
+        },
+        "errors": [
+          {
+            "test": "stop:accounting",
+            "function": "Record orders in accounting",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:email",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:flagd",
+            "function": "Screen orders for fraud",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:fraud-detection",
+            "function": "Screen orders for fraud",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "stop:kafka",
+            "function": "Place an order",
+            "predicted": false,
+            "measured": true
+          }
+        ]
+      }
+    },
+    "flag": {
+      "plan": {
+        "score": {
+          "tp": 5,
+          "fp": 12,
+          "fn": 4,
+          "tn": 103,
+          "precision": 0.294,
+          "recall": 0.556,
+          "exact": 6,
+          "tests": 14
+        },
+        "errors": [
+          {
+            "test": "flag:adFailure",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adHighCpu",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:cartFailure",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:cartFailure",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:emailMemoryLeak",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogLockContention",
+            "function": "Add to cart",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "flag:productCatalogLockContention",
+            "function": "Place an order",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "flag:productCatalogLockContention",
+            "function": "Record orders in accounting",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogLockContention",
+            "function": "Show recommendations",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "flag:productCatalogLockContention",
+            "function": "View a product",
+            "predicted": false,
+            "measured": true
+          },
+          {
+            "test": "flag:recommendationCacheFailure",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          }
+        ]
+      },
+      "architecture": {
+        "score": {
+          "tp": 9,
+          "fp": 92,
+          "fn": 0,
+          "tn": 23,
+          "precision": 0.089,
+          "recall": 1.0,
+          "exact": 0,
+          "tests": 14
+        },
+        "errors": [
+          {
+            "test": "flag:adFailure",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adFailure",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adFailure",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adFailure",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adFailure",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adFailure",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adFailure",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adHighCpu",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adHighCpu",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adHighCpu",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adHighCpu",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adHighCpu",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adHighCpu",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adHighCpu",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adManualGc",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adManualGc",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adManualGc",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adManualGc",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adManualGc",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adManualGc",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:cartFailure",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:cartFailure",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:cartFailure",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:cartFailure",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:cartFailure",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:cartFailure",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:emailMemoryLeak",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:emailMemoryLeak",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:emailMemoryLeak",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:emailMemoryLeak",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:emailMemoryLeak",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:emailMemoryLeak",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:emailMemoryLeak",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:imageSlowLoad",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:imageSlowLoad",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:imageSlowLoad",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:imageSlowLoad",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:imageSlowLoad",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:imageSlowLoad",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:imageSlowLoad",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:intlShippingSlowdown",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:intlShippingSlowdown",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:intlShippingSlowdown",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:intlShippingSlowdown",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:intlShippingSlowdown",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:intlShippingSlowdown",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "Record orders in accounting",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "Screen orders for fraud",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentFailure",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentFailure",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentFailure",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentFailure",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentFailure",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentFailure",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentUnreachable",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentUnreachable",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentUnreachable",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentUnreachable",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentUnreachable",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:paymentUnreachable",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogLockContention",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogLockContention",
+            "function": "Record orders in accounting",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogLockContention",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogLockContention",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:recommendationCacheFailure",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:recommendationCacheFailure",
+            "function": "Browse the shop",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:recommendationCacheFailure",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:recommendationCacheFailure",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:recommendationCacheFailure",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:recommendationCacheFailure",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:recommendationCacheFailure",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          }
+        ]
+      },
+      "evidence": {
+        "score": {
+          "tp": 9,
+          "fp": 16,
+          "fn": 0,
+          "tn": 99,
+          "precision": 0.36,
+          "recall": 1.0,
+          "exact": 5,
+          "tests": 14
+        },
+        "errors": [
+          {
+            "test": "flag:adFailure",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:adHighCpu",
+            "function": "Show ads",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:cartFailure",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:cartFailure",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:emailMemoryLeak",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:failedReadinessProbe",
+            "function": "View cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "Record orders in accounting",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:kafkaQueueProblems",
+            "function": "Screen orders for fraud",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "Add to cart",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "Place an order",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogFailure",
+            "function": "View a product",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:productCatalogLockContention",
+            "function": "Record orders in accounting",
+            "predicted": true,
+            "measured": false
+          },
+          {
+            "test": "flag:recommendationCacheFailure",
+            "function": "Show recommendations",
+            "predicted": true,
+            "measured": false
+          }
+        ]
+      }
+    }
+  },
+  "outcomes": [
+    {
+      "test": "stop:accounting",
+      "kind": "stop",
+      "target": "accounting",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.44
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.451
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.446
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.439
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.867
+          },
+          "fault": {
+            "attempts": 30,
+            "failure_rate": 0.0,
+            "p95_s": 1.099
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.033
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.026
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.682
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.817
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.015
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.9,
+        "user_browse_product": 0.9,
+        "user_get_recommendations": 0.6,
+        "user_get_ads": 0.9,
+        "user_view_cart": 0.9,
+        "user_add_to_cart": 0.0,
+        "user_checkout_single": 0.5
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:ad",
+      "kind": "stop",
+      "target": "ad",
+      "affected": [
+        "Show ads"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.485
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.696
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.502
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.433
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.865
+          },
+          "fault": {
+            "attempts": 30,
+            "failure_rate": 0.0,
+            "p95_s": 1.221
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "fault": {
+            "attempts": 6,
+            "failure_rate": 1.0,
+            "p95_s": 10.029
+          },
+          "affected": true
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.871
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.968
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.015
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.5,
+        "user_browse_product": 0.5,
+        "user_get_recommendations": 0.7,
+        "user_get_ads": 1.1,
+        "user_view_cart": 0.5,
+        "user_add_to_cart": 0.7,
+        "user_checkout_single": 0.6
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:cart",
+      "kind": "stop",
+      "target": "cart",
+      "affected": [
+        "Add to cart",
+        "Place an order",
+        "View cart"
+      ],
+      "unjudged": [
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.347
+          },
+          "fault": {
+            "attempts": 50,
+            "failure_rate": 1.0,
+            "p95_s": 0.832
+          },
+          "affected": true
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.299
+          },
+          "fault": {
+            "attempts": 49,
+            "failure_rate": 0.0,
+            "p95_s": 0.636
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.05,
+            "p95_s": 0.955
+          },
+          "fault": {
+            "attempts": 26,
+            "failure_rate": 1.0,
+            "p95_s": 0.509
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.026
+          },
+          "fault": {
+            "attempts": 49,
+            "failure_rate": 0.0,
+            "p95_s": 0.029
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.871
+          },
+          "fault": {
+            "attempts": 49,
+            "failure_rate": 0.0,
+            "p95_s": 0.928
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 50,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 49,
+            "failure_rate": 1.0,
+            "p95_s": 0.019
+          },
+          "affected": true
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 1.0,
+        "user_browse_product": 0.0,
+        "user_get_recommendations": 0.0,
+        "user_get_ads": 0.0,
+        "user_view_cart": 10.1,
+        "user_add_to_cart": 10.1,
+        "user_checkout_single": 10.9
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:checkout",
+      "kind": "stop",
+      "target": "checkout",
+      "affected": [
+        "Place an order"
+      ],
+      "unjudged": [
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.479
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.38
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.385
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.29
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 1.13
+          },
+          "fault": {
+            "attempts": 6,
+            "failure_rate": 1.0,
+            "p95_s": 10.301
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.733
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.552
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.011
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.008
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.6,
+        "user_browse_product": 0.6,
+        "user_get_recommendations": 0.7,
+        "user_get_ads": 0.6,
+        "user_view_cart": 0.6,
+        "user_add_to_cart": 0.7,
+        "user_checkout_single": 1.6
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:currency",
+      "kind": "stop",
+      "target": "currency",
+      "affected": [
+        "Place an order"
+      ],
+      "unjudged": [
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.518
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.508
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.701
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.454
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.994
+          },
+          "fault": {
+            "attempts": 22,
+            "failure_rate": 1.0,
+            "p95_s": 10.112
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.023
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.824
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.775
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.01
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.8,
+        "user_browse_product": 0.8,
+        "user_get_recommendations": 0.5,
+        "user_get_ads": 0.8,
+        "user_view_cart": 0.8,
+        "user_add_to_cart": 0.9,
+        "user_checkout_single": 1.7
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:email",
+      "kind": "stop",
+      "target": "email",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.843
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.772
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.841
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.816
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 1.469
+          },
+          "fault": {
+            "attempts": 29,
+            "failure_rate": 0.0,
+            "p95_s": 2.038
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.026
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.99
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.966
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.01
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.016
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.7,
+        "user_browse_product": 0.7,
+        "user_get_recommendations": 0.7,
+        "user_get_ads": 0.7,
+        "user_view_cart": 0.8,
+        "user_add_to_cart": 0.8,
+        "user_checkout_single": 0.2
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:flagd",
+      "kind": "stop",
+      "target": "flagd",
+      "affected": [
+        "Place an order",
+        "Show ads"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.713
+          },
+          "fault": {
+            "attempts": 58,
+            "failure_rate": 0.0,
+            "p95_s": 1.249
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.564
+          },
+          "fault": {
+            "attempts": 58,
+            "failure_rate": 0.0,
+            "p95_s": 1.125
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 19,
+            "failure_rate": 0.0,
+            "p95_s": 1.269
+          },
+          "fault": {
+            "attempts": 9,
+            "failure_rate": 0.556,
+            "p95_s": 11.176
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.026
+          },
+          "fault": {
+            "attempts": 45,
+            "failure_rate": 0.0,
+            "p95_s": 1.533
+          },
+          "affected": true
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 1.004
+          },
+          "fault": {
+            "attempts": 47,
+            "failure_rate": 0.0,
+            "p95_s": 1.937
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.8,
+        "user_browse_product": 0.1,
+        "user_get_recommendations": 0.8,
+        "user_get_ads": 0.9,
+        "user_view_cart": 0.8,
+        "user_add_to_cart": 0.5,
+        "user_checkout_single": 8.3
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:flagd-ui",
+      "kind": "stop",
+      "target": "flagd-ui",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.588
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.472
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.555
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.331
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 1.059
+          },
+          "fault": {
+            "attempts": 30,
+            "failure_rate": 0.0,
+            "p95_s": 0.893
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.023
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.023
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.831
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.755
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.8,
+        "user_browse_product": 0.2,
+        "user_get_recommendations": 0.4,
+        "user_get_ads": 0.1,
+        "user_view_cart": 0.9,
+        "user_add_to_cart": 0.6,
+        "user_checkout_single": 0.5
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:fraud-detection",
+      "kind": "stop",
+      "target": "fraud-detection",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.534
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.439
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.276
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.572
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.831
+          },
+          "fault": {
+            "attempts": 30,
+            "failure_rate": 0.0,
+            "p95_s": 0.967
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.024
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.858
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.732
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.01
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.9,
+        "user_browse_product": 0.3,
+        "user_get_recommendations": 0.5,
+        "user_get_ads": 0.2,
+        "user_view_cart": 0.0,
+        "user_add_to_cart": 0.7,
+        "user_checkout_single": 0.8
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:frontend",
+      "kind": "stop",
+      "target": "frontend",
+      "affected": [
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "Show ads",
+        "Show recommendations",
+        "View a product",
+        "View cart"
+      ],
+      "unjudged": [
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.599
+          },
+          "fault": {
+            "attempts": 23,
+            "failure_rate": 1.0,
+            "p95_s": 5.002
+          },
+          "affected": true
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.71
+          },
+          "fault": {
+            "attempts": 21,
+            "failure_rate": 0.905,
+            "p95_s": 5.025
+          },
+          "affected": true
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.716
+          },
+          "fault": {
+            "attempts": 20,
+            "failure_rate": 1.0,
+            "p95_s": 5.009
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.033
+          },
+          "fault": {
+            "attempts": 22,
+            "failure_rate": 1.0,
+            "p95_s": 5.003
+          },
+          "affected": true
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 38,
+            "failure_rate": 0.0,
+            "p95_s": 0.728
+          },
+          "fault": {
+            "attempts": 21,
+            "failure_rate": 1.0,
+            "p95_s": 5.008
+          },
+          "affected": true
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 22,
+            "failure_rate": 1.0,
+            "p95_s": 5.008
+          },
+          "affected": true
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 21,
+            "failure_rate": 1.0,
+            "p95_s": 5.006
+          },
+          "affected": true
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 1.2,
+        "user_browse_product": 1.2,
+        "user_get_recommendations": 1.2,
+        "user_get_ads": 1.2,
+        "user_view_cart": 1.2,
+        "user_add_to_cart": 1.2,
+        "user_checkout_single": 2.2
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:frontend-proxy",
+      "kind": "stop",
+      "target": "frontend-proxy",
+      "affected": [
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "Show ads",
+        "Show recommendations",
+        "View a product",
+        "View cart"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.481
+          },
+          "fault": {
+            "attempts": 19,
+            "failure_rate": 0.737,
+            "p95_s": 7.342
+          },
+          "affected": true
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.515
+          },
+          "fault": {
+            "attempts": 19,
+            "failure_rate": 0.737,
+            "p95_s": 7.342
+          },
+          "affected": true
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 1.065
+          },
+          "fault": {
+            "attempts": 16,
+            "failure_rate": 0.812,
+            "p95_s": 7.497
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.024
+          },
+          "fault": {
+            "attempts": 17,
+            "failure_rate": 0.706,
+            "p95_s": 10.002
+          },
+          "affected": true
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.689
+          },
+          "fault": {
+            "attempts": 19,
+            "failure_rate": 0.789,
+            "p95_s": 7.342
+          },
+          "affected": true
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.01
+          },
+          "fault": {
+            "attempts": 19,
+            "failure_rate": 0.737,
+            "p95_s": 7.342
+          },
+          "affected": true
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.008
+          },
+          "fault": {
+            "attempts": 19,
+            "failure_rate": 0.737,
+            "p95_s": 7.341
+          },
+          "affected": true
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 10.8,
+        "user_browse_product": 10.8,
+        "user_get_recommendations": 10.8,
+        "user_get_ads": 10.8,
+        "user_view_cart": 10.8,
+        "user_add_to_cart": 10.8,
+        "user_checkout_single": 10.7
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:image-provider",
+      "kind": "stop",
+      "target": "image-provider",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.423
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.484
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.553
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.4
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.999
+          },
+          "fault": {
+            "attempts": 30,
+            "failure_rate": 0.0,
+            "p95_s": 1.077
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.677
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.676
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.01
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.014
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.014
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.8,
+        "user_browse_product": 0.8,
+        "user_get_recommendations": 0.9,
+        "user_get_ads": 0.8,
+        "user_view_cart": 0.8,
+        "user_add_to_cart": 0.8,
+        "user_checkout_single": 0.9
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:kafka",
+      "kind": "stop",
+      "target": "kafka",
+      "affected": [
+        "Place an order",
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.515
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.36
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.435
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.342
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 1.038
+          },
+          "fault": {
+            "attempts": 26,
+            "failure_rate": 0.077,
+            "p95_s": 10.134
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.024
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.024
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.695
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.667
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 0.0,
+          "affected": true
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 0.0,
+          "affected": true
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.9,
+        "user_browse_product": 0.9,
+        "user_get_recommendations": 0.1,
+        "user_get_ads": 0.9,
+        "user_view_cart": 0.9,
+        "user_add_to_cart": 0.9,
+        "user_checkout_single": null
+      },
+      "not_recovered": [
+        "user_checkout_single"
+      ]
+    },
+    {
+      "test": "stop:payment",
+      "kind": "stop",
+      "target": "payment",
+      "affected": [
+        "Place an order"
+      ],
+      "unjudged": [
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.044
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.041
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.06
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.073
+          },
+          "fault": {
+            "attempts": 30,
+            "failure_rate": 1.0,
+            "p95_s": 0.09
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.024
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.041
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.055
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.012
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.011
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.3,
+        "user_browse_product": 0.3,
+        "user_get_recommendations": 0.3,
+        "user_get_ads": 0.4,
+        "user_view_cart": 0.3,
+        "user_add_to_cart": 0.3,
+        "user_checkout_single": 2.5
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:product-catalog",
+      "kind": "stop",
+      "target": "product-catalog",
+      "affected": [
+        "Add to cart",
+        "Place an order",
+        "Show recommendations",
+        "View a product"
+      ],
+      "unjudged": [
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.038
+          },
+          "fault": {
+            "attempts": 6,
+            "failure_rate": 1.0,
+            "p95_s": 10.028
+          },
+          "affected": true
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.054
+          },
+          "fault": {
+            "attempts": 6,
+            "failure_rate": 1.0,
+            "p95_s": 10.014
+          },
+          "affected": true
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.107
+          },
+          "fault": {
+            "attempts": 6,
+            "failure_rate": 1.0,
+            "p95_s": 10.029
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "fault": {
+            "attempts": 41,
+            "failure_rate": 1.0,
+            "p95_s": 0.032
+          },
+          "affected": true
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.008
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.3,
+        "user_browse_product": 0.8,
+        "user_get_recommendations": 7.2,
+        "user_get_ads": 0.4,
+        "user_view_cart": 0.3,
+        "user_add_to_cart": 0.8,
+        "user_checkout_single": 0.5
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:quote",
+      "kind": "stop",
+      "target": "quote",
+      "affected": [
+        "Place an order"
+      ],
+      "unjudged": [
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.037
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.069
+          },
+          "fault": {
+            "attempts": 16,
+            "failure_rate": 1.0,
+            "p95_s": 3.994
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.039
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.4,
+        "user_browse_product": 0.2,
+        "user_get_recommendations": 0.2,
+        "user_get_ads": 0.5,
+        "user_view_cart": 0.5,
+        "user_add_to_cart": 0.2,
+        "user_checkout_single": 3.4
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:recommendation",
+      "kind": "stop",
+      "target": "recommendation",
+      "affected": [
+        "Show recommendations"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.037
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.058
+          },
+          "fault": {
+            "attempts": 30,
+            "failure_rate": 0.0,
+            "p95_s": 0.071
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.029
+          },
+          "fault": {
+            "attempts": 11,
+            "failure_rate": 0.545,
+            "p95_s": 10.018
+          },
+          "affected": true
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.5,
+        "user_browse_product": 0.3,
+        "user_get_recommendations": 5.8,
+        "user_get_ads": 0.6,
+        "user_view_cart": 0.6,
+        "user_add_to_cart": 0.3,
+        "user_checkout_single": 1.5
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:shipping",
+      "kind": "stop",
+      "target": "shipping",
+      "affected": [
+        "Place an order"
+      ],
+      "unjudged": [
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.067
+          },
+          "fault": {
+            "attempts": 16,
+            "failure_rate": 1.0,
+            "p95_s": 4.017
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.04
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.03
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.7,
+        "user_browse_product": 0.5,
+        "user_get_recommendations": 0.9,
+        "user_get_ads": 0.8,
+        "user_view_cart": 0.7,
+        "user_add_to_cart": 0.5,
+        "user_checkout_single": 3.8
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:valkey-cart",
+      "kind": "stop",
+      "target": "valkey-cart",
+      "affected": [
+        "Add to cart",
+        "Place an order",
+        "View cart"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 6,
+            "failure_rate": 1.0,
+            "p95_s": 10.023
+          },
+          "affected": true
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.07
+          },
+          "fault": {
+            "attempts": 6,
+            "failure_rate": 0.833,
+            "p95_s": 10.022
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.039
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.032
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 7,
+            "failure_rate": 1.0,
+            "p95_s": 10.012
+          },
+          "affected": true
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.7,
+        "user_browse_product": 0.6,
+        "user_get_recommendations": 0.0,
+        "user_get_ads": 0.9,
+        "user_view_cart": 1.2,
+        "user_add_to_cart": 1.0,
+        "user_checkout_single": 1.3
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "stop:astronomy-db",
+      "kind": "stop",
+      "target": "astronomy-db",
+      "affected": [
+        "Add to cart",
+        "Place an order",
+        "Show recommendations",
+        "View a product"
+      ],
+      "unjudged": [
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "fault": {
+            "attempts": 16,
+            "failure_rate": 1.0,
+            "p95_s": 3.996
+          },
+          "affected": true
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "fault": {
+            "attempts": 17,
+            "failure_rate": 0.941,
+            "p95_s": 3.876
+          },
+          "affected": true
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.067
+          },
+          "fault": {
+            "attempts": 16,
+            "failure_rate": 1.0,
+            "p95_s": 3.875
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.025
+          },
+          "fault": {
+            "attempts": 16,
+            "failure_rate": 1.0,
+            "p95_s": 4.007
+          },
+          "affected": true
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 60,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 59,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.8,
+        "user_browse_product": 2.3,
+        "user_get_recommendations": 2.3,
+        "user_get_ads": 0.0,
+        "user_view_cart": 0.2,
+        "user_add_to_cart": 2.3,
+        "user_checkout_single": 2.3
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:adFailure",
+      "kind": "flag",
+      "target": "ad",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.012
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.066
+          },
+          "fault": {
+            "attempts": 38,
+            "failure_rate": 0.0,
+            "p95_s": 0.068
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.093,
+            "p95_s": 0.034
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.023
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.029
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.8,
+        "user_browse_product": 0.3,
+        "user_get_recommendations": 0.3,
+        "user_get_ads": 0.1,
+        "user_view_cart": 0.2,
+        "user_add_to_cart": 0.3,
+        "user_checkout_single": 0.3
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:adHighCpu",
+      "kind": "flag",
+      "target": "ad",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.037
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.067
+          },
+          "fault": {
+            "attempts": 38,
+            "failure_rate": 0.0,
+            "p95_s": 0.063
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.039
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.031
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.7,
+        "user_browse_product": 0.2,
+        "user_get_recommendations": 0.2,
+        "user_get_ads": 1.0,
+        "user_view_cart": 0.1,
+        "user_add_to_cart": 0.2,
+        "user_checkout_single": 1.0
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:adManualGc",
+      "kind": "flag",
+      "target": "ad",
+      "affected": [
+        "Show ads"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.032
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.017
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.055
+          },
+          "fault": {
+            "attempts": 37,
+            "failure_rate": 0.0,
+            "p95_s": 0.067
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "fault": {
+            "attempts": 67,
+            "failure_rate": 0.0,
+            "p95_s": 1.183
+          },
+          "affected": true
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.028
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.032
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.017
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.0,
+        "user_browse_product": 0.7,
+        "user_get_recommendations": 0.1,
+        "user_get_ads": 1.0,
+        "user_view_cart": 0.5,
+        "user_add_to_cart": 0.9,
+        "user_checkout_single": 0.3
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:cartFailure",
+      "kind": "flag",
+      "target": "cart",
+      "affected": [
+        "Place an order"
+      ],
+      "unjudged": [
+        "Record orders in accounting",
+        "Screen orders for fraud"
+      ],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.027
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.067
+          },
+          "fault": {
+            "attempts": 8,
+            "failure_rate": 1.0,
+            "p95_s": 10.054
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.03
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.043
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.024
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": null,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.2,
+        "user_browse_product": 0.8,
+        "user_get_recommendations": 0.4,
+        "user_get_ads": 0.3,
+        "user_view_cart": 0.4,
+        "user_add_to_cart": 0.1,
+        "user_checkout_single": 5.3
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:emailMemoryLeak",
+      "kind": "flag",
+      "target": "email",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.067
+          },
+          "fault": {
+            "attempts": 38,
+            "failure_rate": 0.0,
+            "p95_s": 0.889
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.033
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.03
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.031
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.9,
+        "user_browse_product": 0.5,
+        "user_get_recommendations": 0.2,
+        "user_get_ads": 0.0,
+        "user_view_cart": 0.2,
+        "user_add_to_cart": 0.8,
+        "user_checkout_single": 1.8
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:failedReadinessProbe",
+      "kind": "flag",
+      "target": "cart",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.068
+          },
+          "fault": {
+            "attempts": 38,
+            "failure_rate": 0.0,
+            "p95_s": 0.068
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.03
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.5,
+        "user_browse_product": 0.1,
+        "user_get_recommendations": 0.7,
+        "user_get_ads": 0.6,
+        "user_view_cart": 0.7,
+        "user_add_to_cart": 0.4,
+        "user_checkout_single": 1.9
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:imageSlowLoad",
+      "kind": "flag",
+      "target": "image-provider",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.037
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.067
+          },
+          "fault": {
+            "attempts": 38,
+            "failure_rate": 0.0,
+            "p95_s": 0.067
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.023
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.031
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.033
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.1,
+        "user_browse_product": 0.7,
+        "user_get_recommendations": 0.2,
+        "user_get_ads": 0.1,
+        "user_view_cart": 0.2,
+        "user_add_to_cart": 0.0,
+        "user_checkout_single": 0.1
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:intlShippingSlowdown",
+      "kind": "flag",
+      "target": "shipping",
+      "affected": [
+        "Place an order"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.038
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.037
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.068
+          },
+          "fault": {
+            "attempts": 30,
+            "failure_rate": 0.067,
+            "p95_s": 10.018
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.03
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.017
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.6,
+        "user_browse_product": 0.1,
+        "user_get_recommendations": 0.7,
+        "user_get_ads": 0.6,
+        "user_view_cart": 0.7,
+        "user_add_to_cart": 0.5,
+        "user_checkout_single": 0.1
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:kafkaQueueProblems",
+      "kind": "flag",
+      "target": "kafka",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.038
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.039
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.017
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 19,
+            "failure_rate": 0.0,
+            "p95_s": 0.076
+          },
+          "fault": {
+            "attempts": 38,
+            "failure_rate": 0.0,
+            "p95_s": 0.074
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.034
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.032
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.033
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 1.0,
+        "user_browse_product": 0.5,
+        "user_get_recommendations": 0.1,
+        "user_get_ads": 1.0,
+        "user_view_cart": 0.1,
+        "user_add_to_cart": 0.9,
+        "user_checkout_single": 0.0
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:paymentFailure",
+      "kind": "flag",
+      "target": "payment",
+      "affected": [
+        "Place an order"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 19,
+            "failure_rate": 0.0,
+            "p95_s": 0.071
+          },
+          "fault": {
+            "attempts": 38,
+            "failure_rate": 0.974,
+            "p95_s": 0.058
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.023
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.038
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.032
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.4,
+        "user_browse_product": 1.0,
+        "user_get_recommendations": 0.6,
+        "user_get_ads": 0.4,
+        "user_view_cart": 0.5,
+        "user_add_to_cart": 0.4,
+        "user_checkout_single": 2.0
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:paymentUnreachable",
+      "kind": "flag",
+      "target": "payment",
+      "affected": [
+        "Place an order"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 19,
+            "failure_rate": 0.0,
+            "p95_s": 0.089
+          },
+          "fault": {
+            "attempts": 21,
+            "failure_rate": 0.952,
+            "p95_s": 3.999
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.031
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.033
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.8,
+        "user_browse_product": 0.3,
+        "user_get_recommendations": 0.0,
+        "user_get_ads": 0.9,
+        "user_view_cart": 0.9,
+        "user_add_to_cart": 0.9,
+        "user_checkout_single": 4.0
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:productCatalogFailure",
+      "kind": "flag",
+      "target": "product-catalog",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.038
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.026
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 19,
+            "failure_rate": 0.0,
+            "p95_s": 0.088
+          },
+          "fault": {
+            "attempts": 38,
+            "failure_rate": 0.0,
+            "p95_s": 0.07
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.029
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.03
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.018
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.4,
+        "user_browse_product": 0.9,
+        "user_get_recommendations": 0.7,
+        "user_get_ads": 0.5,
+        "user_view_cart": 0.5,
+        "user_add_to_cart": 0.5,
+        "user_checkout_single": 0.3
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:productCatalogLockContention",
+      "kind": "flag",
+      "target": "astronomy-db",
+      "affected": [
+        "Add to cart",
+        "Place an order",
+        "Show recommendations",
+        "View a product"
+      ],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.037
+          },
+          "fault": {
+            "attempts": 22,
+            "failure_rate": 0.182,
+            "p95_s": 10.015
+          },
+          "affected": true
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 23,
+            "failure_rate": 0.174,
+            "p95_s": 10.014
+          },
+          "affected": true
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.073
+          },
+          "fault": {
+            "attempts": 14,
+            "failure_rate": 0.286,
+            "p95_s": 10.015
+          },
+          "affected": true
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.033
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.022
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.04
+          },
+          "fault": {
+            "attempts": 22,
+            "failure_rate": 0.182,
+            "p95_s": 10.014
+          },
+          "affected": true
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 0.2,
+        "user_browse_product": 0.6,
+        "user_get_recommendations": 0.7,
+        "user_get_ads": 0.4,
+        "user_view_cart": 0.3,
+        "user_add_to_cart": 0.7,
+        "user_checkout_single": 0.7
+      },
+      "not_recovered": []
+    },
+    {
+      "test": "flag:recommendationCacheFailure",
+      "kind": "flag",
+      "target": "recommendation",
+      "affected": [],
+      "unjudged": [],
+      "journeys": {
+        "user_add_to_cart": {
+          "function": "Add to cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.035
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.036
+          },
+          "affected": false
+        },
+        "user_browse_product": {
+          "function": "View a product",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.021
+          },
+          "affected": false
+        },
+        "user_checkout_single": {
+          "function": "Place an order",
+          "baseline": {
+            "attempts": 20,
+            "failure_rate": 0.0,
+            "p95_s": 0.068
+          },
+          "fault": {
+            "attempts": 38,
+            "failure_rate": 0.0,
+            "p95_s": 0.068
+          },
+          "affected": false
+        },
+        "user_get_ads": {
+          "function": "Show ads",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.033
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.033
+          },
+          "affected": false
+        },
+        "user_get_recommendations": {
+          "function": "Show recommendations",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.029
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.032
+          },
+          "affected": false
+        },
+        "user_index": {
+          "function": "Browse the shop",
+          "baseline": {
+            "attempts": 39,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "fault": {
+            "attempts": 76,
+            "failure_rate": 0.0,
+            "p95_s": 0.02
+          },
+          "affected": false
+        },
+        "user_view_cart": {
+          "function": "View cart",
+          "baseline": {
+            "attempts": 40,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "fault": {
+            "attempts": 75,
+            "failure_rate": 0.0,
+            "p95_s": 0.019
+          },
+          "affected": false
+        }
+      },
+      "backoffice": {
+        "Record orders in accounting": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        },
+        "Screen orders for fraud": {
+          "baseline_share": 1.0,
+          "fault_share": 1.0,
+          "affected": false
+        }
+      },
+      "recovery_s": {
+        "user_index": 1.0,
+        "user_browse_product": 0.4,
+        "user_get_recommendations": 0.6,
+        "user_get_ads": 0.2,
+        "user_view_cart": 0.1,
+        "user_add_to_cart": 0.5,
+        "user_checkout_single": 1.3
+      },
+      "not_recovered": []
+    }
+  ]
+}

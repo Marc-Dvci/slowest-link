@@ -1,10 +1,10 @@
 {
   "codec": "markdown",
-  "checkpoint_lsn": 3,
-  "commit_ts": 3,
+  "checkpoint_lsn": 40,
+  "commit_ts": 42,
   "value_encoding": 2,
-  "next_node_id": 30,
-  "next_rel_id": 73,
+  "next_node_id": 64,
+  "next_rel_id": 107,
   "indexes": [
     {
       "name": "component_text",
@@ -83,11 +83,13 @@
       "Datastore": "name",
       "Function": "name",
       "Queue": "name",
-      "Service": "name"
+      "Service": "name",
+      "Test": "name"
     },
     "rel_types": [
       "CALLS",
       "ENTERS",
+      "EXERCISED",
       "USES"
     ],
     "raw_files": [],
@@ -171,9 +173,9 @@
       "mtime": 1794654062170203200
     },
     "Service/checkout.md": {
-      "len": 1871,
-      "crc": 3684283525,
-      "mtime": 1794654062175980900
+      "len": 2050,
+      "crc": 554775694,
+      "mtime": 1794662441223448200
     },
     "Service/currency.md": {
       "len": 143,
@@ -196,9 +198,9 @@
       "mtime": 1794654061663546300
     },
     "Service/fraud-detection.md": {
-      "len": 601,
-      "crc": 657898836,
-      "mtime": 1794654062175980900
+      "len": 705,
+      "crc": 499699405,
+      "mtime": 1794662441224571400
     },
     "Service/frontend-proxy.md": {
       "len": 981,
@@ -208,7 +210,7 @@
     "Service/frontend.md": {
       "len": 1685,
       "crc": 1385163920,
-      "mtime": 1794654062180058300
+      "mtime": 1794657155375262700
     },
     "Service/image-provider.md": {
       "len": 126,
@@ -239,6 +241,176 @@
       "len": 512,
       "crc": 2397600263,
       "mtime": 1794654062187840400
+    },
+    "Test/2026-11-14 flag_adFailure.md": {
+      "len": 409,
+      "crc": 3069361702,
+      "mtime": 1794662441225575600
+    },
+    "Test/2026-11-14 flag_adHighCpu.md": {
+      "len": 409,
+      "crc": 798379640,
+      "mtime": 1794662441226575800
+    },
+    "Test/2026-11-14 flag_adManualGc.md": {
+      "len": 421,
+      "crc": 1726346709,
+      "mtime": 1794662441229366400
+    },
+    "Test/2026-11-14 flag_cartFailure.md": {
+      "len": 431,
+      "crc": 2302105119,
+      "mtime": 1794662441230869400
+    },
+    "Test/2026-11-14 flag_emailMemoryLeak.md": {
+      "len": 424,
+      "crc": 1931221708,
+      "mtime": 1794662441232399400
+    },
+    "Test/2026-11-14 flag_failedReadinessProbe.md": {
+      "len": 433,
+      "crc": 3477414709,
+      "mtime": 1794662441234402600
+    },
+    "Test/2026-11-14 flag_imageSlowLoad.md": {
+      "len": 429,
+      "crc": 1634824820,
+      "mtime": 1794662441236403500
+    },
+    "Test/2026-11-14 flag_intlShippingSlowdown.md": {
+      "len": 453,
+      "crc": 738471500,
+      "mtime": 1794662441237905200
+    },
+    "Test/2026-11-14 flag_kafkaQueueProblems.md": {
+      "len": 428,
+      "crc": 626293604,
+      "mtime": 1794662441238908400
+    },
+    "Test/2026-11-14 flag_paymentFailure.md": {
+      "len": 440,
+      "crc": 1284062830,
+      "mtime": 1794662441240923400
+    },
+    "Test/2026-11-14 flag_paymentUnreachable.md": {
+      "len": 448,
+      "crc": 3471487646,
+      "mtime": 1794662441243169900
+    },
+    "Test/2026-11-14 flag_productCatalogFailure.md": {
+      "len": 446,
+      "crc": 2436098601,
+      "mtime": 1794662441245174800
+    },
+    "Test/2026-11-14 flag_productCatalogLockContention.md": {
+      "len": 535,
+      "crc": 3074272633,
+      "mtime": 1794662441246173200
+    },
+    "Test/2026-11-14 flag_recommendationCacheFailure.md": {
+      "len": 455,
+      "crc": 3834147025,
+      "mtime": 1794662441248698300
+    },
+    "Test/2026-11-14 stop_accounting.md": {
+      "len": 419,
+      "crc": 2432750210,
+      "mtime": 1794662441250698400
+    },
+    "Test/2026-11-14 stop_ad.md": {
+      "len": 405,
+      "crc": 623548480,
+      "mtime": 1794662441251727600
+    },
+    "Test/2026-11-14 stop_astronomy-db.md": {
+      "len": 503,
+      "crc": 3638343258,
+      "mtime": 1794662441253727000
+    },
+    "Test/2026-11-14 stop_cart.md": {
+      "len": 450,
+      "crc": 1220899638,
+      "mtime": 1794662441255727200
+    },
+    "Test/2026-11-14 stop_checkout.md": {
+      "len": 429,
+      "crc": 1222316465,
+      "mtime": 1794662441257727700
+    },
+    "Test/2026-11-14 stop_currency.md": {
+      "len": 429,
+      "crc": 4084763542,
+      "mtime": 1794662441258727200
+    },
+    "Test/2026-11-14 stop_email.md": {
+      "len": 404,
+      "crc": 320892376,
+      "mtime": 1794662441261076800
+    },
+    "Test/2026-11-14 stop_flagd-ui.md": {
+      "len": 413,
+      "crc": 4202993955,
+      "mtime": 1794662441262080100
+    },
+    "Test/2026-11-14 stop_flagd.md": {
+      "len": 433,
+      "crc": 3334122916,
+      "mtime": 1794662441264005400
+    },
+    "Test/2026-11-14 stop_fraud-detection.md": {
+      "len": 434,
+      "crc": 1083437659,
+      "mtime": 1794662441265008800
+    },
+    "Test/2026-11-14 stop_frontend-proxy.md": {
+      "len": 561,
+      "crc": 3550159964,
+      "mtime": 1794662441266512300
+    },
+    "Test/2026-11-14 stop_frontend.md": {
+      "len": 536,
+      "crc": 268072286,
+      "mtime": 1794662441269039600
+    },
+    "Test/2026-11-14 stop_image-provider.md": {
+      "len": 431,
+      "crc": 3298850451,
+      "mtime": 1794662441271040800
+    },
+    "Test/2026-11-14 stop_kafka.md": {
+      "len": 467,
+      "crc": 88581842,
+      "mtime": 1794662441273376500
+    },
+    "Test/2026-11-14 stop_payment.md": {
+      "len": 426,
+      "crc": 3075450550,
+      "mtime": 1794662441274376100
+    },
+    "Test/2026-11-14 stop_product-catalog.md": {
+      "len": 510,
+      "crc": 1166635456,
+      "mtime": 1794662441276398500
+    },
+    "Test/2026-11-14 stop_quote.md": {
+      "len": 420,
+      "crc": 2622412084,
+      "mtime": 1794662441278398500
+    },
+    "Test/2026-11-14 stop_recommendation.md": {
+      "len": 453,
+      "crc": 1565936845,
+      "mtime": 1794662441279398900
+    },
+    "Test/2026-11-14 stop_shipping.md": {
+      "len": 429,
+      "crc": 3403060235,
+      "mtime": 1794662441281683900
+    },
+    "Test/2026-11-14 stop_valkey-cart.md": {
+      "len": 470,
+      "crc": 2393766819,
+      "mtime": 1794662441283687100
     }
   },
   "node_ids": {
@@ -270,7 +442,41 @@
     "Service/product-catalog": 3,
     "Service/quote": 10,
     "Service/recommendation": 12,
-    "Service/shipping": 9
+    "Service/shipping": 9,
+    "Test/2026-11-14 flag_adFailure": 50,
+    "Test/2026-11-14 flag_adHighCpu": 51,
+    "Test/2026-11-14 flag_adManualGc": 52,
+    "Test/2026-11-14 flag_cartFailure": 53,
+    "Test/2026-11-14 flag_emailMemoryLeak": 54,
+    "Test/2026-11-14 flag_failedReadinessProbe": 55,
+    "Test/2026-11-14 flag_imageSlowLoad": 56,
+    "Test/2026-11-14 flag_intlShippingSlowdown": 57,
+    "Test/2026-11-14 flag_kafkaQueueProblems": 58,
+    "Test/2026-11-14 flag_paymentFailure": 59,
+    "Test/2026-11-14 flag_paymentUnreachable": 60,
+    "Test/2026-11-14 flag_productCatalogFailure": 61,
+    "Test/2026-11-14 flag_productCatalogLockContention": 62,
+    "Test/2026-11-14 flag_recommendationCacheFailure": 63,
+    "Test/2026-11-14 stop_accounting": 30,
+    "Test/2026-11-14 stop_ad": 31,
+    "Test/2026-11-14 stop_astronomy-db": 49,
+    "Test/2026-11-14 stop_cart": 32,
+    "Test/2026-11-14 stop_checkout": 33,
+    "Test/2026-11-14 stop_currency": 34,
+    "Test/2026-11-14 stop_email": 35,
+    "Test/2026-11-14 stop_flagd": 36,
+    "Test/2026-11-14 stop_flagd-ui": 37,
+    "Test/2026-11-14 stop_fraud-detection": 38,
+    "Test/2026-11-14 stop_frontend": 39,
+    "Test/2026-11-14 stop_frontend-proxy": 40,
+    "Test/2026-11-14 stop_image-provider": 41,
+    "Test/2026-11-14 stop_kafka": 42,
+    "Test/2026-11-14 stop_payment": 43,
+    "Test/2026-11-14 stop_product-catalog": 44,
+    "Test/2026-11-14 stop_quote": 45,
+    "Test/2026-11-14 stop_recommendation": 46,
+    "Test/2026-11-14 stop_shipping": 47,
+    "Test/2026-11-14 stop_valkey-cart": 48
   },
   "rel_ids": {
     "Function/Add to cart\u0001ENTERS\u0001Service/frontend-proxy\u0001{}": 8,
@@ -316,17 +522,17 @@
     "Service/ad\u0001CALLS\u0001Service/flagd\u0001{\"calls\":6,\"declared\":true,\"journeys\":[\"Show ads\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 39,
     "Service/cart\u0001CALLS\u0001Datastore/valkey-cart\u0001{\"calls\":1235,\"declared\":true,\"journeys\":[\"Add to cart\",\"Place an order\",\"View cart\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"\",\"source\":\"published architecture\"}": 46,
     "Service/cart\u0001CALLS\u0001Service/flagd\u0001{\"calls\":201,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 47,
-    "Service/checkout\u0001CALLS\u0001Queue/kafka\u0001{\"calls\":67,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"async\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"TCP\",\"source\":\"published architecture\"}": 50,
+    "Service/checkout\u0001CALLS\u0001Queue/kafka\u0001{\"calls\":67,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"async\",\"need_tests\":[\"2026-11-14 stop:kafka\"],\"needed_by\":[\"Place an order\"],\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"TCP\",\"source\":\"published architecture\"}": 50,
     "Service/checkout\u0001CALLS\u0001Service/cart\u0001{\"calls\":134,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 45,
     "Service/checkout\u0001CALLS\u0001Service/currency\u0001{\"calls\":197,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 44,
-    "Service/checkout\u0001CALLS\u0001Service/email\u0001{\"calls\":134,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"HTTP\",\"source\":\"published architecture\"}": 49,
+    "Service/checkout\u0001CALLS\u0001Service/email\u0001{\"calls\":134,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"HTTP\",\"source\":\"published architecture\",\"survival_tests\":[\"2026-11-14 stop:email\"],\"survives_without\":[\"Place an order\"]}": 49,
     "Service/checkout\u0001CALLS\u0001Service/flagd\u0001{\"declared\":true,\"mode\":\"unknown\",\"observed\":false,\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 40,
     "Service/checkout\u0001CALLS\u0001Service/payment\u0001{\"calls\":67,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 48,
     "Service/checkout\u0001CALLS\u0001Service/product-catalog\u0001{\"calls\":130,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 51,
     "Service/checkout\u0001CALLS\u0001Service/shipping\u0001{\"calls\":268,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"HTTP\",\"source\":\"published architecture\"}": 52,
     "Service/email\u0001CALLS\u0001Service/flagd\u0001{\"declared\":true,\"mode\":\"unknown\",\"observed\":false,\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 42,
     "Service/fraud-detection\u0001CALLS\u0001Queue/kafka\u0001{\"calls\":154,\"declared\":true,\"journeys\":[\"Screen orders for fraud\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"TCP\",\"source\":\"published architecture\"}": 67,
-    "Service/fraud-detection\u0001CALLS\u0001Service/flagd\u0001{\"calls\":2,\"declared\":true,\"journeys\":[\"Screen orders for fraud\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 54,
+    "Service/fraud-detection\u0001CALLS\u0001Service/flagd\u0001{\"calls\":2,\"declared\":true,\"journeys\":[\"Screen orders for fraud\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\",\"survival_tests\":[\"2026-11-14 stop:flagd\"],\"survives_without\":[\"Screen orders for fraud\"]}": 54,
     "Service/frontend\u0001CALLS\u0001Service/ad\u0001{\"calls\":242,\"declared\":true,\"journeys\":[\"Show ads\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 55,
     "Service/frontend\u0001CALLS\u0001Service/cart\u0001{\"calls\":1140,\"declared\":true,\"journeys\":[\"Add to cart\",\"Place an order\",\"View cart\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 56,
     "Service/frontend\u0001CALLS\u0001Service/checkout\u0001{\"calls\":134,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 58,
@@ -344,6 +550,40 @@
     "Service/recommendation\u0001CALLS\u0001Service/flagd\u0001{\"declared\":true,\"mode\":\"unknown\",\"observed\":false,\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 69,
     "Service/recommendation\u0001CALLS\u0001Service/product-catalog\u0001{\"calls\":86,\"declared\":true,\"journeys\":[\"Show recommendations\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 68,
     "Service/shipping\u0001CALLS\u0001Service/flagd\u0001{\"declared\":true,\"mode\":\"unknown\",\"observed\":false,\"protocol\":\"gRPC\",\"source\":\"published architecture\"}": 43,
-    "Service/shipping\u0001CALLS\u0001Service/quote\u0001{\"calls\":134,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"HTTP\",\"source\":\"published architecture\"}": 53
+    "Service/shipping\u0001CALLS\u0001Service/quote\u0001{\"calls\":134,\"declared\":true,\"journeys\":[\"Place an order\"],\"mode\":\"sync\",\"observed\":true,\"observed_on\":\"2026-11-14\",\"protocol\":\"HTTP\",\"source\":\"published architecture\"}": 53,
+    "Test/2026-11-14 flag_adFailure\u0001EXERCISED\u0001Service/ad\u0001{}": 93,
+    "Test/2026-11-14 flag_adHighCpu\u0001EXERCISED\u0001Service/ad\u0001{}": 94,
+    "Test/2026-11-14 flag_adManualGc\u0001EXERCISED\u0001Service/ad\u0001{}": 95,
+    "Test/2026-11-14 flag_cartFailure\u0001EXERCISED\u0001Service/cart\u0001{}": 96,
+    "Test/2026-11-14 flag_emailMemoryLeak\u0001EXERCISED\u0001Service/email\u0001{}": 97,
+    "Test/2026-11-14 flag_failedReadinessProbe\u0001EXERCISED\u0001Service/cart\u0001{}": 98,
+    "Test/2026-11-14 flag_imageSlowLoad\u0001EXERCISED\u0001Service/image-provider\u0001{}": 99,
+    "Test/2026-11-14 flag_intlShippingSlowdown\u0001EXERCISED\u0001Service/shipping\u0001{}": 100,
+    "Test/2026-11-14 flag_kafkaQueueProblems\u0001EXERCISED\u0001Queue/kafka\u0001{}": 101,
+    "Test/2026-11-14 flag_paymentFailure\u0001EXERCISED\u0001Service/payment\u0001{}": 102,
+    "Test/2026-11-14 flag_paymentUnreachable\u0001EXERCISED\u0001Service/payment\u0001{}": 103,
+    "Test/2026-11-14 flag_productCatalogFailure\u0001EXERCISED\u0001Service/product-catalog\u0001{}": 104,
+    "Test/2026-11-14 flag_productCatalogLockContention\u0001EXERCISED\u0001Datastore/astronomy-db\u0001{}": 105,
+    "Test/2026-11-14 flag_recommendationCacheFailure\u0001EXERCISED\u0001Service/recommendation\u0001{}": 106,
+    "Test/2026-11-14 stop_accounting\u0001EXERCISED\u0001Service/accounting\u0001{}": 73,
+    "Test/2026-11-14 stop_ad\u0001EXERCISED\u0001Service/ad\u0001{}": 74,
+    "Test/2026-11-14 stop_astronomy-db\u0001EXERCISED\u0001Datastore/astronomy-db\u0001{}": 92,
+    "Test/2026-11-14 stop_cart\u0001EXERCISED\u0001Service/cart\u0001{}": 75,
+    "Test/2026-11-14 stop_checkout\u0001EXERCISED\u0001Service/checkout\u0001{}": 76,
+    "Test/2026-11-14 stop_currency\u0001EXERCISED\u0001Service/currency\u0001{}": 77,
+    "Test/2026-11-14 stop_email\u0001EXERCISED\u0001Service/email\u0001{}": 78,
+    "Test/2026-11-14 stop_flagd\u0001EXERCISED\u0001Service/flagd\u0001{}": 79,
+    "Test/2026-11-14 stop_flagd-ui\u0001EXERCISED\u0001Service/flagd-ui\u0001{}": 80,
+    "Test/2026-11-14 stop_fraud-detection\u0001EXERCISED\u0001Service/fraud-detection\u0001{}": 81,
+    "Test/2026-11-14 stop_frontend\u0001EXERCISED\u0001Service/frontend\u0001{}": 82,
+    "Test/2026-11-14 stop_frontend-proxy\u0001EXERCISED\u0001Service/frontend-proxy\u0001{}": 83,
+    "Test/2026-11-14 stop_image-provider\u0001EXERCISED\u0001Service/image-provider\u0001{}": 84,
+    "Test/2026-11-14 stop_kafka\u0001EXERCISED\u0001Queue/kafka\u0001{}": 85,
+    "Test/2026-11-14 stop_payment\u0001EXERCISED\u0001Service/payment\u0001{}": 86,
+    "Test/2026-11-14 stop_product-catalog\u0001EXERCISED\u0001Service/product-catalog\u0001{}": 87,
+    "Test/2026-11-14 stop_quote\u0001EXERCISED\u0001Service/quote\u0001{}": 88,
+    "Test/2026-11-14 stop_recommendation\u0001EXERCISED\u0001Service/recommendation\u0001{}": 89,
+    "Test/2026-11-14 stop_shipping\u0001EXERCISED\u0001Service/shipping\u0001{}": 90,
+    "Test/2026-11-14 stop_valkey-cart\u0001EXERCISED\u0001Datastore/valkey-cart\u0001{}": 91
   }
 }

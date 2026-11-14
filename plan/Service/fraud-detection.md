@@ -24,5 +24,9 @@ CALLS:
     observed_on: 2026-11-14
     protocol: gRPC
     source: published architecture
+    survival_tests:
+      - 2026-11-14 stop:flagd
+    survives_without:
+      - Screen orders for fraud
     target: "[[Service/flagd]]"
 ---

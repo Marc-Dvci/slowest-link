@@ -59,7 +59,9 @@ def questions() -> list[dict[str, Any]]:
         home = guard.simulate_call(conn, "frontend", "product-catalog", ["Browse the shop"])
         place = checks.profile(conn, "evidence", "Place an order")
         view = checks.profile(conn, "evidence", "View a product")
-        record = rows(conn, "MATCH (f:Function {name: 'Record orders in accounting'}) RETURN f.promise_min AS p")[0]["p"]
+        record = rows(conn, "MATCH (f:Function {name: 'Record orders in accounting'}) RETURN f.promise_min AS p")[0][
+            "p"
+        ]
     chain_only = sorted(f for f in chains if f not in inv)
     return [
         {"id": "q01", "kind": "names", "question": "Which functions cannot keep their recovery promise because one of "

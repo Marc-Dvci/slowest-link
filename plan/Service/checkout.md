@@ -11,6 +11,10 @@ CALLS:
     journeys:
       - Place an order
     mode: async
+    need_tests:
+      - 2026-11-14 stop:kafka
+    needed_by:
+      - Place an order
     observed: true
     observed_on: 2026-11-14
     protocol: TCP
@@ -45,6 +49,10 @@ CALLS:
     observed_on: 2026-11-14
     protocol: HTTP
     source: published architecture
+    survival_tests:
+      - 2026-11-14 stop:email
+    survives_without:
+      - Place an order
     target: "[[Service/email]]"
   - declared: true
     mode: unknown

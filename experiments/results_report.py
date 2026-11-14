@@ -1,6 +1,6 @@
 """Write docs/RESULTS.md from the committed evidence, so every number in it comes from a file in evidence/.
 
-    python experiments/results_report.py
+python experiments/results_report.py
 """
 
 from __future__ import annotations
@@ -63,6 +63,16 @@ def outcome_table(results: dict[str, Any], predictions: dict[str, Any], kind: st
     return lines
 
 
+def window(kind: str) -> str:
+    """The fault windows of one kind of test, in seconds, as the timeline measured them."""
+    path = EVIDENCE / "e1e2" / "timeline.jsonl"
+    tests = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    spans = sorted({round(t["t_fault_end"] - t["t_fault"]) for t in tests if t["kind"] == kind})
+    if not spans:
+        return "a fixed window"
+    return f"{spans[0]} seconds" if len(spans) == 1 else f"{spans[0]} to {spans[-1]} seconds"
+
+
 def main() -> None:
     predictions = load("predictions.json")
     results = load("e1e2-results.json")
@@ -91,7 +101,12 @@ def main() -> None:
             "",
         ]
 
-    out += ["## Findings on the plan", "", "| View | Broken promises | Restore chains past the promise |", "|---|---|---|"]
+    out += [
+        "## Findings on the plan",
+        "",
+        "| View | Broken promises | Restore chains past the promise |",
+        "|---|---|---|",
+    ]
     for view in checks.VIEWS:
         inv, chains = found[view]
         out.append(
@@ -112,12 +127,12 @@ def main() -> None:
             "Predictions were committed before the tests ran. A pair is one fault and one function; back-office",
             "functions are left out of a test when no order was placed in its window.",
             "",
-            "### Stopping each component for 60 seconds (E1)",
+            f"### Stopping each component for {window('stop')} (E1)",
             "",
         ]
         out += score_table(results["views"]["stop"]) + [""]
         out += outcome_table(results, predictions, "stop") + [""]
-        out += ["### Turning on each failure flag for 60 seconds (E2)", ""]
+        out += [f"### Turning on each failure flag for {window('flag')} (E2)", ""]
         out += score_table(results["views"]["flag"]) + [""]
         out += outcome_table(results, predictions, "flag") + [""]
         slow = [
