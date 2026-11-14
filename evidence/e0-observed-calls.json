@@ -1,0 +1,240 @@
+{
+  "traces": 1037,
+  "attributed": 1037,
+  "unattributed_roots": {},
+  "unknown_targets": {},
+  "calls": [
+    {
+      "source": "accounting",
+      "target": "astronomy-db",
+      "mode": "sync",
+      "journeys": [
+        "Record orders in accounting"
+      ],
+      "calls": 79
+    },
+    {
+      "source": "accounting",
+      "target": "kafka",
+      "mode": "sync",
+      "journeys": [
+        "Record orders in accounting"
+      ],
+      "calls": 78
+    },
+    {
+      "source": "ad",
+      "target": "flagd",
+      "mode": "sync",
+      "journeys": [
+        "Show ads"
+      ],
+      "calls": 6
+    },
+    {
+      "source": "cart",
+      "target": "flagd",
+      "mode": "sync",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 201
+    },
+    {
+      "source": "cart",
+      "target": "valkey-cart",
+      "mode": "sync",
+      "journeys": [
+        "Add to cart",
+        "Place an order",
+        "View cart"
+      ],
+      "calls": 1235
+    },
+    {
+      "source": "checkout",
+      "target": "cart",
+      "mode": "sync",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 134
+    },
+    {
+      "source": "checkout",
+      "target": "currency",
+      "mode": "sync",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 197
+    },
+    {
+      "source": "checkout",
+      "target": "email",
+      "mode": "sync",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 134
+    },
+    {
+      "source": "checkout",
+      "target": "kafka",
+      "mode": "async",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 67
+    },
+    {
+      "source": "checkout",
+      "target": "payment",
+      "mode": "sync",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 67
+    },
+    {
+      "source": "checkout",
+      "target": "product-catalog",
+      "mode": "sync",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 130
+    },
+    {
+      "source": "checkout",
+      "target": "shipping",
+      "mode": "sync",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 268
+    },
+    {
+      "source": "fraud-detection",
+      "target": "flagd",
+      "mode": "sync",
+      "journeys": [
+        "Screen orders for fraud"
+      ],
+      "calls": 2
+    },
+    {
+      "source": "fraud-detection",
+      "target": "kafka",
+      "mode": "sync",
+      "journeys": [
+        "Screen orders for fraud"
+      ],
+      "calls": 154
+    },
+    {
+      "source": "frontend",
+      "target": "ad",
+      "mode": "sync",
+      "journeys": [
+        "Show ads"
+      ],
+      "calls": 242
+    },
+    {
+      "source": "frontend",
+      "target": "cart",
+      "mode": "sync",
+      "journeys": [
+        "Add to cart",
+        "Place an order",
+        "View cart"
+      ],
+      "calls": 1140
+    },
+    {
+      "source": "frontend",
+      "target": "checkout",
+      "mode": "sync",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 134
+    },
+    {
+      "source": "frontend",
+      "target": "product-catalog",
+      "mode": "sync",
+      "journeys": [
+        "Add to cart",
+        "Place an order",
+        "Show recommendations",
+        "View a product"
+      ],
+      "calls": 2172
+    },
+    {
+      "source": "frontend",
+      "target": "recommendation",
+      "mode": "sync",
+      "journeys": [
+        "Show recommendations"
+      ],
+      "calls": 175
+    },
+    {
+      "source": "frontend-proxy",
+      "target": "frontend",
+      "mode": "sync",
+      "journeys": [
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "Show ads",
+        "Show recommendations",
+        "View a product",
+        "View cart"
+      ],
+      "calls": 1372
+    },
+    {
+      "source": "payment",
+      "target": "flagd",
+      "mode": "sync",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 4
+    },
+    {
+      "source": "product-catalog",
+      "target": "astronomy-db",
+      "mode": "sync",
+      "journeys": [
+        "Add to cart",
+        "Place an order",
+        "Show recommendations",
+        "View a product"
+      ],
+      "calls": 1305
+    },
+    {
+      "source": "recommendation",
+      "target": "product-catalog",
+      "mode": "sync",
+      "journeys": [
+        "Show recommendations"
+      ],
+      "calls": 86
+    },
+    {
+      "source": "shipping",
+      "target": "quote",
+      "mode": "sync",
+      "journeys": [
+        "Place an order"
+      ],
+      "calls": 134
+    }
+  ]
+}

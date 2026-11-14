@@ -1,0 +1,1 @@
+CREATE FULLTEXT INDEX `component_text` FOR (n:`Service`|`Datastore`|`Queue`) ON EACH [n.`name`, n.`description`] OPTIONS {indexConfig: {`fulltext.analyzer`: 'standard-no-stop-words',`fulltext.eventually_consistent`: false}};
