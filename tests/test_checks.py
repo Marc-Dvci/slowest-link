@@ -175,3 +175,12 @@ def test_run_all_returns_every_check_in_every_view(conn: relate.Connection) -> N
     result = checks.run_all(conn, "2025-11-14")
     assert set(result["inversions"]) == set(checks.VIEWS)
     assert set(result) >= {"plan_gaps", "hidden_calls", "unseen_calls", "untested_components", "shared_points"}
+
+
+def test_an_asynchronous_call_a_test_proved_needed_holds_the_promise(conn: relate.Connection) -> None:
+    assert "queue" not in checks.reach(conn, "evidence")["Place order"]
+    conn.execute(
+        "MATCH (:Service {name: 'orders'})-[r:CALLS]->(:Queue {name: 'queue'}) SET r.needed_by = ['Place order']"
+    )
+    assert "queue" in checks.reach(conn, "evidence")["Place order"]
+    assert "queue" not in checks.reach(conn, "evidence")["View product"]

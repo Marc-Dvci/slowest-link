@@ -29,7 +29,7 @@ from pathlib import Path
 from typing import Any
 
 from slowest_link import checks, guard, report, scoring, whatif
-from slowest_link.evidence import import_derivation, plan_maps, record_survival, record_test
+from slowest_link.evidence import import_derivation, plan_maps, record_need, record_survival, record_test
 from slowest_link.export import export_cypher
 from slowest_link.seed import seed
 from slowest_link.store import open_store
@@ -161,7 +161,7 @@ PROBED = {
 def cmd_score(a: argparse.Namespace) -> int:
     predictions = json.loads(a.predictions.read_text(encoding="utf-8"))
     with open_store(a.vault, read_only=True) as conn:
-        outcomes, functions = outcomes_for(conn, a.run)
+        outcomes, functions = outcomes_for(conn, a.run_dir)
     by_test = {f["id"]: f for f in predictions["faults"]}
     result: dict[str, Any] = {"functions": functions, "views": {}, "outcomes": [o.to_dict() for o in outcomes]}
     for kind in ("stop", "flag"):
@@ -185,9 +185,9 @@ def cmd_score(a: argparse.Namespace) -> int:
 
 def cmd_record_tests(a: argparse.Namespace) -> int:
     with open_store(a.vault) as conn:
-        outcomes, functions = outcomes_for(conn, a.run)
+        outcomes, functions = outcomes_for(conn, a.run_dir)
         reach = checks.reach(conn, "evidence")
-        written = survived = 0
+        written = survived = needed = 0
         for o in outcomes:
             record_test(
                 conn,
@@ -207,10 +207,14 @@ def cmd_record_tests(a: argparse.Namespace) -> int:
             if o.kind != "stop":
                 continue
             for function in functions:
-                if function in o.unjudged or function in o.affected or o.target not in reach.get(function, set()):
+                if function in o.unjudged:
                     continue
-                survived += record_survival(conn, function, o.target, f"{a.date} {o.test}")
-    print(json.dumps({"tests": written, "calls_marked_survivable": survived}))
+                reached = o.target in reach.get(function, set())
+                if reached and function not in o.affected:
+                    survived += record_survival(conn, function, o.target, f"{a.date} {o.test}")
+                elif function in o.affected and not reached:
+                    needed += record_need(conn, function, o.target, f"{a.date} {o.test}")
+    print(json.dumps({"tests": written, "calls_marked_survivable": survived, "calls_marked_needed": needed}))
     return 0
 
 
@@ -339,14 +343,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     s = sub.add_parser("score", help="compare measured effects with the frozen predictions")
     s.add_argument("--vault", type=Path, default=DEFAULT_VAULT)
-    s.add_argument("--run", type=Path, default=ROOT / "evidence" / "e1e2")
+    s.add_argument("--run", dest="run_dir", type=Path, default=ROOT / "evidence" / "e1e2")
     s.add_argument("--predictions", type=Path, default=ROOT / "evidence" / "predictions.json")
     s.add_argument("--out", type=Path, default=ROOT / "evidence" / "e1e2-results.json")
     s.set_defaults(run=cmd_score)
 
     s = sub.add_parser("record-tests", help="write the outage tests into the plan")
     s.add_argument("--vault", type=Path, default=DEFAULT_VAULT)
-    s.add_argument("--run", type=Path, default=ROOT / "evidence" / "e1e2")
+    s.add_argument("--run", dest="run_dir", type=Path, default=ROOT / "evidence" / "e1e2")
     s.add_argument("--date", required=True, help="the day the tests ran, YYYY-MM-DD")
     s.add_argument("--window", type=int, default=60, help="seconds each fault lasted")
     s.set_defaults(run=cmd_record_tests)

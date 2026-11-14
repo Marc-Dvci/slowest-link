@@ -103,3 +103,14 @@ def test_survival_is_recorded_once(conn: relate.Connection) -> None:
 
 def test_survival_ignores_calls_outside_the_functions_traces(conn: relate.Connection) -> None:
     assert evidence.record_survival(conn, "View product", "mail", "t") == 0
+
+
+def test_need_marks_an_asynchronous_call_the_function_cannot_lose(conn: relate.Connection) -> None:
+    assert evidence.record_need(conn, "Place order", "queue", "t-queue") == 1
+    assert edge(conn, "orders", "queue")["needed_by"] == ["Place order"]
+    assert "queue" in checks.reach(conn, "evidence")["Place order"]
+
+
+def test_need_is_recorded_once(conn: relate.Connection) -> None:
+    evidence.record_need(conn, "Place order", "queue", "t-queue")
+    assert evidence.record_need(conn, "Place order", "queue", "t-queue-again") == 0

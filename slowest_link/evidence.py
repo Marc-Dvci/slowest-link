@@ -134,3 +134,21 @@ def record_survival(conn: relate.Connection, function: str, component: str, test
         {"c": component, "f": function, "t": test},
     )
     return int(edges[0]["n"])
+
+
+def record_need(conn: relate.Connection, function: str, component: str, test: str) -> int:
+    """Mark the calls into `component` on `function`'s traced paths as calls the function needs.
+
+    Called when a stop test of `component` stopped `function` although the evidence view did not reach it, for
+    example a call that traces show as asynchronous. Returns the number of edges marked.
+    """
+    edges = rows(
+        conn,
+        f"MATCH (a:{COMPONENT})-[r:CALLS]->(b:{COMPONENT} {{name: $c}}) "
+        "WHERE r.observed = true AND $f IN coalesce(r.journeys, []) AND NOT $f IN coalesce(r.needed_by, []) "
+        "SET r.needed_by = coalesce(r.needed_by, []) + $f, "
+        "    r.need_tests = coalesce(r.need_tests, []) + $t "
+        "RETURN count(r) AS n",
+        {"c": component, "f": function, "t": test},
+    )
+    return int(edges[0]["n"])

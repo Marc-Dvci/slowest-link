@@ -1,16 +1,25 @@
 cff-version: 1.2.0
-message: "If you use Slowest Link or its evaluation, please cite it as below."
+message: "If you use Slowest Link or its measurements, please cite it as below."
 type: software
-title: "Slowest Link: Slowest Link finds the recovery promises a system can't keep: it checks each promise in a continuity plan against everything the function depends on, and shows the path that breaks it."
+title: "Slowest Link: find recovery promises your system can't keep"
 abstract: >-
-  {{ABSTRACT}}
+  Slowest Link checks each recovery promise in a business continuity plan against everything the function depends
+  on, declared in the plan, seen in traces and proved by outage tests, and shows the path that breaks it. The plan is
+  a Relate by Neo4j graph stored as Markdown notes. Measured on the OpenTelemetry Astronomy Shop 3.1.0 with 1,037
+  traces, 20 component stop tests and 14 fault flags, against predictions committed before the tests ran.
 authors:
   - family-names: Donovici
     given-names: Marc
 version: 1.0.0
-date-released: "{{RELEASE_DATE}}"
 license: MIT
 repository-code: "https://github.com/Marc-Dvci/slowest-link"
-url: "{{DEMO_URL}}"
+url: "https://marc-dvci.github.io/slowest-link/"
 keywords:
-  - "{{KEYWORD}}"
+  - business continuity
+  - recovery time objective
+  - dependency graph
+  - OpenTelemetry
+  - Relate
+  - Neo4j
+  - Cypher
+  - MCP

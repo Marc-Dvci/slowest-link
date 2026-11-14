@@ -98,7 +98,9 @@ def test_the_hook_ignores_edits_outside_the_plan(
     assert run(capsys, "guard", "--vault", str(vault), "--hook", "--call", "frontend->product-catalog")[0] == 0
 
 
-def test_predict_writes_every_fault_for_every_view(vault: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+def test_predict_writes_every_fault_for_every_view(
+    vault: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
     out = tmp_path / "p.json"
     assert run(capsys, "predict", "--vault", str(vault), "--out", str(out))[0] == 0
     data = json.loads(out.read_text(encoding="utf-8"))
