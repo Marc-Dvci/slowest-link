@@ -1,8 +1,14 @@
-# An allowlist: nothing reaches a build unless it is named here, so keys, caches and runs cannot slip in.
+# An allowlist: nothing reaches a build unless it is named here.
 *
-!app/
-!web/
 !requirements.txt
+!slowest_link/
+!sources/
+!plan/
+!evidence/
+!experiments/
+!web/
 
 **/__pycache__
+**/*.cypherlite.writer
 web/node_modules
+web/test

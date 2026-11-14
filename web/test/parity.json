@@ -1,0 +1,1275 @@
+{
+  "whatif": [
+    {
+      "notice": "Our managed PostgreSQL database is down. Estimated restore: 3 hours.",
+      "view": "plan",
+      "components": [
+        {
+          "component": "astronomy-db",
+          "how": "search",
+          "score": 2.194
+        }
+      ],
+      "outage_min": 180,
+      "affected": [
+        {
+          "function": "Record orders in accounting",
+          "promise_min": 1440,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": false
+        }
+      ],
+      "broken": [],
+      "restore_order": [
+        "astronomy-db",
+        "Record orders in accounting"
+      ]
+    },
+    {
+      "notice": "Our managed PostgreSQL database is down. Estimated restore: 3 hours.",
+      "view": "architecture",
+      "components": [
+        {
+          "component": "astronomy-db",
+          "how": "search",
+          "score": 2.194
+        }
+      ],
+      "outage_min": 180,
+      "affected": [
+        {
+          "function": "Add to cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": true
+        },
+        {
+          "function": "Browse the shop",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": true
+        },
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": true
+        },
+        {
+          "function": "View a product",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": true
+        },
+        {
+          "function": "View cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": true
+        },
+        {
+          "function": "Show recommendations",
+          "promise_min": 480,
+          "critical": false,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": false
+        },
+        {
+          "function": "Record orders in accounting",
+          "promise_min": 1440,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": false
+        },
+        {
+          "function": "Show ads",
+          "promise_min": 1440,
+          "critical": false,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": false
+        }
+      ],
+      "broken": [
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart"
+      ],
+      "restore_order": [
+        "astronomy-db",
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart",
+        "Show recommendations",
+        "Record orders in accounting",
+        "Show ads"
+      ]
+    },
+    {
+      "notice": "Our managed PostgreSQL database is down. Estimated restore: 3 hours.",
+      "view": "evidence",
+      "components": [
+        {
+          "component": "astronomy-db",
+          "how": "search",
+          "score": 2.194
+        }
+      ],
+      "outage_min": 180,
+      "affected": [
+        {
+          "function": "Add to cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": true
+        },
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": true
+        },
+        {
+          "function": "View a product",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": true
+        },
+        {
+          "function": "Show recommendations",
+          "promise_min": 480,
+          "critical": false,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": false
+        },
+        {
+          "function": "Record orders in accounting",
+          "promise_min": 1440,
+          "critical": true,
+          "through": [
+            "astronomy-db"
+          ],
+          "expected_outage_min": 180,
+          "broken": false
+        }
+      ],
+      "broken": [
+        "Add to cart",
+        "Place an order",
+        "View a product"
+      ],
+      "restore_order": [
+        "astronomy-db",
+        "Add to cart",
+        "Place an order",
+        "View a product",
+        "Show recommendations",
+        "Record orders in accounting"
+      ]
+    },
+    {
+      "notice": "Kafka brokers unavailable, recovery expected in 2 hours.",
+      "view": "plan",
+      "components": [
+        {
+          "component": "kafka",
+          "how": "named",
+          "score": null
+        }
+      ],
+      "outage_min": 120,
+      "affected": [],
+      "broken": [],
+      "restore_order": [
+        "kafka"
+      ]
+    },
+    {
+      "notice": "Kafka brokers unavailable, recovery expected in 2 hours.",
+      "view": "architecture",
+      "components": [
+        {
+          "component": "kafka",
+          "how": "named",
+          "score": null
+        }
+      ],
+      "outage_min": 120,
+      "affected": [
+        {
+          "function": "Add to cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": true
+        },
+        {
+          "function": "Browse the shop",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": true
+        },
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": true
+        },
+        {
+          "function": "View a product",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": true
+        },
+        {
+          "function": "View cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": true
+        },
+        {
+          "function": "Screen orders for fraud",
+          "promise_min": 240,
+          "critical": false,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": false
+        },
+        {
+          "function": "Show recommendations",
+          "promise_min": 480,
+          "critical": false,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": false
+        },
+        {
+          "function": "Record orders in accounting",
+          "promise_min": 1440,
+          "critical": true,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": false
+        },
+        {
+          "function": "Show ads",
+          "promise_min": 1440,
+          "critical": false,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": false
+        }
+      ],
+      "broken": [
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart"
+      ],
+      "restore_order": [
+        "kafka",
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart",
+        "Screen orders for fraud",
+        "Show recommendations",
+        "Record orders in accounting",
+        "Show ads"
+      ]
+    },
+    {
+      "notice": "Kafka brokers unavailable, recovery expected in 2 hours.",
+      "view": "evidence",
+      "components": [
+        {
+          "component": "kafka",
+          "how": "named",
+          "score": null
+        }
+      ],
+      "outage_min": 120,
+      "affected": [
+        {
+          "function": "Screen orders for fraud",
+          "promise_min": 240,
+          "critical": false,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": false
+        },
+        {
+          "function": "Record orders in accounting",
+          "promise_min": 1440,
+          "critical": true,
+          "through": [
+            "kafka"
+          ],
+          "expected_outage_min": 120,
+          "broken": false
+        }
+      ],
+      "broken": [],
+      "restore_order": [
+        "kafka",
+        "Screen orders for fraud",
+        "Record orders in accounting"
+      ]
+    },
+    {
+      "notice": "Card payments are failing at the payment service, ETA 45 minutes.",
+      "view": "plan",
+      "components": [
+        {
+          "component": "payment",
+          "how": "named",
+          "score": null
+        }
+      ],
+      "outage_min": 45,
+      "affected": [
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "payment"
+          ],
+          "expected_outage_min": 45,
+          "broken": false
+        }
+      ],
+      "broken": [],
+      "restore_order": [
+        "payment",
+        "Place an order"
+      ]
+    },
+    {
+      "notice": "Card payments are failing at the payment service, ETA 45 minutes.",
+      "view": "architecture",
+      "components": [
+        {
+          "component": "payment",
+          "how": "named",
+          "score": null
+        }
+      ],
+      "outage_min": 45,
+      "affected": [
+        {
+          "function": "Add to cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "payment"
+          ],
+          "expected_outage_min": 45,
+          "broken": false
+        },
+        {
+          "function": "Browse the shop",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "payment"
+          ],
+          "expected_outage_min": 45,
+          "broken": false
+        },
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "payment"
+          ],
+          "expected_outage_min": 45,
+          "broken": false
+        },
+        {
+          "function": "View a product",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "payment"
+          ],
+          "expected_outage_min": 45,
+          "broken": false
+        },
+        {
+          "function": "View cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "payment"
+          ],
+          "expected_outage_min": 45,
+          "broken": false
+        },
+        {
+          "function": "Show recommendations",
+          "promise_min": 480,
+          "critical": false,
+          "through": [
+            "payment"
+          ],
+          "expected_outage_min": 45,
+          "broken": false
+        },
+        {
+          "function": "Show ads",
+          "promise_min": 1440,
+          "critical": false,
+          "through": [
+            "payment"
+          ],
+          "expected_outage_min": 45,
+          "broken": false
+        }
+      ],
+      "broken": [],
+      "restore_order": [
+        "payment",
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart",
+        "Show recommendations",
+        "Show ads"
+      ]
+    },
+    {
+      "notice": "Card payments are failing at the payment service, ETA 45 minutes.",
+      "view": "evidence",
+      "components": [
+        {
+          "component": "payment",
+          "how": "named",
+          "score": null
+        }
+      ],
+      "outage_min": 45,
+      "affected": [
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "payment"
+          ],
+          "expected_outage_min": 45,
+          "broken": false
+        }
+      ],
+      "broken": [],
+      "restore_order": [
+        "payment",
+        "Place an order"
+      ]
+    },
+    {
+      "notice": "The cart cache (valkey-cart) is lost; rebuilding for 90 minutes.",
+      "view": "plan",
+      "components": [
+        {
+          "component": "cart",
+          "how": "named",
+          "score": null
+        },
+        {
+          "component": "valkey-cart",
+          "how": "named",
+          "score": null
+        }
+      ],
+      "outage_min": 90,
+      "affected": [
+        {
+          "function": "Add to cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        },
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        },
+        {
+          "function": "View cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        }
+      ],
+      "broken": [
+        "Add to cart",
+        "Place an order",
+        "View cart"
+      ],
+      "restore_order": [
+        "valkey-cart",
+        "cart",
+        "Add to cart",
+        "Place an order",
+        "View cart"
+      ]
+    },
+    {
+      "notice": "The cart cache (valkey-cart) is lost; rebuilding for 90 minutes.",
+      "view": "architecture",
+      "components": [
+        {
+          "component": "cart",
+          "how": "named",
+          "score": null
+        },
+        {
+          "component": "valkey-cart",
+          "how": "named",
+          "score": null
+        }
+      ],
+      "outage_min": 90,
+      "affected": [
+        {
+          "function": "Add to cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart",
+            "valkey-cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        },
+        {
+          "function": "Browse the shop",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart",
+            "valkey-cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        },
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart",
+            "valkey-cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        },
+        {
+          "function": "View a product",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart",
+            "valkey-cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        },
+        {
+          "function": "View cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart",
+            "valkey-cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        },
+        {
+          "function": "Show recommendations",
+          "promise_min": 480,
+          "critical": false,
+          "through": [
+            "cart",
+            "valkey-cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": false
+        },
+        {
+          "function": "Show ads",
+          "promise_min": 1440,
+          "critical": false,
+          "through": [
+            "cart",
+            "valkey-cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": false
+        }
+      ],
+      "broken": [
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart"
+      ],
+      "restore_order": [
+        "valkey-cart",
+        "cart",
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart",
+        "Show recommendations",
+        "Show ads"
+      ]
+    },
+    {
+      "notice": "The cart cache (valkey-cart) is lost; rebuilding for 90 minutes.",
+      "view": "evidence",
+      "components": [
+        {
+          "component": "cart",
+          "how": "named",
+          "score": null
+        },
+        {
+          "component": "valkey-cart",
+          "how": "named",
+          "score": null
+        }
+      ],
+      "outage_min": 90,
+      "affected": [
+        {
+          "function": "Add to cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart",
+            "valkey-cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        },
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart",
+            "valkey-cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        },
+        {
+          "function": "View cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "cart",
+            "valkey-cart"
+          ],
+          "expected_outage_min": 90,
+          "broken": true
+        }
+      ],
+      "broken": [
+        "Add to cart",
+        "Place an order",
+        "View cart"
+      ],
+      "restore_order": [
+        "valkey-cart",
+        "cart",
+        "Add to cart",
+        "Place an order",
+        "View cart"
+      ]
+    },
+    {
+      "notice": "flagd and frontend-proxy are both down for 2 h 28 min",
+      "view": "plan",
+      "components": [
+        {
+          "component": "flagd",
+          "how": "named",
+          "score": null
+        },
+        {
+          "component": "frontend-proxy",
+          "how": "named",
+          "score": null
+        },
+        {
+          "component": "frontend",
+          "how": "search",
+          "score": 1.868
+        }
+      ],
+      "outage_min": 148,
+      "affected": [
+        {
+          "function": "Add to cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "Browse the shop",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "View a product",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "View cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "Show recommendations",
+          "promise_min": 480,
+          "critical": false,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": false
+        },
+        {
+          "function": "Show ads",
+          "promise_min": 1440,
+          "critical": false,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": false
+        }
+      ],
+      "broken": [
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart"
+      ],
+      "restore_order": [
+        "flagd",
+        "frontend",
+        "frontend-proxy",
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart",
+        "Show recommendations",
+        "Show ads"
+      ]
+    },
+    {
+      "notice": "flagd and frontend-proxy are both down for 2 h 28 min",
+      "view": "architecture",
+      "components": [
+        {
+          "component": "flagd",
+          "how": "named",
+          "score": null
+        },
+        {
+          "component": "frontend-proxy",
+          "how": "named",
+          "score": null
+        },
+        {
+          "component": "frontend",
+          "how": "search",
+          "score": 1.868
+        }
+      ],
+      "outage_min": 148,
+      "affected": [
+        {
+          "function": "Add to cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "flagd",
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "Browse the shop",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "flagd",
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "flagd",
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "View a product",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "flagd",
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "View cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "flagd",
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "Screen orders for fraud",
+          "promise_min": 240,
+          "critical": false,
+          "through": [
+            "flagd"
+          ],
+          "expected_outage_min": 148,
+          "broken": false
+        },
+        {
+          "function": "Show recommendations",
+          "promise_min": 480,
+          "critical": false,
+          "through": [
+            "flagd",
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": false
+        },
+        {
+          "function": "Show ads",
+          "promise_min": 1440,
+          "critical": false,
+          "through": [
+            "flagd",
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": false
+        }
+      ],
+      "broken": [
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart"
+      ],
+      "restore_order": [
+        "flagd",
+        "frontend",
+        "frontend-proxy",
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart",
+        "Screen orders for fraud",
+        "Show recommendations",
+        "Show ads"
+      ]
+    },
+    {
+      "notice": "flagd and frontend-proxy are both down for 2 h 28 min",
+      "view": "evidence",
+      "components": [
+        {
+          "component": "flagd",
+          "how": "named",
+          "score": null
+        },
+        {
+          "component": "frontend-proxy",
+          "how": "named",
+          "score": null
+        },
+        {
+          "component": "frontend",
+          "how": "search",
+          "score": 1.868
+        }
+      ],
+      "outage_min": 148,
+      "affected": [
+        {
+          "function": "Add to cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "Browse the shop",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "Place an order",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "flagd",
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "View a product",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "View cart",
+          "promise_min": 60,
+          "critical": true,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": true
+        },
+        {
+          "function": "Screen orders for fraud",
+          "promise_min": 240,
+          "critical": false,
+          "through": [
+            "flagd"
+          ],
+          "expected_outage_min": 148,
+          "broken": false
+        },
+        {
+          "function": "Show recommendations",
+          "promise_min": 480,
+          "critical": false,
+          "through": [
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": false
+        },
+        {
+          "function": "Show ads",
+          "promise_min": 1440,
+          "critical": false,
+          "through": [
+            "flagd",
+            "frontend",
+            "frontend-proxy"
+          ],
+          "expected_outage_min": 148,
+          "broken": false
+        }
+      ],
+      "broken": [
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart"
+      ],
+      "restore_order": [
+        "flagd",
+        "frontend",
+        "frontend-proxy",
+        "Add to cart",
+        "Browse the shop",
+        "Place an order",
+        "View a product",
+        "View cart",
+        "Screen orders for fraud",
+        "Show recommendations",
+        "Show ads"
+      ]
+    },
+    {
+      "notice": "The office coffee machine is broken",
+      "view": "plan",
+      "components": [],
+      "outage_min": null,
+      "affected": [],
+      "broken": [],
+      "restore_order": []
+    },
+    {
+      "notice": "The office coffee machine is broken",
+      "view": "architecture",
+      "components": [],
+      "outage_min": null,
+      "affected": [],
+      "broken": [],
+      "restore_order": []
+    },
+    {
+      "notice": "The office coffee machine is broken",
+      "view": "evidence",
+      "components": [],
+      "outage_min": null,
+      "affected": [],
+      "broken": [],
+      "restore_order": []
+    }
+  ],
+  "guard": [
+    {
+      "source": "frontend",
+      "target": "product-catalog",
+      "functions": [
+        "Browse the shop"
+      ],
+      "new": [
+        [
+          "inversion",
+          "Browse the shop",
+          240
+        ],
+        [
+          "restore_chain",
+          "Browse the shop",
+          300
+        ]
+      ],
+      "worse": []
+    },
+    {
+      "source": "checkout",
+      "target": "recommendation",
+      "functions": [
+        "Place an order"
+      ],
+      "new": [],
+      "worse": [
+        [
+          "restore_chain",
+          "Place an order",
+          330,
+          390
+        ]
+      ]
+    },
+    {
+      "source": "frontend",
+      "target": "ad",
+      "functions": [
+        "View cart"
+      ],
+      "new": [],
+      "worse": [
+        [
+          "restore_chain",
+          "View cart",
+          90,
+          105
+        ]
+      ]
+    },
+    {
+      "source": "cart",
+      "target": "flagd",
+      "functions": [
+        "View cart"
+      ],
+      "new": [],
+      "worse": []
+    }
+  ]
+}

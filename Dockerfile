@@ -1,22 +1,27 @@
-# Two images from one file. compose.yaml builds both; a plain `docker build .` gives the demo.
-#   app   the API and the web app on one port; live features with your own keys (.env)
-#   demo  the same image in demo mode: recorded or deterministic answers, no keys
+# Two images from one file; compose.yaml builds both, and a plain `docker build .` gives the web page.
+#   cli  the command line on the committed plan:  docker run --rm slowest-link:cli check
+#   web  the browser page, served on port 8080 (Relate runs in the page, in WebAssembly)
 
-FROM python:3.12-slim-bookworm AS app
+FROM python:3.12-slim-bookworm AS cli
 ENV PYTHONUNBUFFERED=1 \
-    APP_WEB_DIR=/app/web
+    DO_NOT_TRACK=1
 WORKDIR /app
-# System libraries that some wheels link go here (rasterio, for one, needs libexpat1), installed with apt-get.
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-COPY app/ app/
-COPY web/ web/
-RUN useradd --create-home appuser
+COPY slowest_link/ slowest_link/
+COPY sources/ sources/
+COPY plan/ plan/
+COPY evidence/ evidence/
+COPY experiments/ experiments/
+RUN useradd --create-home appuser && chown -R appuser /app
 USER appuser
-EXPOSE 8787
-HEALTHCHECK --interval=30s --timeout=5s --start-period=15s \
-    CMD python -c "import urllib.request as u; u.urlopen('http://127.0.0.1:8787/api/health', timeout=4)"
-CMD ["python", "-m", "uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "8787"]
+ENTRYPOINT ["python", "-m", "slowest_link"]
+CMD ["check"]
 
-FROM app AS demo
-ENV APP_DEMO=1
+FROM cli AS web
+COPY --chown=appuser web/ web/
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s \
+    CMD python -c "import urllib.request as u; u.urlopen('http://127.0.0.1:8080/', timeout=4)"
+ENTRYPOINT ["python", "-m", "http.server", "8080", "--bind", "0.0.0.0", "--directory", "web"]
+CMD []

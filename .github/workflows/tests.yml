@@ -1,5 +1,6 @@
 # On every push: lint, format, types, tests with coverage of the decision core, spelling and local links (Python);
-# the web build when there is one; and the Docker image, started and asked for its health and its page.
+# the browser code checked against the command line on Relate's WebAssembly build; and both Docker images, started
+# and called.
 # Read-only: nothing here writes to the repository.
 name: tests
 on:
@@ -8,6 +9,8 @@ on:
   pull_request:
 permissions:
   contents: read
+env:
+  DO_NOT_TRACK: "1"
 jobs:
   python:
     runs-on: ubuntu-latest
@@ -53,31 +56,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - id: has
-        run: echo "build=$([ -f web/package.json ] && echo yes || echo no)" >> "$GITHUB_OUTPUT"
-      - if: steps.has.outputs.build == 'yes'
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
           cache-dependency-path: web/package-lock.json
-      - if: steps.has.outputs.build == 'yes'
+      - name: The browser code gives the command line's answers, on Relate's WebAssembly build
         working-directory: web
         run: |
           npm ci
-          npx tsc -b
-          npx eslint src
-          npx vite build
+          node test/parity.mjs | tee parity.log
+          { echo "### Browser and command line"; echo; cat parity.log; } >> "$GITHUB_STEP_SUMMARY"
   docker:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: docker build --target demo -t project:demo .
-      - run: docker run -d --name demo -p 127.0.0.1:8787:8787 project:demo
-      - name: The API and the web app answer
+      - run: docker build --target cli -t slowest-link:cli .
+      - name: The command line runs every check on the committed plan
+        run: docker run --rm slowest-link:cli check --as-of 2026-11-14 | tee check.txt && grep -q "Broken promises" check.txt
+      - run: docker build --target web -t slowest-link:web .
+      - run: docker run -d --name web -p 127.0.0.1:8080:8080 slowest-link:web
+      - name: The page and its graph are served
         run: |
-          for i in $(seq 1 30); do curl -fs http://127.0.0.1:8787/api/health > /dev/null && break; sleep 2; done
-          curl -fs http://127.0.0.1:8787/api/health | grep -q '"demo":true'
-          curl -fs http://127.0.0.1:8787/ | grep -q '<title>'
+          for i in $(seq 1 30); do curl -fs http://127.0.0.1:8080/ > /dev/null && break; sleep 2; done
+          curl -fs http://127.0.0.1:8080/ | grep -q '<title>Slowest Link</title>'
+          curl -fs http://127.0.0.1:8080/data/graph.cypher | grep -q 'CREATE'
       - if: failure()
-        run: docker logs demo
+        run: docker logs web

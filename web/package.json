@@ -1,0 +1,13 @@
+{
+  "name": "slowest-link-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Checks that the browser page gives the command line's answers",
+  "scripts": {
+    "test": "node test/parity.mjs"
+  },
+  "devDependencies": {
+    "@relate/relate-wasm": "1.0.1"
+  }
+}

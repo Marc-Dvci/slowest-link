@@ -1,24 +1,17 @@
-# docker compose up demo   no keys                       http://localhost:8080
-# docker compose up app    live features, keys from .env  http://localhost:8787
-#
-# Both listen on this machine only: anyone who can reach `app` can spend your API credit.
-# Add a named volume to `app` if it keeps state.
+# docker compose up web          the browser page   http://localhost:8080
+# docker compose run --rm cli    the checks on the committed plan (add a command: explain "View cart", whatif "...")
 services:
-  demo:
+  web:
     build:
       context: .
-      target: demo
-    image: "slowest-link:demo"
+      target: web
+    image: "slowest-link:web"
     ports:
-      - "127.0.0.1:8080:8787"
+      - "127.0.0.1:8080:8080"
 
-  app:
+  cli:
     build:
       context: .
-      target: app
-    image: "slowest-link:app"
-    env_file:
-      - path: .env
-        required: false
-    ports:
-      - "127.0.0.1:8787:8787"
+      target: cli
+    image: "slowest-link:cli"
+    profiles: ["cli"]

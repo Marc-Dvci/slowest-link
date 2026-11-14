@@ -1,12 +1,13 @@
 {
   "name": "Slowest Link",
   "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
-  "postCreateCommand": "pip install -r requirements.txt",
-  "postStartCommand": "nohup bash -c 'APP_DEMO=1 python -m uvicorn app.server:app --host 0.0.0.0 --port 8787 > /tmp/demo.log 2>&1 &'",
-  "forwardPorts": [8787],
+  "containerEnv": { "DO_NOT_TRACK": "1" },
+  "postCreateCommand": "pip install -r requirements.txt && python -m slowest_link check",
+  "postStartCommand": "nohup bash -c 'python -m http.server 8080 --directory web > /tmp/web.log 2>&1 &'",
+  "forwardPorts": [8080],
   "portsAttributes": {
-    "8787": {
-      "label": "Slowest Link demo",
+    "8080": {
+      "label": "Slowest Link page",
       "onAutoForward": "openBrowser"
     }
   },
