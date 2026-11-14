@@ -3,20 +3,20 @@
 **Slowest Link finds the recovery promises a system can't keep: it checks each promise in a continuity plan against everything the function depends on, and shows the path that breaks it.**
 
 [![Tests](https://github.com/Marc-Dvci/slowest-link/actions/workflows/tests.yml/badge.svg)](https://github.com/Marc-Dvci/slowest-link/actions/workflows/tests.yml)
-[![Decision core coverage](https://img.shields.io/badge/decision%20core%20coverage-{{COVERAGE}}%25-brightgreen)](#run-it)
+[![Decision core coverage](https://img.shields.io/badge/decision%20core%20coverage-98%25-brightgreen)](#run-it)
 [![CodeQL](https://github.com/Marc-Dvci/slowest-link/actions/workflows/codeql.yml/badge.svg)](https://github.com/Marc-Dvci/slowest-link/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![Live page](https://img.shields.io/badge/live-page-003688)]({{LIVE_URL}})
+[![Live page](https://img.shields.io/badge/live-page-003688)](https://marc-dvci.github.io/slowest-link/)
 
 [![Watch the film: Slowest Link](docs/film_thumbnail.jpg)](https://www.youtube.com/watch?v={{VIDEO_ID}})
 
-**[Watch the film](https://www.youtube.com/watch?v={{VIDEO_ID}})** · **[Open the live page]({{LIVE_URL}})**
+**[Watch the film](https://www.youtube.com/watch?v={{VIDEO_ID}})** · **[Open the live page](https://marc-dvci.github.io/slowest-link/)**
 
 In business-continuity audits I worked on, recovery times were set one application at a time, and nobody checked them against what each application depends on.
 
 | Live page | Built with | Store | Headline result |
 |---|---|---|---|
-| [Open it]({{LIVE_URL}}) (Relate runs in the tab) | Relate by Neo4j 1.0.1: Python, CLI, MCP, WebAssembly | Markdown directory store, [`plan/`](plan/) | {{HEADLINE}} |
+| [Open it](https://marc-dvci.github.io/slowest-link/) (Relate runs in the tab) | Relate by Neo4j 1.0.1: Python, CLI, MCP, WebAssembly | Markdown directory store, [`plan/`](plan/) | Predicted 39 of 40 outages on a real shop, with 4 false alarms; its architecture diagram alone raised 91 |
 
 [For judges](#for-judges) · [See it work](#see-it-work) · [Use case](#use-case) · [How it uses Relate](#how-it-uses-relate) · [Agents](#agents) · [Results](#results) · [Run it](#run-it) · [Where the data lives](#where-the-data-lives)
 
@@ -25,8 +25,8 @@ In business-continuity audits I worked on, recovery times were set one applicati
 | Criterion | Where it is answered |
 |---|---|
 | Relate and connected context | [How it uses Relate](#how-it-uses-relate): the answers are path aggregates computed in Cypher on Relate ([`slowest_link/checks.py`](slowest_link/checks.py)); the plan is a Markdown vault Relate opens as a graph; the same queries run in the CLI, the MCP server and the browser ([parity check](web/test/parity.mjs)) |
-| Functionality and completeness | [See it work](#see-it-work), [Run it](#run-it): command line, MCP server, agent skill and hook, CI guard, browser page, Docker images; {{TEST_COUNT}} tests |
-| Usefulness | [Use case](#use-case), [Results](#results): every finding comes from a real system, its traces and {{TEST_RUNS}} outage tests on it |
+| Functionality and completeness | [See it work](#see-it-work), [Run it](#run-it): command line, MCP server, agent skill and hook, CI guard, browser page, Docker images; 129 tests |
+| Usefulness | [Use case](#use-case), [Results](#results): every finding comes from a real system, its traces and 34 outage tests on it |
 | Documentation and reproducibility | [Run it](#run-it) needs no keys and no Docker; [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md) and the committed evidence reproduce every number |
 | Creativity | A recovery promise checked as a path through a graph, with three kinds of evidence on each edge: declared, observed, proved by a test |
 | AI and agentic capabilities | [Agents](#agents): MCP tools, an agent skill, a coding-agent hook that blocks a promise-breaking change, and a measured comparison of an agent with and without the graph |
@@ -130,7 +130,52 @@ Plain code decides every finding, in Cypher on Relate. Models read and explain, 
 
 ## Results
 
-{{RESULTS}}
+Every number here is computed from the files in [`evidence/`](evidence/); the full tables, one row per test, are in
+[`docs/RESULTS.md`](docs/RESULTS.md), written by `python experiments/results_report.py`. The predictions were committed
+at [`9505baf`](https://github.com/Marc-Dvci/slowest-link/commit/9505baf), before the first outage test started.
+
+### What the plan misses
+
+| View | Broken promises | Restore chains past the promise |
+|---|---|---|
+| Plan (the plan's own list, one component at a time) | 0 | 0 |
+| Architecture (published calls, followed through) | 5 | 5 |
+| Evidence (each function's own traces, plus what the tests proved) | **3** | **4** |
+
+Checked the way plans are checked today, every promise holds. Through what each function really calls, "Add to cart",
+"Place an order" and "View a product" wait for the product database, which takes 4 hours to restore, against 1-hour
+promises. "View cart" has no single component slower than its 1-hour promise, but its restore chain (front door,
+frontend, cart, cart cache) takes 1 h 30 min. The plan's own list for "Place an order" leaves out 6 of the components it
+depends on, the 4-hour database among them.
+
+The published architecture is accurate about which calls exist: all 24 calls seen in 1,037 traces are in it. It cannot
+say which journey uses which call, so it flags "Browse the shop" and "View cart" through the frontend's fan-out. Ten of
+its declared calls appear in no trace.
+
+### Outages on the running shop
+
+Each of the 20 components was stopped for 60 seconds while every journey was replayed through the front door, against
+predictions committed before the tests ran:
+
+| View | Outages predicted | False alarms | Tests exactly right |
+|---|---|---|---|
+| Plan | 25 of 40 | 3 | 11 of 20 |
+| Architecture | 40 of 40 | 91 | 2 of 20 |
+| **Evidence** | **39 of 40** | **4** | **15 of 20** |
+
+The 14 failure flags inject partial faults (a failure rate, a slowdown). The evidence view predicted every function a
+flag took down, 9 of 9, with 16 false alarms where the fault stayed below the threshold; the architecture view raised
+92.
+
+The tests also corrected the graph, and the corrections are reviewable diffs in [`plan/`](plan/):
+
+- **Kafka.** Checkout publishes each order to Kafka, and its traces mark the call asynchronous. Stopping Kafka for 60
+  seconds took "Place an order" down, and orders stayed down after Kafka came back, until the services were restarted.
+  The test recorded the call as `needed_by: Place an order`; the what-if "Kafka is down for 3 hours" now reports that
+  promise broken.
+- **Email.** Every order's trace calls the email service, yet orders kept working while it was stopped. The test
+  recorded `survives_without: Place an order`, and the email service no longer counts against that promise.
+- **Restarts.** Every other affected journey was back within 10.9 seconds of its component restarting.
 
 > [!IMPORTANT]
 > What is real: the system is the OpenTelemetry Astronomy Shop 3.1.0, run unmodified in Docker; the declared calls are its published architecture; the traces, outage tests and recovery times were measured on it. The promises, the plan's component lists and the recovery objectives are the plan's inputs, as a continuity team writes them ([`sources/`](sources/)).
@@ -143,7 +188,7 @@ Plain code decides every finding, in Cypher on Relate. Models read and explain, 
 ## Run it
 
 > [!TIP]
-> Nothing to install: the [live page]({{LIVE_URL}}), or a ready environment in your browser:
+> Nothing to install: the [live page](https://marc-dvci.github.io/slowest-link/), or a ready environment in your browser:
 > [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Marc-Dvci/slowest-link?quickstart=1)
 
 ### Setup and run
@@ -172,7 +217,7 @@ relate --read-only --database plan "MATCH (f:Function) RETURN f.name, f.promise_
 relate serve --mcp stdio --database plan --read-only      # Relate's own MCP server on the plan
 ```
 
-Tests: `pip install -r requirements-dev.txt`, then `python -m pytest --cov`. {{TEST_COUNT}} tests run in a new random order each time; they cover {{COVERAGE}}% of the decision core's lines and {{BRANCH_COVERAGE}}% of its branches, and CI fails below 90%. `cd web && npm ci && node test/parity.mjs` checks that the browser code gives the command line's answers on Relate's WebAssembly build.
+Tests: `pip install -r requirements-dev.txt`, then `python -m pytest --cov`. 129 tests run in a new random order each time; they cover 98% of the decision core's lines and 91% of its branches, and CI fails below 90%. `cd web && npm ci && node test/parity.mjs` checks that the browser code gives the command line's answers on Relate's WebAssembly build.
 
 To repeat the experiments on your own machine (Docker, about 8 GB of images), follow [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md).
 
@@ -187,7 +232,16 @@ To repeat the experiments on your own machine (Docker, about 8 GB of images), fo
 
 ## Claims
 
-{{CLAIMS}}
+| Claim | Code | Test |
+|---|---|---|
+| The plan, architecture and evidence views find 0, 5 and 3 broken promises | [`checks.py`](slowest_link/checks.py) | [`test_claims.py`](tests/test_claims.py) |
+| "View cart" breaks its promise only through its 1 h 30 min restore chain | [`checks.py`](slowest_link/checks.py) | [`test_claims.py`](tests/test_claims.py) |
+| 1,037 traces, every one attributed; all 24 observed calls are in the published architecture | [`traces.py`](slowest_link/traces.py) | [`test_claims.py`](tests/test_claims.py), [`test_cli.py`](tests/test_cli.py) |
+| The evidence view predicted 39 of 40 outages with 4 false alarms; the architecture view, 40 with 91 | [`scoring.py`](slowest_link/scoring.py) | [`test_claims.py`](tests/test_claims.py) |
+| The tests wrote one needed call and two survivable calls into the plan | [`evidence.py`](slowest_link/evidence.py) | [`test_claims.py`](tests/test_claims.py) |
+| The guard blocks a call that puts the 4-hour database under "Browse the shop" | [`guard.py`](slowest_link/guard.py) | [`test_cli.py`](tests/test_cli.py) |
+| The browser page gives the command line's answers | [`web/js/checks.js`](web/js/checks.js) | [`parity.mjs`](web/test/parity.mjs), [`test_web_parity.py`](tests/test_web_parity.py) |
+| The MCP tools cannot write to the plan | [`mcp_server.py`](slowest_link/mcp_server.py) | [`test_cli.py`](tests/test_cli.py) |
 
 ## Layout
 

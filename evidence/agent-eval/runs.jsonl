@@ -1,0 +1,3 @@
+{"id": "q01", "mode": "files", "repeat": 0, "model": "qwen3.8-flash", "seconds": 66.9, "text": "{\"answer\": [\"Add to cart\", \"Place an order\", \"View a product\"]}", "tool_calls": [], "usage": {"prompt_tokens": 11724, "completion_tokens": 4142}}
+{"id": "q02", "mode": "files", "repeat": 0, "model": "qwen3.8-flash", "seconds": 90.8, "text": "{\"answer\": 330}", "tool_calls": [], "usage": {"prompt_tokens": 11734, "completion_tokens": 6161}}
+{"id": "q03", "mode": "files", "repeat": 0, "model": "qwen3.8-flash", "seconds": 59.7, "text": "{\"answer\": [\"astronomy-db\", \"flagd\", \"kafka\", \"product-catalog\", \"quote\", \"valkey-cart\"]}", "tool_calls": [], "usage": {"prompt_tokens": 11733, "completion_tokens": 3672}}
