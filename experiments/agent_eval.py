@@ -141,12 +141,20 @@ def chat(url: str, key: str, messages: list[dict[str, Any]], tools: list[dict[st
     body: dict[str, Any] = {"model": MODEL, "messages": messages, "temperature": 0}
     if tools:
         body["tools"] = tools
-    req = urllib.request.Request(url, data=json.dumps(body).encode(), method="POST")
-    req.add_header("Authorization", f"Bearer {key}")
-    req.add_header("Content-Type", "application/json")
-    with urllib.request.urlopen(req, timeout=180) as response:
-        result: dict[str, Any] = json.load(response)
-    return result
+    data = json.dumps(body).encode()
+    for attempt in range(4):
+        req = urllib.request.Request(url, data=data, method="POST")
+        req.add_header("Authorization", f"Bearer {key}")
+        req.add_header("Content-Type", "application/json")
+        try:
+            with urllib.request.urlopen(req, timeout=180) as response:
+                result: dict[str, Any] = json.load(response)
+            return result
+        except (TimeoutError, OSError):
+            if attempt == 3:
+                raise
+            time.sleep(10 * (attempt + 1))  # a slow or dropped call is retried; the request is the same
+    raise RuntimeError("unreachable")
 
 
 def ask(mode: str, question: str, url: str, key: str, specs: list[dict[str, Any]], run: Any) -> dict[str, Any]:
@@ -233,10 +241,18 @@ def main() -> None:
     if a.step == "run":
         key, url = credentials()
         specs, run = tool_specs_and_runner()
+        done = set()
+        if rfile.exists():  # resume: answers already recorded are kept
+            for line in rfile.read_text(encoding="utf-8").splitlines():
+                if line.strip():
+                    r = json.loads(line)
+                    done.add((r["id"], r["mode"], r["repeat"]))
         with rfile.open("a", encoding="utf-8") as sink:
             for repeat in range(a.repeats):
                 for mode in ("files", "tools"):
                     for q in qs:
+                        if (q["id"], mode, repeat) in done:
+                            continue
                         started = time.time()
                         result = ask(mode, q["question"], url, key, specs, run)
                         record = {"id": q["id"], "mode": mode, "repeat": repeat, "model": MODEL,
