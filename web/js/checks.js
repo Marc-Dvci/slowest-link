@@ -4,6 +4,7 @@
 export const VIEWS = ["plan", "architecture", "evidence"];
 const COMPONENT = "Service|Datastore|Queue";
 const RELATIVE_SCORE = 0.6;
+const MIN_SCORE = 1.5; // a weaker hit is a common word, such as "order" (slowest_link/whatif.py)
 const STOP_WORDS = new Set(
   `a about after all also an and any are as at be been being but by can could down due during eta expect expected
   estimate estimated estimates for from has have hour hours in is it its min mins minute minutes more no not now of
@@ -73,9 +74,9 @@ export function matchComponents(graph, notice, db) {
       db,
     );
     if (hits.length) {
-      const top = hits[0].score;
+      const floor = Math.max(MIN_SCORE, RELATIVE_SCORE * hits[0].score);
       for (const hit of hits) {
-        if (hit.score >= RELATIVE_SCORE * top && !exact.includes(hit.component)) {
+        if (hit.score >= floor && !exact.includes(hit.component)) {
           found.push({ component: hit.component, how: "search", score: Math.round(hit.score * 1000) / 1000 });
         }
       }

@@ -8,6 +8,7 @@
     "test": "node test/parity.mjs"
   },
   "devDependencies": {
-    "@relate/relate-wasm": "1.0.1"
+    "@relate/relate-wasm": "1.0.1",
+    "axe-core": "4.10.3"
   }
 }

@@ -1,7 +1,7 @@
 """What-if: read an outage notice and list the promises it breaks, with a restore order.
 
 1. Components: names written in the notice, then Relate's full-text `SEARCH` over component names and descriptions,
-   with the words every notice uses left out (hits scoring at least 60% of the best hit).
+   with the words every notice uses left out (hits scoring at least 1.5, and at least 60% of the best hit).
 2. Duration: the first duration in the notice ("3 hours", "2 h 28 min", "90 minutes"); without one, each matched
    component's declared recovery objective.
 3. Impact: every function whose dependencies in the chosen view include a matched component. A promise is broken
@@ -21,6 +21,9 @@ from slowest_link import checks
 from slowest_link.store import rows
 
 RELATIVE_SCORE = 0.6
+# On the shop's plan, notices about one of its components score 1.92 or more and unrelated notices 1.25 or less
+# (tests/test_whatif.py): a hit below this floor is a common word, such as "order", and is left out.
+MIN_SCORE = 1.5
 _WORD = re.compile(r"[a-z][a-z0-9-]*")
 # Words every outage notice uses: they say that something failed, not what. Left out of the search.
 STOP_WORDS = frozenset(
@@ -73,8 +76,11 @@ def parse_duration(text: str) -> int | None:
     return None
 
 
-def match_components(conn: relate.Connection, notice: str) -> list[dict[str, Any]]:
-    """Components the notice is about: exact names first, then full-text hits close to the best one."""
+def match_components(conn: relate.Connection, notice: str, min_score: float = MIN_SCORE) -> list[dict[str, Any]]:
+    """Components the notice is about: exact names first, then full-text hits close to the best one.
+
+    Full-text scores grow with the number of components, so `min_score` is calibrated on the plan it serves.
+    """
     names = [row["n"] for row in rows(conn, f"MATCH (c:{checks.COMPONENT}) RETURN c.name AS n")]
     lowered = notice.lower()
     exact = [n for n in names if re.search(rf"(?<![a-z0-9-]){re.escape(n)}(?![a-z0-9-])", lowered)]
@@ -88,9 +94,9 @@ def match_components(conn: relate.Connection, notice: str) -> list[dict[str, Any
             {"q": terms},
         )
         if hits:
-            top = float(hits[0]["score"])
+            floor = max(min_score, RELATIVE_SCORE * float(hits[0]["score"]))
             for hit in hits:
-                if float(hit["score"]) >= RELATIVE_SCORE * top and hit["component"] not in exact:
+                if float(hit["score"]) >= floor and hit["component"] not in exact:
                     found.append(
                         {"component": hit["component"], "how": "search", "score": round(float(hit["score"]), 3)}
                     )
@@ -116,8 +122,10 @@ def _dependency_first(conn: relate.Connection, components: list[str]) -> list[st
     return ordered
 
 
-def what_if(conn: relate.Connection, notice: str, view: checks.View = "evidence") -> WhatIf:
-    matched = match_components(conn, notice)
+def what_if(
+    conn: relate.Connection, notice: str, view: checks.View = "evidence", min_score: float = MIN_SCORE
+) -> WhatIf:
+    matched = match_components(conn, notice, min_score)
     outage = parse_duration(notice)
     result = WhatIf(notice=notice, view=view, components=matched, outage_min=outage)
     if not matched:

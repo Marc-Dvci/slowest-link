@@ -1,6 +1,6 @@
 # On every push: lint, format, types, tests with coverage of the decision core, spelling and local links (Python);
-# the browser code checked against the command line on Relate's WebAssembly build; and both Docker images, started
-# and called.
+# the browser code checked against the command line on Relate's WebAssembly build; the page driven in Chromium with
+# an axe-core scan; and both Docker images, started and called.
 # Read-only: nothing here writes to the repository.
 name: tests
 on:
@@ -67,6 +67,29 @@ jobs:
           npm ci
           node test/parity.mjs | tee parity.log
           { echo "### Browser and command line"; echo; cat parity.log; } >> "$GITHUB_STEP_SUMMARY"
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: pip install -r requirements-dev.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: npm ci
+        working-directory: web
+      - name: The page in Chromium, every section, with an axe-core scan
+        shell: bash
+        run: |
+          python -m pytest -q -m e2e | tee e2e.log
+          { echo "### Browser tests"; echo; grep -E "passed|failed" e2e.log | tail -n 1; } >> "$GITHUB_STEP_SUMMARY"
   docker:
     runs-on: ubuntu-latest
     steps:

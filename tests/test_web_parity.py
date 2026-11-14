@@ -25,6 +25,8 @@ NOTICES = [
     "The cart cache (valkey-cart) is lost; rebuilding for 90 minutes.",
     "flagd and frontend-proxy are both down for 2 h 28 min",
     "The office coffee machine is broken",
+    "The coffee machine on the third floor is out of order.",
+    "Customer support phone lines are busy.",
 ]
 CALLS = [
     ("frontend", "product-catalog", ["Browse the shop"]),

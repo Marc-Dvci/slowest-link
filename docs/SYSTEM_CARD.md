@@ -31,7 +31,7 @@ changes to promises and recovery times are made in the notes and reviewed as dif
 
 - The checks are deterministic Cypher; their figures on the running shop are in [`RESULTS.md`](RESULTS.md): from 20
   component stops, the evidence view predicted 39 of 40 outages with 4 false alarms.
-- The browser code gives the command line's answers on 22 of 22 cases ([`web/test/parity.mjs`](../web/test/parity.mjs)).
+- The browser code gives the command line's answers on 28 of 28 cases ([`web/test/parity.mjs`](../web/test/parity.mjs)).
 - Agents: Qwen 3.8 Flash answered 12 questions three times each. Reading the plan's notes: 36 of 36 correct, 85 seconds
   per answer. Calling the tools: 31 of 36 correct, 21 seconds per answer.
 

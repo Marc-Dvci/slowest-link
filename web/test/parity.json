@@ -1209,6 +1209,60 @@
       "affected": [],
       "broken": [],
       "restore_order": []
+    },
+    {
+      "notice": "The coffee machine on the third floor is out of order.",
+      "view": "plan",
+      "components": [],
+      "outage_min": null,
+      "affected": [],
+      "broken": [],
+      "restore_order": []
+    },
+    {
+      "notice": "The coffee machine on the third floor is out of order.",
+      "view": "architecture",
+      "components": [],
+      "outage_min": null,
+      "affected": [],
+      "broken": [],
+      "restore_order": []
+    },
+    {
+      "notice": "The coffee machine on the third floor is out of order.",
+      "view": "evidence",
+      "components": [],
+      "outage_min": null,
+      "affected": [],
+      "broken": [],
+      "restore_order": []
+    },
+    {
+      "notice": "Customer support phone lines are busy.",
+      "view": "plan",
+      "components": [],
+      "outage_min": null,
+      "affected": [],
+      "broken": [],
+      "restore_order": []
+    },
+    {
+      "notice": "Customer support phone lines are busy.",
+      "view": "architecture",
+      "components": [],
+      "outage_min": null,
+      "affected": [],
+      "broken": [],
+      "restore_order": []
+    },
+    {
+      "notice": "Customer support phone lines are busy.",
+      "view": "evidence",
+      "components": [],
+      "outage_min": null,
+      "affected": [],
+      "broken": [],
+      "restore_order": []
     }
   ],
   "guard": [
