@@ -58,8 +58,6 @@ class Runner:
         self.out = out
         self.flag_file = demo_dir / "src" / "flagd" / "demo.flagd.json"
         self.flag_original = self.flag_file.read_text(encoding="utf-8")
-        port = docker("port", "flagd", "8016").splitlines()[0].rsplit(":", 1)[1]
-        self.ofrep = f"http://localhost:{port}/ofrep/v1/evaluate/flags/"
         self.checks: list[threading.Thread] = []
 
     # --- observation -------------------------------------------------------------------------------------------
@@ -170,12 +168,15 @@ class Runner:
     def confirm_flag(self, flag: str, variant: str) -> bool:
         for _ in range(15):
             try:
-                req = urllib.request.Request(self.ofrep + flag, data=b'{"context":{}}', method="POST")
+                # flagd gets a new host port each time it restarts, so look it up on every check.
+                port = docker("port", "flagd", "8016").splitlines()[0].rsplit(":", 1)[1]
+                url = f"http://localhost:{port}/ofrep/v1/evaluate/flags/{flag}"
+                req = urllib.request.Request(url, data=b'{"context":{}}', method="POST")
                 req.add_header("Content-Type", "application/json")
                 with urllib.request.urlopen(req, timeout=5) as response:
                     if json.load(response).get("variant") == variant:
                         return True
-            except OSError:
+            except (OSError, RuntimeError, IndexError):
                 pass
             time.sleep(1)
         return False

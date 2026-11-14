@@ -54,6 +54,8 @@ On 12 June 2025 a third-party cloud provider behind Cloudflare's Workers KV fail
 
 Continuity plans share that blind spot. A business impact analysis gives each function a recovery promise ("orders back within 1 hour") and lists the applications it uses. Each application's owner declares how fast it recovers. Each line can look fine on its own while the function waits for a database three calls away that takes 4 hours to restore.
 
+European financial law asks for exactly this check. Under DORA, the business impact analysis "shall consider the criticality of identified and mapped business functions, support processes, third-party dependencies and information assets, and their interdependencies"[^2], and continuity plans must be tested at least yearly[^3]. A downtime longer than 2 hours for ICT services that support critical or important functions counts toward a major incident[^4].
+
 Slowest Link is for the continuity lead who signs the annual recovery test plan, and for the engineer on call at 07:40 when a provider's status page turns red. It answers three questions from the graph:
 
 1. **Which promises can't be kept?** The slowest recovery on any path under the function, and the longest restore chain, since a dependent comes back only after what it waits for.
@@ -199,3 +201,6 @@ To repeat the experiments on your own machine (Docker, about 8 GB of images), fo
 [MIT](LICENSE). The shop's service diagram in `sources/` is © OpenTelemetry Authors, CC BY 4.0. The shop's checkout payloads in `experiments/people.json` come from the OpenTelemetry demo, Apache-2.0.
 
 [^1]: Cloudflare, "Cloudflare service outage June 12, 2025", https://blog.cloudflare.com/cloudflare-service-outage-june-12-2025/
+[^2]: Regulation (EU) 2022/2554 (DORA), Article 11(5), https://eur-lex.europa.eu/eli/reg/2022/2554/oj
+[^3]: Regulation (EU) 2022/2554 (DORA), Article 11(6)(a): "test the ICT business continuity plans and the ICT response and recovery plans in relation to ICT systems supporting all functions at least yearly".
+[^4]: Commission Delegated Regulation (EU) 2024/1772, Article 9(3)(b), https://eur-lex.europa.eu/eli/reg_del/2024/1772/oj
