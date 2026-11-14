@@ -1,0 +1,10 @@
+function,journeys,promise_min,critical,enters,uses,description
+Browse the shop,user_index;user_session_start,60,true,frontend-proxy,frontend-proxy;frontend,A visitor opens the shop's home page.
+View a product,user_browse_product,60,true,frontend-proxy,frontend-proxy;frontend;product-catalog,A visitor opens a product page.
+Add to cart,user_add_to_cart,60,true,frontend-proxy,frontend-proxy;frontend;product-catalog;cart,A visitor adds a product to the cart.
+View cart,user_view_cart,60,true,frontend-proxy,frontend-proxy;frontend;cart,A visitor opens the cart.
+Place an order,user_checkout_single;user_checkout_multi,60,true,frontend-proxy,frontend-proxy;frontend;cart;checkout;payment;shipping;currency;email,A customer pays and the order is placed.
+Show recommendations,user_get_recommendations,480,false,frontend-proxy,frontend-proxy;frontend;recommendation,The shop suggests related products.
+Show ads,user_get_ads,1440,false,frontend-proxy,frontend-proxy;frontend;ad,The shop shows contextual ads.
+Record orders in accounting,,1440,true,accounting,accounting;astronomy-db,Each placed order is written to the ledger.
+Screen orders for fraud,,240,false,fraud-detection,fraud-detection,Each placed order is screened for fraud.

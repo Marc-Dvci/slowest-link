@@ -1,0 +1,21 @@
+component,kind,recovery_min,owner,description
+frontend-proxy,Service,15,Platform,"Envoy front door that routes every web request to the frontend, images and feature flags."
+frontend,Service,15,Storefront,Next.js web frontend that renders the shop pages and serves its API routes.
+product-catalog,Service,30,Catalogue,Product catalogue service that lists products and their prices.
+cart,Service,30,Storefront,Cart service that stores each visitor's shopping cart.
+valkey-cart,Datastore,30,Platform,Valkey cache that holds the shopping carts.
+checkout,Service,30,Orders,"Checkout service that places an order: cart, prices, payment, shipping and confirmation."
+payment,Service,30,Payments,Payment service that charges the customer's card.
+currency,Service,30,Storefront,Currency service that converts prices between currencies.
+shipping,Service,30,Orders,Shipping service that quotes shipping costs and ships orders.
+quote,Service,30,Orders,Quote service that computes shipping cost quotes.
+email,Service,60,Orders,Email service that sends the order confirmation.
+recommendation,Service,60,Marketing,Recommendation service that suggests related products.
+ad,Service,60,Marketing,Ad service that serves contextual ads.
+image-provider,Service,30,Platform,nginx server for the product images.
+flagd,Service,15,Platform,flagd feature flag service that evaluates flags for every service.
+flagd-ui,Service,60,Platform,Web console for editing feature flags.
+kafka,Queue,120,Platform,Kafka message queue that carries placed orders to accounting and fraud detection.
+astronomy-db,Datastore,240,Platform,PostgreSQL database that holds the product catalogue and the accounting ledger.
+accounting,Service,120,Finance,Accounting service that records each placed order in the ledger.
+fraud-detection,Service,120,Risk,Fraud detection service that screens each placed order.
