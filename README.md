@@ -8,9 +8,9 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Live page](https://img.shields.io/badge/live-page-003688)](https://marc-dvci.github.io/slowest-link/)
 
-[![Watch the film: Slowest Link](docs/film_thumbnail.jpg)](https://www.youtube.com/watch?v={{VIDEO_ID}})
+[![Watch the film: Slowest Link](docs/film_thumbnail.jpg)](https://www.youtube.com/watch?v=NZ8W9UeiZ7E)
 
-**[Watch the film](https://www.youtube.com/watch?v={{VIDEO_ID}})** · **[Open the live page](https://marc-dvci.github.io/slowest-link/)**
+**[Watch the film](https://www.youtube.com/watch?v=NZ8W9UeiZ7E)** · **[Open the live page](https://marc-dvci.github.io/slowest-link/)**
 
 In business-continuity audits I worked on, recovery times were set one application at a time, and nobody checked them against what each application depends on.
 
