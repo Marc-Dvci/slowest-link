@@ -50,6 +50,15 @@ def test_explain_shows_a_function_in_each_view(vault: Path, capsys: pytest.Captu
     assert code == 0 and "restore chain" in out and "Evidence" in out
 
 
+def test_explain_ignores_case_and_names_the_functions_when_it_finds_none(
+    vault: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    code, out = run(capsys, "explain", "view CART", "--vault", str(vault))
+    assert code == 0 and out.startswith("View cart: promises 1 h")
+    assert cli.main(["explain", "Checkout", "--vault", str(vault)]) == 2
+    assert "the plan's functions: Add to cart, Browse the shop" in capsys.readouterr().err
+
+
 def test_whatif_reads_a_notice(vault: Path, capsys: pytest.CaptureFixture[str]) -> None:
     code, out = run(capsys, "whatif", "PostgreSQL database down for 3 hours", "--vault", str(vault), "--json")
     data = json.loads(out)

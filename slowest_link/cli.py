@@ -32,7 +32,7 @@ from slowest_link import checks, guard, report, scoring, whatif
 from slowest_link.evidence import import_derivation, plan_maps, record_need, record_survival, record_test
 from slowest_link.export import export_cypher
 from slowest_link.seed import seed
-from slowest_link.store import open_store
+from slowest_link.store import open_store, rows
 from slowest_link.traces import derive_calls
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -89,7 +89,12 @@ def cmd_check(a: argparse.Namespace) -> int:
 
 def cmd_explain(a: argparse.Namespace) -> int:
     with open_store(a.vault, read_only=True) as conn:
-        text = report.render_explain(conn, a.function)
+        names = [r["name"] for r in rows(conn, "MATCH (f:Function) RETURN f.name AS name ORDER BY name")]
+        function = next((n for n in names if n.casefold() == a.function.strip().casefold()), None)
+        if function is None:
+            print(f"no function named {a.function!r}; the plan's functions: {', '.join(names)}", file=sys.stderr)
+            return 2
+        text = report.render_explain(conn, function)
     print(text)
     return 0
 

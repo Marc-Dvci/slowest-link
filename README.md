@@ -25,7 +25,7 @@ In business-continuity audits I worked on, recovery times were set one applicati
 | Criterion | Where it is answered |
 |---|---|
 | Relate and connected context | [How it uses Relate](#how-it-uses-relate): the answers are path aggregates computed in Cypher on Relate ([`slowest_link/checks.py`](slowest_link/checks.py)); the plan is a Markdown vault Relate opens as a graph; the same queries run in the CLI, the MCP server and the browser ([parity check](web/test/parity.mjs)) |
-| Functionality and completeness | [See it work](#see-it-work), [Run it](#run-it): command line, MCP server, agent skill and hook, CI guard, browser page, Docker images; 139 tests and 12 browser tests |
+| Functionality and completeness | [See it work](#see-it-work), [Run it](#run-it): command line, MCP server, agent skill and hook, CI guard, browser page, Docker images; 140 tests and 12 browser tests |
 | Usefulness | [Use case](#use-case), [Results](#results): every finding comes from a real system, its traces and 34 outage tests on it |
 | Documentation and reproducibility | [Run it](#run-it) needs no keys and no Docker; [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md) and the committed evidence reproduce every number |
 | Creativity | A recovery promise checked as a path through a graph, with three kinds of evidence on each edge: declared, observed, proved by a test |
@@ -227,7 +227,7 @@ relate --read-only --database plan "MATCH (f:Function) RETURN f.name, f.promise_
 relate serve --mcp stdio --database plan --read-only      # Relate's own MCP server on the plan
 ```
 
-Tests: `pip install -r requirements-dev.txt`, then `python -m pytest --cov`. 139 tests run in a new random order each time; they cover 98% of the decision core's lines and 91% of its branches, and CI fails below 90%. `cd web && npm ci && node test/parity.mjs` checks that the browser code gives the command line's answers on Relate's WebAssembly build, 28 of 28 cases. `python -m playwright install chromium`, then `python -m pytest -m e2e` drives the page in Chromium: 12 tests of every section, including an axe-core scan with no serious accessibility violation.
+Tests: `pip install -r requirements-dev.txt`, then `python -m pytest --cov`. 140 tests run in a new random order each time; they cover 98% of the decision core's lines and 91% of its branches, and CI fails below 90%. `cd web && npm ci && node test/parity.mjs` checks that the browser code gives the command line's answers on Relate's WebAssembly build, 28 of 28 cases. `python -m playwright install chromium`, then `python -m pytest -m e2e` drives the page in Chromium: 12 tests of every section, including an axe-core scan with no serious accessibility violation.
 
 To repeat the experiments on your own machine (Docker, about 8 GB of images), follow [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md).
 
