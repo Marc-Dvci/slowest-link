@@ -20,4 +20,4 @@ jobs:
           if [ "$(date -u +%F)" \> "$RESULTS_DATE" ]; then echo "Past the results date."; exit 0; fi
           curl -fsS --retry 3 --retry-delay 20 --max-time 90 "$LIVE_URL/" | grep -q '<title>Slowest Link</title>'
           curl -fsS --max-time 90 "$LIVE_URL/data/graph.cypher" | grep -q 'CREATE'
-          curl -fsS --max-time 90 "https://cdn.jsdelivr.net/npm/@relate/relate-wasm@1.0.1/relate_bg.wasm" -o /dev/null
+          curl -fsS --max-time 90 "https://cdn.jsdelivr.net/npm/@relate/relate-wasm@1.2.0/relate_bg.wasm" -o /dev/null

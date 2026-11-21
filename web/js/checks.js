@@ -65,7 +65,10 @@ export function matchComponents(graph, notice, db) {
     .filter((n) => new RegExp(`(?<![a-z0-9-])${escapeRe(n)}(?![a-z0-9-])`).test(lowered))
     .sort();
   const found = exact.map((n) => ({ component: n, how: "named", score: null }));
-  const terms = (lowered.match(/[a-z][a-z0-9-]*/g) || []).filter((w) => !STOP_WORDS.has(w)).join(" ");
+  // The names already found are left out of the search, so "frontend" does not bring in "frontend-proxy".
+  const terms = (lowered.match(/[a-z][a-z0-9-]*/g) || [])
+    .filter((w) => !STOP_WORDS.has(w) && !exact.includes(w))
+    .join(" ");
   if (terms) {
     const hits = graph.rows(
       "MATCH (n) SEARCH n IN (FULLTEXT INDEX component_text FOR $q LIMIT 5) SCORE AS score " +

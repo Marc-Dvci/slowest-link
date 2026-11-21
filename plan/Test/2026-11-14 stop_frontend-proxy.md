@@ -11,7 +11,7 @@ affected:
 date: 2026-11-14
 fault: frontend-proxy
 kind: stop
-name: 2026-11-14 stop:frontend-proxy
+name: 2026-11-14 stop_frontend-proxy
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

@@ -5,7 +5,7 @@ affected:
 date: 2026-11-14
 fault: paymentUnreachable
 kind: flag
-name: 2026-11-14 flag:paymentUnreachable
+name: 2026-11-14 flag_paymentUnreachable
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

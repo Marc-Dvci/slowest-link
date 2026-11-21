@@ -5,7 +5,7 @@ affected:
 date: 2026-11-14
 fault: payment
 kind: stop
-name: 2026-11-14 stop:payment
+name: 2026-11-14 stop_payment
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

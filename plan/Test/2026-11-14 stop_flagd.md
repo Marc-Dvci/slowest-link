@@ -6,7 +6,7 @@ affected:
 date: 2026-11-14
 fault: flagd
 kind: stop
-name: 2026-11-14 stop:flagd
+name: 2026-11-14 stop_flagd
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

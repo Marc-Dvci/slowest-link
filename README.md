@@ -16,7 +16,7 @@ In business-continuity audits I worked on, recovery times were set one applicati
 
 | Live page | Built with | Store | Headline result |
 |---|---|---|---|
-| [Open it](https://marc-dvci.github.io/slowest-link/) (Relate runs in the tab) | Relate by Neo4j 1.0.1: Python, CLI, MCP, WebAssembly | Markdown directory store, [`plan/`](plan/) | Predicted 39 of 40 outages on a real shop, with 4 false alarms; its architecture diagram alone raised 91 |
+| [Open it](https://marc-dvci.github.io/slowest-link/) (Relate runs in the tab) | Relate by Neo4j 1.2.0: Python, CLI, MCP, WebAssembly | Markdown directory store, [`plan/`](plan/) | Predicted 39 of 40 outages on a real shop, with 4 false alarms; its architecture diagram alone raised 91 |
 
 [For judges](#for-judges) · [See it work](#see-it-work) · [Use case](#use-case) · [How it uses Relate](#how-it-uses-relate) · [Agents](#agents) · [Results](#results) · [Run it](#run-it) · [Where the data lives](#where-the-data-lives)
 
@@ -25,7 +25,7 @@ In business-continuity audits I worked on, recovery times were set one applicati
 | Criterion | Where it is answered |
 |---|---|
 | Relate and connected context | [How it uses Relate](#how-it-uses-relate): the answers are path aggregates computed in Cypher on Relate ([`slowest_link/checks.py`](slowest_link/checks.py)); the plan is a Markdown vault Relate opens as a graph; the same queries run in the CLI, the MCP server and the browser ([parity check](web/test/parity.mjs)) |
-| Functionality and completeness | [See it work](#see-it-work), [Run it](#run-it): command line, MCP server, agent skill and hook, CI guard, browser page, Docker images; 140 tests and 12 browser tests |
+| Functionality and completeness | [See it work](#see-it-work), [Run it](#run-it): command line, MCP server, agent skill and hook, CI guard, browser page, Docker images; 142 tests and 12 browser tests |
 | Usefulness | [Use case](#use-case), [Results](#results): every finding comes from a real system, its traces and 34 outage tests on it |
 | Documentation and reproducibility | [Run it](#run-it) needs no keys and no Docker; [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md) and the committed evidence reproduce every number |
 | Creativity | A recovery promise checked as a path through a graph, with three kinds of evidence on each edge: declared, observed, proved by a test |
@@ -35,7 +35,7 @@ In business-continuity audits I worked on, recovery times were set one applicati
 
 ![The browser page switching from the plan view (no broken promise) to the architecture view (all five 1-hour promises late) to the evidence view (four functions late, through the 4-hour database and the cart chain); each function is a line drawn to scale, the tick is its promise and red marks the time past it](docs/views.gif)
 
-The page above runs Relate 1.0.1 in the browser tab, compiled to WebAssembly. It loads the plan, runs the same Cypher as the command line, and draws each function as a line. The stations are the components it waits for, in restore order; the tick is its promise; the ringed station is its slowest link. Checked one component at a time, the plan keeps every promise; followed through the published architecture, all five 1-hour promises are late; through what each function really calls, four functions are.
+The page above runs Relate 1.2.0 in the browser tab, compiled to WebAssembly. It loads the plan, runs the same Cypher as the command line, and draws each function as a line. The stations are the components it waits for, in restore order; the tick is its promise; the ringed station is its slowest link. Checked one component at a time, the plan keeps every promise; followed through the published architecture, all five 1-hour promises are late; through what each function really calls, four functions are.
 
 ```text
 $ python -m slowest_link guard --call "frontend->product-catalog" --for "Browse the shop"
@@ -92,7 +92,7 @@ Each `CALLS` edge carries three kinds of evidence. `declared`: the published arc
 | Full-text index and `SEARCH` | The what-if maps an outage notice to components ([`whatif.py`](slowest_link/whatif.py)) |
 | Read-only open | The MCP tools and the guard never write to the plan; Relate refuses a write on a read-only open |
 | WebAssembly (`@relate/relate-wasm`) | The browser page runs the plan and the same queries in the tab ([`web/js`](web/js)) |
-| CLI | `relate --database plan "MATCH ..."` explores the vault; `relate serve --mcp stdio --database plan --read-only` serves it to any agent |
+| CLI | `relate --read-only --database plan "MATCH ..."` explores the vault; `relate serve --mcp stdio --database plan --read-only` serves it to any agent |
 
 ```cypher
 // The slowest link under every function, in the evidence view (slowest_link/checks.py)
@@ -220,14 +220,14 @@ With Docker: `docker compose up web` serves the page at http://localhost:8080, a
 
 In Claude Code, the repository's [`.mcp.json`](.mcp.json) offers the `slowest-link` MCP server and the skill loads from `.claude/skills/`. Any MCP client can start it with `python -m slowest_link mcp`.
 
-To explore the vault with the Relate CLI ([install](https://relatedb.ai/docs/get-started/install/)):
+To explore the vault with the Relate CLI, version 1.2.0 like the Python package ([install](https://relatedb.ai/docs/get-started/install/)):
 
 ```sh
 relate --read-only --database plan "MATCH (f:Function) RETURN f.name, f.promise_min ORDER BY f.name"
 relate serve --mcp stdio --database plan --read-only      # Relate's own MCP server on the plan
 ```
 
-Tests: `pip install -r requirements-dev.txt`, then `python -m pytest --cov`. 140 tests run in a new random order each time; they cover 98% of the decision core's lines and 91% of its branches, and CI fails below 90%. `cd web && npm ci && node test/parity.mjs` checks that the browser code gives the command line's answers on Relate's WebAssembly build, 28 of 28 cases. `python -m playwright install chromium`, then `python -m pytest -m e2e` drives the page in Chromium: 12 tests of every section, including an axe-core scan with no serious accessibility violation.
+Tests: `pip install -r requirements-dev.txt`, then `python -m pytest --cov`. 142 tests run in a new random order each time; they cover 98% of the decision core's lines and 92% of its branches, and CI fails below 90%. `cd web && npm ci && node test/parity.mjs` checks that the browser code gives the command line's answers on Relate's WebAssembly build, 28 of 28 cases. `python -m playwright install chromium`, then `python -m pytest -m e2e` drives the page in Chromium: 12 tests of every section, including an axe-core scan with no serious accessibility violation.
 
 To repeat the experiments on your own machine (Docker, about 8 GB of images), follow [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md).
 

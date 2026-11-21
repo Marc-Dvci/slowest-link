@@ -7,7 +7,7 @@ affected:
 date: 2026-11-14
 fault: kafka
 kind: stop
-name: 2026-11-14 stop:kafka
+name: 2026-11-14 stop_kafka
 not_recovered:
   - user_checkout_single
 recovery_journeys:

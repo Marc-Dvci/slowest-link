@@ -257,6 +257,9 @@ def cmd_guard(a: argparse.Namespace) -> int:
     if sum(bool(x) for x in (a.call, a.base, a.base_ref)) != 1:
         print("give one of --call SOURCE->TARGET, --base VAULT or --base-ref GIT_REF", file=sys.stderr)
         return 2
+    if a.call and "->" not in a.call:
+        print(f"write the call as SOURCE->TARGET, such as frontend->product-catalog (got {a.call!r})", file=sys.stderr)
+        return 2
     with tempfile.TemporaryDirectory() as tmp, open_store(a.vault, read_only=True) as conn:
         if a.call:
             source, _, target = a.call.partition("->")

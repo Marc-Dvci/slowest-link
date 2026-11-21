@@ -8,7 +8,7 @@ affected:
 date: 2026-11-14
 fault: productCatalogLockContention
 kind: flag
-name: 2026-11-14 flag:productCatalogLockContention
+name: 2026-11-14 flag_productCatalogLockContention
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

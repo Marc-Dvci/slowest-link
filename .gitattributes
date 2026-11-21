@@ -3,7 +3,7 @@
 *.sh text eol=lf
 
 # Relate's own files for the vault: kept byte for byte.
-plan/.cypherlite/** -text
+plan/.relate/** -text
 
 # Binary data.
 *.png binary

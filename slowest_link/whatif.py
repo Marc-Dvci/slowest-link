@@ -1,7 +1,8 @@
 """What-if: read an outage notice and list the promises it breaks, with a restore order.
 
 1. Components: names written in the notice, then Relate's full-text `SEARCH` over component names and descriptions,
-   with the words every notice uses left out (hits scoring at least 1.5, and at least 60% of the best hit).
+   with the words every notice uses and the names already found left out (hits scoring at least 1.5, and at least 60%
+   of the best hit), so a notice that names "frontend" does not also match "frontend-proxy" through the word they share.
 2. Duration: the first duration in the notice ("3 hours", "2 h 28 min", "90 minutes"); without one, each matched
    component's declared recovery objective.
 3. Impact: every function whose dependencies in the chosen view include a matched component. A promise is broken
@@ -85,7 +86,7 @@ def match_components(conn: relate.Connection, notice: str, min_score: float = MI
     lowered = notice.lower()
     exact = [n for n in names if re.search(rf"(?<![a-z0-9-]){re.escape(n)}(?![a-z0-9-])", lowered)]
     found = [{"component": n, "how": "named", "score": None} for n in sorted(exact)]
-    terms = " ".join(word for word in _WORD.findall(lowered) if word not in STOP_WORDS)
+    terms = " ".join(word for word in _WORD.findall(lowered) if word not in STOP_WORDS and word not in exact)
     if terms:
         hits = rows(
             conn,

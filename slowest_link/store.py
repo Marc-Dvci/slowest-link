@@ -14,10 +14,10 @@ from typing import Any
 
 import relate
 
-ENGINE_DIR = ".cypherlite"
+ENGINE_DIR = ".relate"
 
-# The manifest of an empty Markdown vault, as `relate --snapshot-format markdown` writes it (Relate 1.0.1). Writing it
-# lets Python create a vault: the Python binding opens a store with the codec its manifest names.
+# The manifest of an empty Markdown vault, as `relate --snapshot-format markdown` writes it (Relate 1.0.1; 1.2.0 opens
+# it as is). Writing it lets Python create a vault: the Python binding opens a store with the codec its manifest names.
 EMPTY_MARKDOWN_MANIFEST: dict[str, Any] = {
     "codec": "markdown",
     "checkpoint_lsn": 0,

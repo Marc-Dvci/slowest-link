@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: recommendationCacheFailure
 kind: flag
-name: 2026-11-14 flag:recommendationCacheFailure
+name: 2026-11-14 flag_recommendationCacheFailure
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

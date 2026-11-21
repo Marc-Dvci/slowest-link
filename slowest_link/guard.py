@@ -56,6 +56,14 @@ def functions_through(conn: relate.Connection, component: str, view: checks.View
     return sorted(name for name, deps in checks.reach(conn, view).items() if component in deps)
 
 
+def _as_planned(name: str, known: set[str], kind: str) -> str:
+    """`name` as the plan spells it, in any case. A name the plan does not hold is refused, with the plan's names."""
+    by_case = {k.casefold(): k for k in known}
+    if name.casefold() in by_case:
+        return by_case[name.casefold()]
+    raise ValueError(f"no {kind} named {name!r}; the plan's {kind}s: {', '.join(sorted(known))}")
+
+
 def simulate_call(
     conn: relate.Connection,
     source: str,
@@ -68,17 +76,15 @@ def simulate_call(
 
     Without `functions`, the call is assumed to serve every function that reaches `source` today.
     """
-    names = {row["n"] for row in rows(conn, f"MATCH (c:{checks.COMPONENT}) RETURN c.name AS n")}
-    for name in (source, target):
-        if name not in names:
-            raise ValueError(f"no component named {name!r}")
+    components = {row["n"] for row in rows(conn, f"MATCH (c:{checks.COMPONENT}) RETURN c.name AS n")}
+    source, target = _as_planned(source, components, "component"), _as_planned(target, components, "component")
     if mode not in {"sync", "async"}:
         raise ValueError("mode is sync or async")
-    served = functions if functions is not None else functions_through(conn, source, view)
     known = {row["n"] for row in rows(conn, "MATCH (f:Function) RETURN f.name AS n")}
-    unknown = sorted(set(served) - known)
-    if unknown:
-        raise ValueError(f"no function named {unknown}")
+    if functions is None:
+        served = functions_through(conn, source, view)
+    else:
+        served = [_as_planned(name, known, "function") for name in functions]
     after = copy_to_memory(conn)
     try:
         existing = rows(

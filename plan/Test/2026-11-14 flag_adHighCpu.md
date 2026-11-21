@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: adHighCpu
 kind: flag
-name: 2026-11-14 flag:adHighCpu
+name: 2026-11-14 flag_adHighCpu
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

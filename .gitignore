@@ -24,4 +24,4 @@ data/runs/
 
 # Relate: the vault's writer markers are per process; its lock files and WAL are part of the store
 *.cypherlite.writer
-!plan/.cypherlite/wal/*.log
+!plan/.relate/wal/*.log

@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: adFailure
 kind: flag
-name: 2026-11-14 flag:adFailure
+name: 2026-11-14 flag_adFailure
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

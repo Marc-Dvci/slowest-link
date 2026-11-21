@@ -8,7 +8,7 @@ affected:
 date: 2026-11-14
 fault: astronomy-db
 kind: stop
-name: 2026-11-14 stop:astronomy-db
+name: 2026-11-14 stop_astronomy-db
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

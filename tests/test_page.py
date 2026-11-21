@@ -48,7 +48,7 @@ def page(browser: Any, base_url: str) -> Iterator[Page]:
 
 
 def test_relate_runs_in_the_tab_and_draws_every_function(page: Page) -> None:
-    assert page.inner_text("#status").startswith("Relate 1.0.1 running in this tab (WebAssembly): 63 nodes")
+    assert page.inner_text("#status").startswith("Relate 1.2.0 running in this tab (WebAssembly): 63 nodes")
     assert page.locator("#map .row").count() == 9
 
 

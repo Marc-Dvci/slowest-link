@@ -11,7 +11,7 @@ affected:
 date: 2026-11-14
 fault: frontend
 kind: stop
-name: 2026-11-14 stop:frontend
+name: 2026-11-14 stop_frontend
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

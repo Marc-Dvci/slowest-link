@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: email
 kind: stop
-name: 2026-11-14 stop:email
+name: 2026-11-14 stop_email
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

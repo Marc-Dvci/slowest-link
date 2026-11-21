@@ -82,6 +82,23 @@ def test_guard_refuses_an_unknown_component(vault: Path, capsys: pytest.CaptureF
     assert run(capsys, "guard", "--vault", str(vault), "--call", "frontend->ghost")[0] == 2
 
 
+def test_guard_takes_names_in_any_case_and_names_what_it_cannot_find(
+    vault: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    code, out = run(
+        capsys, "guard", "--vault", str(vault), "--call", "Frontend->Product-Catalog", "--for", "browse the shop"
+    )
+    assert code == 1 and "NEW    Browse the shop" in out
+    # Without --for, the call serves every function that reaches its source today.
+    code, out = run(capsys, "guard", "--vault", str(vault), "--call", "FRONTEND->product-catalog")
+    assert code == 1 and "for Add to cart, Browse the shop" in out
+    assert cli.main(["guard", "--vault", str(vault), "--call", "frontend->product-catalog", "--for", "Checkout"]) == 2
+    err = capsys.readouterr().err
+    assert "no function named 'Checkout'; the plan's functions: Add to cart, Browse the shop" in err
+    assert cli.main(["guard", "--vault", str(vault), "--call", "frontend product-catalog"]) == 2
+    assert "write the call as SOURCE->TARGET" in capsys.readouterr().err
+
+
 def test_guard_needs_exactly_one_kind_of_change(vault: Path, capsys: pytest.CaptureFixture[str]) -> None:
     assert run(capsys, "guard", "--vault", str(vault))[0] == 2
 

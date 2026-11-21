@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: flagd-ui
 kind: stop
-name: 2026-11-14 stop:flagd-ui
+name: 2026-11-14 stop_flagd-ui
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

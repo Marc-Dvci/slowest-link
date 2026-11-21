@@ -2,7 +2,7 @@
 // The graph is the plan vault exported to one Cypher script (python -m slowest_link export); the queries are the
 // exact Cypher the command line and the MCP server run (slowest_link/checks.py).
 
-const RELATE_VERSION = "1.0.1";
+export const RELATE_VERSION = "1.2.0";
 const RELATE_URL = `https://cdn.jsdelivr.net/npm/@relate/relate-wasm@${RELATE_VERSION}/relate.js`;
 
 export class Graph {

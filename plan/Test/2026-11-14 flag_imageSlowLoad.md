@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: imageSlowLoad
 kind: flag
-name: 2026-11-14 flag:imageSlowLoad
+name: 2026-11-14 flag_imageSlowLoad
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

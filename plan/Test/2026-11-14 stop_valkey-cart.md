@@ -7,7 +7,7 @@ affected:
 date: 2026-11-14
 fault: valkey-cart
 kind: stop
-name: 2026-11-14 stop:valkey-cart
+name: 2026-11-14 stop_valkey-cart
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

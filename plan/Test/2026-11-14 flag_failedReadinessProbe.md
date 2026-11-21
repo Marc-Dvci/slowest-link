@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: failedReadinessProbe
 kind: flag
-name: 2026-11-14 flag:failedReadinessProbe
+name: 2026-11-14 flag_failedReadinessProbe
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

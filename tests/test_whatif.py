@@ -136,6 +136,15 @@ def test_a_notice_about_a_component_of_the_plan_finds_it_first(
     assert whatif.match_components(plan, notice)[0]["component"] == component
 
 
+def test_a_named_component_does_not_bring_in_another_that_shares_its_name(plan: relate.Connection) -> None:
+    # "frontend" is part of "frontend-proxy": naming one leaves the other out, in both directions.
+    assert whatif.match_components(plan, "The frontend is down for 30 minutes.") == [
+        {"component": "frontend", "how": "named", "score": None}
+    ]
+    found = whatif.match_components(plan, "flagd and frontend-proxy are both down for 2 h 28 min")
+    assert [m["component"] for m in found] == ["flagd", "frontend-proxy"]
+
+
 @pytest.mark.parametrize(
     "notice",
     [

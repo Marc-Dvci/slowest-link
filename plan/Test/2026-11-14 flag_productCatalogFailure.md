@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: productCatalogFailure
 kind: flag
-name: 2026-11-14 flag:productCatalogFailure
+name: 2026-11-14 flag_productCatalogFailure
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

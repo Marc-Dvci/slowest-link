@@ -5,7 +5,7 @@ affected:
 date: 2026-11-14
 fault: paymentFailure
 kind: flag
-name: 2026-11-14 flag:paymentFailure
+name: 2026-11-14 flag_paymentFailure
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

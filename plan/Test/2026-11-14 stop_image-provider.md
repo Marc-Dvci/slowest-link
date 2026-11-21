@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: image-provider
 kind: stop
-name: 2026-11-14 stop:image-provider
+name: 2026-11-14 stop_image-provider
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

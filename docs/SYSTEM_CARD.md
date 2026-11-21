@@ -20,7 +20,7 @@ changes to promises and recovery times are made in the notes and reviewed as dif
 
 | Component | Model or source | Role |
 |---|---|---|
-| Checks, what-if, guard | Cypher on Relate by Neo4j 1.0.1 | Decide every finding |
+| Checks, what-if, guard | Cypher on Relate by Neo4j 1.2.0 | Decide every finding |
 | Notice matching | Relate full-text index and `SEARCH` | Map free text to components |
 | Agents | Any MCP client (Claude Code, Cursor, Codex and others) | Ask questions, explain the tools' answers |
 | Agent evaluation | Qwen 3.8 Flash, Alibaba Cloud Model Studio | Measure answers with and without the graph |

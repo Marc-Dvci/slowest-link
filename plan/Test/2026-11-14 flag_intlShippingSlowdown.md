@@ -5,7 +5,7 @@ affected:
 date: 2026-11-14
 fault: intlShippingSlowdown
 kind: flag
-name: 2026-11-14 flag:intlShippingSlowdown
+name: 2026-11-14 flag_intlShippingSlowdown
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

@@ -5,7 +5,7 @@ affected:
 date: 2026-11-14
 fault: quote
 kind: stop
-name: 2026-11-14 stop:quote
+name: 2026-11-14 stop_quote
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

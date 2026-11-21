@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: accounting
 kind: stop
-name: 2026-11-14 stop:accounting
+name: 2026-11-14 stop_accounting
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

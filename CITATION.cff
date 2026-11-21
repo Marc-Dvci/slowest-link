@@ -10,7 +10,7 @@ abstract: >-
 authors:
   - family-names: Donovici
     given-names: Marc
-version: 1.0.0
+version: 1.0.1
 license: MIT
 repository-code: "https://github.com/Marc-Dvci/slowest-link"
 url: "https://marc-dvci.github.io/slowest-link/"

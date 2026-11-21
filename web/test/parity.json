@@ -816,11 +816,6 @@
           "component": "frontend-proxy",
           "how": "named",
           "score": null
-        },
-        {
-          "component": "frontend",
-          "how": "search",
-          "score": 1.868
         }
       ],
       "outage_min": 148,
@@ -830,7 +825,6 @@
           "promise_min": 60,
           "critical": true,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -841,7 +835,6 @@
           "promise_min": 60,
           "critical": true,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -852,7 +845,6 @@
           "promise_min": 60,
           "critical": true,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -863,7 +855,6 @@
           "promise_min": 60,
           "critical": true,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -874,7 +865,6 @@
           "promise_min": 60,
           "critical": true,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -885,7 +875,6 @@
           "promise_min": 480,
           "critical": false,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -896,7 +885,6 @@
           "promise_min": 1440,
           "critical": false,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -912,7 +900,6 @@
       ],
       "restore_order": [
         "flagd",
-        "frontend",
         "frontend-proxy",
         "Add to cart",
         "Browse the shop",
@@ -936,11 +923,6 @@
           "component": "frontend-proxy",
           "how": "named",
           "score": null
-        },
-        {
-          "component": "frontend",
-          "how": "search",
-          "score": 1.868
         }
       ],
       "outage_min": 148,
@@ -951,7 +933,6 @@
           "critical": true,
           "through": [
             "flagd",
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -963,7 +944,6 @@
           "critical": true,
           "through": [
             "flagd",
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -975,7 +955,6 @@
           "critical": true,
           "through": [
             "flagd",
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -987,7 +966,6 @@
           "critical": true,
           "through": [
             "flagd",
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -999,7 +977,6 @@
           "critical": true,
           "through": [
             "flagd",
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -1021,7 +998,6 @@
           "critical": false,
           "through": [
             "flagd",
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -1033,7 +1009,6 @@
           "critical": false,
           "through": [
             "flagd",
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -1049,7 +1024,6 @@
       ],
       "restore_order": [
         "flagd",
-        "frontend",
         "frontend-proxy",
         "Add to cart",
         "Browse the shop",
@@ -1074,11 +1048,6 @@
           "component": "frontend-proxy",
           "how": "named",
           "score": null
-        },
-        {
-          "component": "frontend",
-          "how": "search",
-          "score": 1.868
         }
       ],
       "outage_min": 148,
@@ -1088,7 +1057,6 @@
           "promise_min": 60,
           "critical": true,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -1099,7 +1067,6 @@
           "promise_min": 60,
           "critical": true,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -1111,7 +1078,6 @@
           "critical": true,
           "through": [
             "flagd",
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -1122,7 +1088,6 @@
           "promise_min": 60,
           "critical": true,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -1133,7 +1098,6 @@
           "promise_min": 60,
           "critical": true,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -1144,7 +1108,6 @@
           "promise_min": 480,
           "critical": false,
           "through": [
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -1156,7 +1119,6 @@
           "critical": false,
           "through": [
             "flagd",
-            "frontend",
             "frontend-proxy"
           ],
           "expected_outage_min": 148,
@@ -1172,7 +1134,6 @@
       ],
       "restore_order": [
         "flagd",
-        "frontend",
         "frontend-proxy",
         "Add to cart",
         "Browse the shop",

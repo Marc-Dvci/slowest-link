@@ -1,4 +1,4 @@
-import { Graph } from "./relate.js";
+import { Graph, RELATE_VERSION } from "./relate.js";
 import { VIEWS, functions, profile, simulateCall, whatIf } from "./checks.js";
 
 // Line colours, one per function, in the spirit of a metro map. Red is kept for broken promises.
@@ -160,9 +160,11 @@ function testsFor(fn, deps) {
       if (!hit && !listed) return null;
       const journey = Object.entries(o.journeys).find(([, j]) => j.function === fn);
       const rec = journey ? o.recovery_s[journey[0]] : null;
-      const verdict = hit ? `stopped it${rec != null ? `, back ${rec} s after restart` : ""}` : "it kept working";
+      const manual = hit && o.not_recovered.includes(journey?.[0]);
+      const back = rec != null ? `, back ${rec} s after restart` : "";
+      const verdict = !hit ? "it kept working" : manual ? 'it went down <span class="miss">until a manual restart</span>' : `it went down${back}`;
       const agree = hit === listed ? "" : ` <span class="miss">${listed ? "graph expected an outage" : "not in this view"}</span>`;
-      return `<li><b>${esc(o.target)}</b> stopped for 60 s: ${verdict}${agree}${o.not_recovered.includes(journey?.[0]) ? ' <span class="miss">needed a manual restart</span>' : ""}</li>`;
+      return `<li><b>${esc(o.target)}</b> stopped for 60 s: ${verdict}${agree}</li>`;
     })
     .filter(Boolean);
   if (!rows.length) return "";
@@ -315,7 +317,7 @@ async function start() {
   }
   const counts = state.graph.rows("MATCH (n) RETURN count(n) AS n")[0].n;
   const rels = state.graph.rows("MATCH ()-[r]->() RETURN count(r) AS n")[0].n;
-  $("#status").textContent = `Relate 1.0.1 running in this tab (WebAssembly): ${counts} nodes, ${rels} relationships, loaded in ${state.graph.loadMs} ms.`;
+  $("#status").textContent = `Relate ${RELATE_VERSION} running in this tab (WebAssembly): ${counts} nodes, ${rels} relationships, loaded in ${state.graph.loadMs} ms.`;
   state.fns = functions(state.graph);
   try {
     const tests = await fetch("data/tests.json").then((r) => (r.ok ? r.json() : null));

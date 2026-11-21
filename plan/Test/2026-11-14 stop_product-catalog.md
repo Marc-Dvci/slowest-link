@@ -8,7 +8,7 @@ affected:
 date: 2026-11-14
 fault: product-catalog
 kind: stop
-name: 2026-11-14 stop:product-catalog
+name: 2026-11-14 stop_product-catalog
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

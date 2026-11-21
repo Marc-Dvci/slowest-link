@@ -5,7 +5,7 @@ affected:
 date: 2026-11-14
 fault: adManualGc
 kind: flag
-name: 2026-11-14 flag:adManualGc
+name: 2026-11-14 flag_adManualGc
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart

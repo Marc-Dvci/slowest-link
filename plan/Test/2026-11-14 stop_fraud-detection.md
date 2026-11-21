@@ -4,7 +4,7 @@ affected: []
 date: 2026-11-14
 fault: fraud-detection
 kind: stop
-name: 2026-11-14 stop:fraud-detection
+name: 2026-11-14 stop_fraud-detection
 not_recovered: []
 recovery_journeys:
   - user_add_to_cart
