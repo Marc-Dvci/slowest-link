@@ -24,13 +24,15 @@ changes to promises and recovery times are made in the notes and reviewed as dif
 | Notice matching | Relate full-text index and `SEARCH` | Map free text to components |
 | Agents | Any MCP client (Claude Code, Cursor, Codex and others) | Ask questions, explain the tools' answers |
 | Agent evaluation | Qwen 3.8 Flash, Alibaba Cloud Model Studio | Measure answers with and without the graph |
-| System | OpenTelemetry Astronomy Shop 3.1.0 | Real services, traces and outage tests |
+| System | OpenTelemetry Astronomy Shop 3.1.0, the OpenTelemetry reference microservice demo, run unmodified | Real services, traces and outage tests |
 | Plan inputs | `sources/` | Promises, the plan's component lists, recovery objectives |
 
 ## Evaluation
 
-- The checks are deterministic Cypher; their figures on the running shop are in [`RESULTS.md`](RESULTS.md): from 20
-  component stops, the evidence view predicted 39 of 40 outages with 4 false alarms.
+- The checks are deterministic Cypher; their figures on the running shop are in [`RESULTS.md`](RESULTS.md). The 20
+  component stops took a function down 40 times. The evidence view, frozen before the tests, predicted 39 of them with
+  4 false alarms. Taking out the three corrections the tests wrote afterwards, today's plan gives the frozen
+  predictions back exactly.
 - The browser code gives the command line's answers on 28 of 28 cases ([`web/test/parity.mjs`](../web/test/parity.mjs)).
 - Agents: Qwen 3.8 Flash answered 12 questions three times each. Reading the plan's notes: 36 of 36 correct, 85 seconds
   per answer. Calling the tools: 31 of 36 correct, 21 seconds per answer.
@@ -40,6 +42,8 @@ changes to promises and recovery times are made in the notes and reviewed as dif
 - People own the promises and the recovery objectives; the vault records who owns each component.
 - Trace evidence and test results are written as properties on the notes, so a reviewer sees each change as a diff.
 - The guard blocks a change in CI; a person decides whether to change the code or the promise.
+- It supports the dependency analysis and the recovery tests a continuity team runs; classifying an incident and
+  signing off the plan stay with people.
 - An agent connected over MCP reads the plan and cannot write to it.
 
 ## How a correction is made

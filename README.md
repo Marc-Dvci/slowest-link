@@ -135,8 +135,8 @@ answers taken from the checks and committed before it ran ([`experiments/agent_e
 | Reading the plan's notes, pasted into its context | 36 of 36 | 85 | 5,130 |
 | Calling the Slowest Link tools on Relate | 31 of 36 | 21 | 1,108 |
 
-The vault is small enough to fit in the model's context, and reading it whole answered every question. Through the
-tools, the same questions take a quarter of the time and a fifth of the output tokens.
+Reading the whole vault in its context, the model answered every question. Through the tools, it answered in a quarter
+of the time, with a fifth of the output tokens.
 
 ## Results
 
@@ -189,12 +189,13 @@ The tests also corrected the graph, and the corrections are reviewable diffs in 
   recorded `survives_without: Place an order`, and the email service no longer counts against that promise.
 - **Restarts.** Every other affected journey was back within 10.9 seconds of its component restarting.
 
-The scores above compare the tests with [`evidence/predictions.json`](evidence/predictions.json), computed from the plan
-at [`8211f9f`](https://github.com/Marc-Dvci/slowest-link/commit/8211f9f) and committed at
-[`9505baf`](https://github.com/Marc-Dvci/slowest-link/commit/9505baf) before the first test. The three corrections are
-the only change to the plan's component notes since then: `git diff 8211f9f HEAD -- plan/Service` shows exactly those
-three. With them taken out, today's plan gives the frozen predictions back, all 102 of them; with them, 5 evidence-view
-predictions change. A test checks both ([`test_claims.py`](tests/test_claims.py)).
+The scores above compare the tests with the predictions I committed at
+[`9505baf`](https://github.com/Marc-Dvci/slowest-link/commit/9505baf) before the first test
+([`evidence/predictions.json`](evidence/predictions.json), computed from the plan at
+[`8211f9f`](https://github.com/Marc-Dvci/slowest-link/commit/8211f9f)). Since then, the three corrections are the only
+change to the plan's component notes: `git diff 8211f9f HEAD -- plan/Service` shows exactly those three. A test takes
+them out of today's plan and gets all 102 frozen predictions back; with them in, 5 evidence-view predictions change
+([`test_claims.py`](tests/test_claims.py)).
 
 > [!IMPORTANT]
 > What is real: the system is the OpenTelemetry Astronomy Shop 3.1.0, run unmodified in Docker; the declared calls are its published architecture; the traces, outage tests and recovery times were measured on it. The promises, the plan's component lists and the recovery objectives are the plan's inputs, as a continuity team writes them ([`sources/`](sources/)).
