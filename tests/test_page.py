@@ -105,7 +105,7 @@ def test_the_guard_refuses_a_call_from_a_component_to_itself(page: Page) -> None
 
 
 def test_the_results_grid_shows_the_one_outage_the_evidence_view_missed(page: Page) -> None:
-    assert "Evidence: 39 of 40 outages predicted, 4 false alarms" in page.inner_text("#results-scores")
+    assert "Evidence: 39 of 40 function outages predicted, 4 false alarms" in page.inner_text("#results-scores")
     missed = page.locator("#results-table td.hit.miss")
     assert missed.count() == 1
     assert missed.first.get_attribute("title") == "Place an order: stopped (not expected)"

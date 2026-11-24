@@ -16,7 +16,7 @@ In business-continuity audits I worked on, recovery times were set one applicati
 
 | Live page | Built with | Store | Headline result |
 |---|---|---|---|
-| [Open it](https://marc-dvci.github.io/slowest-link/) (Relate runs in the tab) | Relate by Neo4j 1.2.0: Python, CLI, MCP, WebAssembly | Markdown directory store, [`plan/`](plan/) | Predicted 39 of 40 outages on a real shop, with 4 false alarms; its architecture diagram alone raised 91 |
+| [Open it](https://marc-dvci.github.io/slowest-link/) (Relate runs in the tab) | Relate by Neo4j 1.2.0: Python, CLI, MCP, WebAssembly | Markdown directory store, [`plan/`](plan/) | Stopping 20 components of the OpenTelemetry demo shop took a function down 40 times: it predicted 39, with 4 false alarms; the architecture diagram alone raised 91 |
 
 [For judges](#for-judges) · [See it work](#see-it-work) · [Use case](#use-case) · [How it uses Relate](#how-it-uses-relate) · [Agents](#agents) · [Results](#results) · [Run it](#run-it) · [Where the data lives](#where-the-data-lives)
 
@@ -25,8 +25,8 @@ In business-continuity audits I worked on, recovery times were set one applicati
 | Criterion | Where it is answered |
 |---|---|
 | Relate and connected context | [How it uses Relate](#how-it-uses-relate): the answers are path aggregates computed in Cypher on Relate ([`slowest_link/checks.py`](slowest_link/checks.py)); the plan is a Markdown vault Relate opens as a graph; the same queries run in the CLI, the MCP server and the browser ([parity check](web/test/parity.mjs)) |
-| Functionality and completeness | [See it work](#see-it-work), [Run it](#run-it): command line, MCP server, agent skill and hook, CI guard, browser page, Docker images; 142 tests and 12 browser tests |
-| Usefulness | [Use case](#use-case), [Results](#results): every finding comes from a real system, its traces and 34 outage tests on it |
+| Functionality and completeness | [See it work](#see-it-work), [Run it](#run-it): command line, MCP server, agent skill and hook, CI guard, browser page, Docker images; 143 tests and 12 browser tests |
+| Usefulness | [Use case](#use-case), [Results](#results): every finding comes from the OpenTelemetry Astronomy Shop run unmodified, its traces and 34 outage tests on it |
 | Documentation and reproducibility | [Run it](#run-it) needs no keys and no Docker; [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md) and the committed evidence reproduce every number |
 | Creativity | A recovery promise checked as a path through a graph, with three kinds of evidence on each edge: declared, observed, proved by a test |
 | AI and agentic capabilities | [Agents](#agents): MCP tools, an agent skill, a coding-agent hook that blocks a promise-breaking change, and a measured agent evaluation |
@@ -54,7 +54,7 @@ On 12 June 2025 a third-party cloud provider behind Cloudflare's Workers KV fail
 
 Continuity plans share that blind spot. A business impact analysis gives each function a recovery promise ("orders back within 1 hour") and lists the applications it uses. Each application's owner declares how fast it recovers. Each line can look fine on its own while the function waits for a database three calls away that takes 4 hours to restore.
 
-European financial law asks for exactly this check. Under DORA, the business impact analysis "shall consider the criticality of identified and mapped business functions, support processes, third-party dependencies and information assets, and their interdependencies"[^2], and continuity plans must be tested at least yearly[^3]. A downtime longer than 2 hours for ICT services that support critical or important functions counts toward a major incident[^4].
+In EU finance, DORA sets the same expectation in general terms. The business impact analysis "shall consider the criticality of identified and mapped business functions, support processes, third-party dependencies and information assets, and their interdependencies"[^2], and continuity plans are tested at least yearly[^3]. A service downtime longer than 2 hours for ICT services that support critical or important functions is one of the materiality thresholds used to classify a major incident[^4]. Slowest Link supports that dependency analysis and the yearly recovery tests: it computes the interdependencies behind each promise and records each test on the same graph.
 
 Slowest Link is for the continuity lead who signs the annual recovery test plan, and for the engineer on call at 07:40 when a provider's status page turns red. It answers three questions from the graph:
 
@@ -135,8 +135,8 @@ answers taken from the checks and committed before it ran ([`experiments/agent_e
 | Reading the plan's notes, pasted into its context | 36 of 36 | 85 | 5,130 |
 | Calling the Slowest Link tools on Relate | 31 of 36 | 21 | 1,108 |
 
-The vault's notes are plain enough for a model to reason over directly. Through the tools, the same questions take a
-quarter of the time and a fifth of the output tokens.
+The vault is small enough to fit in the model's context, and reading it whole answered every question. Through the
+tools, the same questions take a quarter of the time and a fifth of the output tokens.
 
 ## Results
 
@@ -165,9 +165,11 @@ its declared calls appear in no trace.
 ### Outages on the running shop
 
 Each of the 20 components was stopped for 60 seconds while every journey was replayed through the front door, against
-predictions committed before the tests ran:
+predictions committed before the tests ran. The 20 stops took a function down 40 times. A view predicts one of those
+function outages when it names that function for that stop; a test is exactly right when the view names every function
+the stop took down and no other.
 
-| View | Outages predicted | False alarms | Tests exactly right |
+| View | Function outages predicted | False alarms | Tests exactly right |
 |---|---|---|---|
 | Plan | 25 of 40 | 3 | 11 of 20 |
 | Architecture | 40 of 40 | 91 | 2 of 20 |
@@ -187,6 +189,13 @@ The tests also corrected the graph, and the corrections are reviewable diffs in 
   recorded `survives_without: Place an order`, and the email service no longer counts against that promise.
 - **Restarts.** Every other affected journey was back within 10.9 seconds of its component restarting.
 
+The scores above compare the tests with [`evidence/predictions.json`](evidence/predictions.json), computed from the plan
+at [`8211f9f`](https://github.com/Marc-Dvci/slowest-link/commit/8211f9f) and committed at
+[`9505baf`](https://github.com/Marc-Dvci/slowest-link/commit/9505baf) before the first test. The three corrections are
+the only change to the plan's component notes since then: `git diff 8211f9f HEAD -- plan/Service` shows exactly those
+three. With them taken out, today's plan gives the frozen predictions back, all 102 of them; with them, 5 evidence-view
+predictions change. A test checks both ([`test_claims.py`](tests/test_claims.py)).
+
 > [!IMPORTANT]
 > What is real: the system is the OpenTelemetry Astronomy Shop 3.1.0, run unmodified in Docker; the declared calls are its published architecture; the traces, outage tests and recovery times were measured on it. The promises, the plan's component lists and the recovery objectives are the plan's inputs, as a continuity team writes them ([`sources/`](sources/)).
 
@@ -194,6 +203,8 @@ The tests also corrected the graph, and the corrections are reviewable diffs in 
 
 - Change the plan on its own. The MCP tools and the guard open it read-only; people edit the notes, and the trace import and the test recorder write evidence only.
 - Let an agent invent a number. The skill and the server instructions require every figure to come from a tool result.
+- Decide compliance. It gives the continuity lead the dependency analysis and the test evidence; classifying an incident
+  and signing off the plan stay with people.
 
 ## Run it
 
@@ -227,7 +238,7 @@ relate --read-only --database plan "MATCH (f:Function) RETURN f.name, f.promise_
 relate serve --mcp stdio --database plan --read-only      # Relate's own MCP server on the plan
 ```
 
-Tests: `pip install -r requirements-dev.txt`, then `python -m pytest --cov`. 142 tests run in a new random order each time; they cover 98% of the decision core's lines and 92% of its branches, and CI fails below 90%. `cd web && npm ci && node test/parity.mjs` checks that the browser code gives the command line's answers on Relate's WebAssembly build, 28 of 28 cases. `python -m playwright install chromium`, then `python -m pytest -m e2e` drives the page in Chromium: 12 tests of every section, including an axe-core scan with no serious accessibility violation.
+Tests: `pip install -r requirements-dev.txt`, then `python -m pytest --cov`. 143 tests run in a new random order each time; they cover 98% of the decision core's lines and 92% of its branches, and CI fails below 90%. `cd web && npm ci && node test/parity.mjs` checks that the browser code gives the command line's answers on Relate's WebAssembly build, 28 of 28 cases. `python -m playwright install chromium`, then `python -m pytest -m e2e` drives the page in Chromium: 12 tests of every section, including an axe-core scan with no serious accessibility violation.
 
 To repeat the experiments on your own machine (Docker, about 8 GB of images), follow [`experiments/PROTOCOL.md`](experiments/PROTOCOL.md).
 
@@ -247,7 +258,8 @@ To repeat the experiments on your own machine (Docker, about 8 GB of images), fo
 | The plan, architecture and evidence views find 0, 5 and 3 broken promises | [`checks.py`](slowest_link/checks.py) | [`test_claims.py`](tests/test_claims.py) |
 | "View cart" breaks its promise only through its 1 h 30 min restore chain | [`checks.py`](slowest_link/checks.py) | [`test_claims.py`](tests/test_claims.py) |
 | 1,037 traces, every one attributed; all 24 observed calls are in the published architecture | [`traces.py`](slowest_link/traces.py) | [`test_claims.py`](tests/test_claims.py), [`test_cli.py`](tests/test_cli.py) |
-| The evidence view predicted 39 of 40 outages with 4 false alarms; the architecture view, 40 with 91 | [`scoring.py`](slowest_link/scoring.py) | [`test_claims.py`](tests/test_claims.py) |
+| The evidence view predicted 39 of the 40 function outages with 4 false alarms; the architecture view, 40 with 91 | [`scoring.py`](slowest_link/scoring.py) | [`test_claims.py`](tests/test_claims.py) |
+| Without the tests' three corrections, today's plan gives the frozen predictions exactly | [`checks.py`](slowest_link/checks.py) | [`test_claims.py`](tests/test_claims.py) |
 | The tests wrote one needed call and two survivable calls into the plan | [`evidence.py`](slowest_link/evidence.py) | [`test_claims.py`](tests/test_claims.py) |
 | The guard blocks a call that puts the 4-hour database under "Browse the shop" | [`guard.py`](slowest_link/guard.py) | [`test_cli.py`](tests/test_cli.py) |
 | The browser page gives the command line's answers | [`web/js/checks.js`](web/js/checks.js) | [`parity.mjs`](web/test/parity.mjs), [`test_web_parity.py`](tests/test_web_parity.py) |

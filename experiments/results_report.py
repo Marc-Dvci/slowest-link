@@ -32,7 +32,7 @@ def pct(x: float | None) -> str:
 
 def score_table(views: dict[str, Any]) -> list[str]:
     lines = [
-        "| View | Outages predicted | False alarms | Precision | Recall | Tests exactly right |",
+        "| View | Function outages predicted | False alarms | Precision | Recall | Tests exactly right |",
         "|---|---|---|---|---|---|",
     ]
     for view in checks.VIEWS:
@@ -125,7 +125,11 @@ def main() -> None:
             "## Outage tests (E1 and E2)",
             "",
             "Predictions were committed before the tests ran. A pair is one fault and one function; back-office",
-            "functions are left out of a test when no order was placed in its window.",
+            "functions are left out of a test when no order was placed in its window. A function outage is a pair",
+            "where the function went down. The scores use the predictions frozen at 9505baf, computed from the plan",
+            "at 8211f9f. The corrections the tests wrote afterwards (one needed call, two survivable calls) change 5",
+            "of the 102 predictions; tests/test_claims.py takes them out of today's plan and gets the frozen",
+            "predictions back exactly.",
             "",
             f"### Stopping each component for {window('stop')} (E1)",
             "",

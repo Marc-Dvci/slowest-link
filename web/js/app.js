@@ -301,7 +301,7 @@ function drawResults() {
   $("#results-scores").innerHTML = VIEWS.filter((v) => views[v])
     .map((v) => {
       const s = views[v].score;
-      return `<li><b>${VIEW_LABEL[v]}</b>: ${s.tp} of ${s.tp + s.fn} outages predicted, ${s.fp} false alarms, ${s.exact} of ${s.tests} tests exactly right</li>`;
+      return `<li><b>${VIEW_LABEL[v]}</b>: ${s.tp} of ${s.tp + s.fn} function outages predicted, ${s.fp} false alarms, ${s.exact} of ${s.tests} tests exactly right</li>`;
     })
     .join("");
 }

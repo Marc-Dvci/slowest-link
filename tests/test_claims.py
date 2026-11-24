@@ -65,6 +65,35 @@ def test_the_predictions_name_the_vault_commit_they_came_from_and_cover_every_te
     assert sorted(tests) == sorted(f["id"] for f in predictions["faults"])
 
 
+def test_without_the_tests_corrections_the_plan_gives_the_frozen_predictions(monkeypatch: pytest.MonkeyPatch) -> None:
+    """The scores use the predictions frozen before the tests; since then the tests wrote three corrections into the
+    plan (one needed call, two survivable calls). Taken out, the plan gives every frozen prediction back."""
+    predictions = json.loads((ROOT / "evidence" / "predictions.json").read_text(encoding="utf-8"))
+    frozen = {(f["id"], view): f["predicted"][view] for f in predictions["faults"] for view in checks.VIEWS}
+
+    def predicted(conn: object) -> dict[tuple[str, str], list[str]]:
+        reach = {view: checks.reach(conn, view) for view in checks.VIEWS}  # type: ignore[arg-type]
+        return {
+            (f["id"], view): sorted(fn for fn, deps in reach[view].items() if f["target"] in deps)
+            for f in predictions["faults"]
+            for view in checks.VIEWS
+        }
+
+    with open_store(ROOT / "plan", read_only=True) as conn:
+        corrected = predicted(conn)
+        # The evidence view as it stood before the tests: no `needed_by`, no `survives_without`.
+        monkeypatch.setitem(
+            checks.EDGE_FILTER,
+            "evidence",
+            "r.observed = true AND f.name IN coalesce(r.journeys, []) AND r.mode = 'sync'",
+        )
+        before = predicted(conn)
+    assert len(frozen) == 102
+    assert before == frozen
+    changed = sorted(key for key in frozen if corrected[key] != frozen[key])
+    assert len(changed) == 5 and {view for _, view in changed} == {"evidence"}
+
+
 def test_the_tests_wrote_one_needed_call_and_two_survivable_calls_into_the_plan() -> None:
     with open_store(ROOT / "plan", read_only=True) as conn:
         needed = [

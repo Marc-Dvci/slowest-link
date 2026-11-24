@@ -31,11 +31,15 @@ Dependencies the plan's own list leaves out (evidence view):
 ## Outage tests (E1 and E2)
 
 Predictions were committed before the tests ran. A pair is one fault and one function; back-office
-functions are left out of a test when no order was placed in its window.
+functions are left out of a test when no order was placed in its window. A function outage is a pair
+where the function went down. The scores use the predictions frozen at 9505baf, computed from the plan
+at 8211f9f. The corrections the tests wrote afterwards (one needed call, two survivable calls) change 5
+of the 102 predictions; tests/test_claims.py takes them out of today's plan and gets the frozen
+predictions back exactly.
 
 ### Stopping each component for 60 seconds (E1)
 
-| View | Outages predicted | False alarms | Precision | Recall | Tests exactly right |
+| View | Function outages predicted | False alarms | Precision | Recall | Tests exactly right |
 |---|---|---|---|---|---|
 | Plan | 25 of 40 | 3 | 89% | 62% | 11 of 20 |
 | Architecture | 40 of 40 | 91 | 30% | 100% | 2 of 20 |
@@ -66,7 +70,7 @@ functions are left out of a test when no order was placed in its window.
 
 ### Turning on each failure flag for 76 seconds (E2)
 
-| View | Outages predicted | False alarms | Precision | Recall | Tests exactly right |
+| View | Function outages predicted | False alarms | Precision | Recall | Tests exactly right |
 |---|---|---|---|---|---|
 | Plan | 5 of 9 | 12 | 29% | 56% | 6 of 14 |
 | Architecture | 9 of 9 | 92 | 9% | 100% | 0 of 14 |
